@@ -1,0 +1,1640 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Yau & You — Brand Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400;1,700&family=Nunito:wght@300;400;600;700&family=Libre+Baskerville:ital@1&family=DM+Serif+Display:ital@0;1&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --forest: #1A4731;
+    --forest-mid: #2D6A4F;
+    --forest-light: #52B788;
+    --gold: #D4930A;
+    --gold-warm: #F0A500;
+    --gold-light: #FAD166;
+    --cream: #F7F3EC;
+    --cream-warm: #EEE8DA;
+    --cream-deep: #E2D9C8;
+    --ink: #1C1A14;
+    --ink-soft: #3D3A2E;
+    --white: #FDFCF9;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    background: var(--cream);
+    color: var(--ink);
+    font-family: 'Nunito', sans-serif;
+    overflow-x: hidden;
+  }
+
+  /* ── GRAIN OVERLAY ── */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 1000;
+    opacity: 0.4;
+  }
+
+  /* ── BACK BUTTON ── */
+  .back-btn {
+    position: fixed;
+    top: 28px;
+    left: 32px;
+    z-index: 9999;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    padding: 10px 20px 10px 14px;
+    background: rgba(26, 71, 49, 0.85);
+    border: 1px solid rgba(212, 147, 10, 0.3);
+    color: var(--cream);
+    text-decoration: none;
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    transition: background 0.3s ease, border-color 0.3s ease, transform 0.2s ease;
+  }
+
+  .back-btn:hover {
+    background: var(--forest);
+    border-color: var(--gold);
+    transform: translateX(-3px);
+  }
+
+  .back-btn svg {
+    width: 14px;
+    height: 14px;
+    flex-shrink: 0;
+    stroke: var(--gold-warm);
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+    transition: stroke 0.3s ease;
+  }
+
+  /* ── WAVE SVG DECORATION ── */
+  .wave-divider {
+    width: 100%;
+    overflow: hidden;
+    line-height: 0;
+  }
+
+  /* ── HERO ── */
+  .hero {
+    min-height: 100vh;
+    background: var(--forest);
+    position: relative;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    overflow: hidden;
+  }
+
+  /* ── LEFT: background image panel ── */
+  .hero-bg-image {
+    position: relative;
+    overflow: hidden;
+    background: var(--forest-mid);
+  }
+
+  .hero-bg-image img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    opacity: 0.92;
+  }
+
+  .hero-bg-image::after {
+    content: '';
+    position: absolute;
+    inset: 0;
+    background: linear-gradient(to right, transparent 60%, var(--forest) 100%);
+  }
+
+  /* ── RIGHT: text panel ── */
+  .hero-text-panel {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    padding: 100px 10% 100px 8%;
+    position: relative;
+    z-index: 2;
+  }
+
+  .hero-label {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    opacity: 0.7;
+    margin-bottom: 52px;
+    animation: fadeUp 1s ease both;
+  }
+
+  .hero-logo-wrap {
+    margin-bottom: 56px;
+    animation: fadeUp 1s 0.15s ease both;
+  }
+
+  .hero-logo-wrap img {
+    width: 220px;
+    filter: brightness(0) invert(1);
+    opacity: 0.9;
+    display: block;
+  }
+
+  .hero-headline {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(52px, 6vw, 96px);
+    color: var(--cream);
+    line-height: 0.95;
+    letter-spacing: -0.02em;
+    margin-bottom: 32px;
+    animation: fadeUp 1s 0.3s ease both;
+  }
+
+  .hero-headline em {
+    font-style: italic;
+    color: var(--gold-warm);
+    display: block;
+  }
+
+  .hero-rule {
+    width: 48px;
+    height: 2px;
+    background: var(--gold);
+    margin-bottom: 32px;
+    animation: fadeUp 1s 0.45s ease both;
+  }
+
+  .hero-tagline {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 300;
+    font-size: 15px;
+    letter-spacing: 0.12em;
+    color: rgba(247,243,236,0.55);
+    line-height: 1.7;
+    max-width: 340px;
+    animation: fadeUp 1s 0.55s ease both;
+  }
+
+  .hero-subline {
+    font-family: 'Nunito', sans-serif;
+    font-weight: 700;
+    font-size: 10px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-top: 52px;
+    animation: fadeUp 1s 0.7s ease both;
+  }
+
+  .hero-scroll {
+    position: absolute;
+    bottom: 40px;
+    right: 10%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 8px;
+    animation: fadeUp 1s 1s ease both;
+  }
+
+  .hero-scroll span {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    color: rgba(247,243,236,0.3);
+    text-transform: uppercase;
+  }
+
+  .scroll-line {
+    width: 1px;
+    height: 40px;
+    background: linear-gradient(to bottom, rgba(212,147,10,0.5), transparent);
+    animation: scrollPulse 2s ease-in-out infinite;
+  }
+
+  @keyframes scrollPulse {
+    0%, 100% { opacity: 0.3; transform: scaleY(1); }
+    50% { opacity: 1; transform: scaleY(0.5); }
+  }
+
+  @media (max-width: 900px) {
+    .hero { grid-template-columns: 1fr; }
+    .hero-bg-image { min-height: 40vh; }
+    .hero-text-panel { padding: 60px 40px; }
+  }
+
+  /* ── BRAND OVERVIEW ── */
+  .overview {
+    background: var(--white);
+    padding: 0;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .overview::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 4px;
+    background: linear-gradient(90deg, var(--forest), var(--gold), var(--forest-light));
+    z-index: 2;
+  }
+
+  .section-label {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold);
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    max-width: 60px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.4;
+  }
+
+  .overview-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0;
+    max-width: 100%;
+    margin: 0;
+    align-items: stretch;
+  }
+
+  .overview-left {
+    padding: 120px 80px 120px 10%;
+  }
+
+  .overview-headline {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 5vw, 64px);
+    color: var(--forest);
+    line-height: 1.1;
+    margin-bottom: 32px;
+  }
+
+  .overview-headline em {
+    font-style: italic;
+    color: var(--gold);
+  }
+
+  .overview-body {
+    font-size: 16px;
+    line-height: 1.8;
+    color: var(--ink-soft);
+    font-weight: 400;
+    margin-bottom: 24px;
+  }
+
+  .brand-stats {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+    margin-top: 48px;
+    padding-top: 48px;
+    border-top: 1px solid var(--cream-deep);
+  }
+
+  .stat {
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .stat-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+  }
+
+  .stat-value {
+    font-family: 'DM Serif Display', serif;
+    font-size: 14px;
+    color: var(--forest);
+  }
+
+  .overview-right {
+    position: relative;
+    min-height: 700px;
+  }
+
+  .can-mockup-wrap {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+  }
+
+  .can-bg-circle {
+    display: none;
+  }
+
+  .can-mockup-wrap img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.6s ease;
+  }
+
+  .can-mockup-wrap:hover img {
+    transform: scale(1.03);
+  }
+
+  /* ── PILLARS ── */
+  .pillars {
+    background: var(--forest);
+    padding: 120px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .pillars-bg-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    font-family: 'DM Serif Display', serif;
+    font-size: 300px;
+    color: rgba(255,255,255,0.02);
+    white-space: nowrap;
+    pointer-events: none;
+    letter-spacing: -10px;
+  }
+
+  .pillars-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .pillars-head {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+    margin-bottom: 72px;
+  }
+
+  .pillars-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(36px, 4vw, 56px);
+    color: var(--cream);
+    line-height: 1.1;
+  }
+
+  .pillars-title em {
+    font-style: italic;
+    color: var(--gold-warm);
+  }
+
+  .pillars-grid {
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 2px;
+  }
+
+  .pillar-card {
+    background: rgba(255,255,255,0.04);
+    padding: 40px 32px;
+    position: relative;
+    overflow: hidden;
+    transition: background 0.4s ease;
+    cursor: default;
+  }
+
+  .pillar-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 2px;
+    background: var(--gold);
+    transform: scaleX(0);
+    transform-origin: left;
+    transition: transform 0.4s ease;
+  }
+
+  .pillar-card:hover {
+    background: rgba(255,255,255,0.08);
+  }
+
+  .pillar-card:hover::before {
+    transform: scaleX(1);
+  }
+
+  .pillar-num {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 20px;
+    display: block;
+  }
+
+  .pillar-name {
+    font-family: 'DM Serif Display', serif;
+    font-size: 22px;
+    color: var(--cream);
+    margin-bottom: 16px;
+    line-height: 1.2;
+  }
+
+  .pillar-desc {
+    font-size: 13px;
+    line-height: 1.7;
+    color: rgba(247,243,236,0.55);
+    font-weight: 300;
+  }
+
+  /* ── PALETTE ── */
+  .palette {
+    background: var(--cream);
+    padding: 120px 60px;
+  }
+
+  .palette-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .palette-head {
+    margin-bottom: 64px;
+  }
+
+  .palette-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 4vw, 52px);
+    color: var(--forest);
+  }
+
+  .color-swatches {
+    display: grid;
+    grid-template-columns: repeat(5, 1fr);
+    gap: 20px;
+  }
+
+  .swatch {
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+    cursor: default;
+  }
+
+  .swatch-block {
+    height: 200px;
+    border-radius: 4px;
+    position: relative;
+    overflow: hidden;
+    transition: transform 0.3s ease;
+  }
+
+  .swatch:hover .swatch-block {
+    transform: translateY(-6px);
+  }
+
+  .swatch-block::after {
+    content: attr(data-hex);
+    position: absolute;
+    bottom: 16px;
+    left: 16px;
+    font-family: 'Courier New', monospace;
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.1em;
+    color: inherit;
+    opacity: 0.7;
+  }
+
+  .swatch-name {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    color: var(--ink-soft);
+  }
+
+  .swatch-role {
+    font-size: 12px;
+    color: rgba(28,26,20,0.5);
+    font-weight: 300;
+    margin-top: -8px;
+  }
+
+  /* ── TYPOGRAPHY ── */
+  .typography {
+    background: var(--forest-mid);
+    padding: 120px 60px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .type-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+    position: relative;
+  }
+
+  .type-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 60px;
+    margin-top: 64px;
+  }
+
+  .font-card {
+    padding: 48px;
+    border: 1px solid rgba(255,255,255,0.1);
+    background: rgba(255,255,255,0.04);
+    position: relative;
+  }
+
+  .font-label {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    color: var(--gold-light);
+    margin-bottom: 24px;
+    display: block;
+  }
+
+  .font-specimen-serif {
+    font-family: 'Playfair Display', serif;
+    font-size: 52px;
+    color: var(--cream);
+    line-height: 1;
+    margin-bottom: 20px;
+  }
+
+  .font-specimen-serif em {
+    font-style: italic;
+    color: var(--gold-warm);
+  }
+
+  .font-specimen-sans {
+    font-family: 'Nunito', sans-serif;
+    font-size: 18px;
+    color: rgba(247,243,236,0.8);
+    line-height: 1.6;
+    font-weight: 300;
+    margin-bottom: 20px;
+  }
+
+  .font-name {
+    font-family: 'Nunito', sans-serif;
+    font-size: 11px;
+    letter-spacing: 0.2em;
+    text-transform: uppercase;
+    color: rgba(247,243,236,0.35);
+    margin-top: 24px;
+    padding-top: 24px;
+    border-top: 1px solid rgba(255,255,255,0.08);
+  }
+
+  .alphabet {
+    font-family: 'Playfair Display', serif;
+    font-size: 14px;
+    color: rgba(247,243,236,0.3);
+    letter-spacing: 0.1em;
+    line-height: 2;
+    margin-bottom: 8px;
+  }
+
+  /* ── VOICE ── */
+  .voice {
+    background: var(--cream-warm);
+    padding: 120px 60px;
+  }
+
+  .voice-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .voice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 80px;
+    margin-top: 64px;
+    align-items: start;
+  }
+
+  .voice-words {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 12px;
+    margin-bottom: 40px;
+  }
+
+  .voice-word {
+    padding: 10px 20px;
+    border: 1px solid var(--forest);
+    font-size: 13px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: var(--forest);
+    font-weight: 600;
+    background: transparent;
+    transition: all 0.3s ease;
+    cursor: default;
+  }
+
+  .voice-word:hover {
+    background: var(--forest);
+    color: var(--cream);
+  }
+
+  .voice-word.accent {
+    background: var(--gold);
+    color: var(--white);
+    border-color: var(--gold);
+  }
+
+  .copy-sample {
+    padding: 40px;
+    background: var(--white);
+    border-left: 3px solid var(--gold);
+    margin-bottom: 24px;
+  }
+
+  .copy-sample-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--gold);
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .copy-sample-text {
+    font-family: 'DM Serif Display', serif;
+    font-size: 20px;
+    color: var(--forest);
+    line-height: 1.5;
+    font-style: italic;
+  }
+
+  .copy-dont {
+    padding: 40px;
+    background: rgba(220,38,38,0.04);
+    border-left: 3px solid rgba(220,38,38,0.3);
+    margin-bottom: 24px;
+  }
+
+  .copy-dont-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(220,38,38,0.6);
+    font-weight: 700;
+    margin-bottom: 16px;
+    display: block;
+  }
+
+  .copy-dont-text {
+    font-size: 15px;
+    color: rgba(28,26,20,0.5);
+    line-height: 1.6;
+    text-decoration: line-through;
+    text-decoration-color: rgba(220,38,38,0.3);
+  }
+
+  /* ── MISSION STRIP ── */
+  .mission-strip {
+    background: var(--gold);
+    padding: 80px 60px;
+    overflow: hidden;
+    position: relative;
+  }
+
+  .mission-marquee-track {
+    display: flex;
+    gap: 60px;
+    animation: marqueeScroll 20s linear infinite;
+    white-space: nowrap;
+  }
+
+  .mission-marquee-track span {
+    font-family: 'DM Serif Display', serif;
+    font-size: clamp(32px, 5vw, 60px);
+    color: var(--forest);
+    flex-shrink: 0;
+  }
+
+  .mission-marquee-track span em {
+    font-style: italic;
+    opacity: 0.5;
+  }
+
+  @keyframes marqueeScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
+  }
+
+  /* ── LOGO SECTION ── */
+  .logo-section {
+    background: var(--white);
+    padding: 120px 60px;
+  }
+
+  .logo-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .logo-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    gap: 4px;
+    margin-top: 64px;
+  }
+
+  .logo-card {
+    padding: 60px 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 24px;
+    min-height: 260px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .logo-card.light { background: var(--cream); }
+  .logo-card.dark { background: var(--forest); }
+  .logo-card.mid { background: var(--cream-deep); }
+
+  .logo-card img {
+    max-width: 200px;
+    width: 100%;
+    object-fit: contain;
+  }
+
+  .logo-card.dark img {
+    filter: brightness(0) invert(1);
+  }
+
+  .logo-card-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 700;
+    position: absolute;
+    bottom: 20px;
+    left: 24px;
+  }
+
+  .logo-card.light .logo-card-label { color: rgba(28,26,20,0.4); }
+  .logo-card.dark .logo-card-label { color: rgba(247,243,236,0.3); }
+  .logo-card.mid .logo-card-label { color: rgba(28,26,20,0.4); }
+
+  /* ── ICON SHOWCASE ── */
+  .icon-row {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 4px;
+    margin-top: 4px;
+  }
+
+  .icon-card {
+    padding: 40px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 20px;
+    min-height: 200px;
+    position: relative;
+  }
+
+  .icon-card.f-green { background: var(--forest-mid); }
+  .icon-card.f-gold { background: var(--gold-warm); }
+  .icon-card.f-cream { background: var(--cream-warm); }
+
+  .icon-card img {
+    width: 80px;
+    height: 80px;
+    object-fit: contain;
+  }
+
+  .icon-card.f-green img { filter: brightness(0) invert(1); }
+  .icon-card.f-gold img { filter: brightness(0); }
+  .icon-card.f-cream img { filter: none; }
+
+  .icon-card-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 700;
+    position: absolute;
+    bottom: 16px;
+    left: 20px;
+  }
+
+  .icon-card.f-green .icon-card-label { color: rgba(247,243,236,0.3); }
+  .icon-card.f-gold .icon-card-label { color: rgba(26,71,49,0.5); }
+  .icon-card.f-cream .icon-card-label { color: rgba(28,26,20,0.35); }
+
+  /* ── FOOTER ── */
+  .footer {
+    background: var(--forest);
+    padding: 80px 60px 40px;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .footer::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: linear-gradient(90deg, var(--gold), var(--forest-light), var(--gold));
+  }
+
+  .footer-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .footer-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    padding-bottom: 60px;
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    margin-bottom: 40px;
+    gap: 40px;
+    flex-wrap: wrap;
+  }
+
+  .footer-logo img {
+    width: 160px;
+    filter: brightness(0) invert(1);
+    opacity: 0.85;
+  }
+
+  .footer-tagline {
+    font-family: 'DM Serif Display', serif;
+    font-style: italic;
+    font-size: 28px;
+    color: var(--gold-warm);
+    line-height: 1.3;
+  }
+
+  .footer-meta {
+    display: flex;
+    gap: 60px;
+    flex-wrap: wrap;
+  }
+
+  .footer-meta-col {}
+
+  .footer-meta-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(247,243,236,0.35);
+    font-weight: 700;
+    margin-bottom: 12px;
+    display: block;
+  }
+
+  .footer-meta-value {
+    font-size: 14px;
+    color: rgba(247,243,236,0.7);
+    line-height: 1.7;
+    font-weight: 300;
+  }
+
+  .footer-bottom {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 20px;
+    flex-wrap: wrap;
+  }
+
+  .footer-credit {
+    font-size: 11px;
+    color: rgba(247,243,236,0.25);
+    letter-spacing: 0.15em;
+  }
+
+  .footer-brand-num {
+    font-family: 'DM Serif Display', serif;
+    font-size: 80px;
+    color: rgba(255,255,255,0.04);
+    line-height: 1;
+    position: absolute;
+    bottom: 20px;
+    right: 60px;
+  }
+
+  /* ── ANIMATIONS ── */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(30px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .sr { opacity: 0; transform: translateY(24px); transition: opacity 0.7s ease, transform 0.7s ease; }
+  .sr.visible { opacity: 1; transform: translateY(0); }
+
+  /* ── GUIDELINES REFERENCE PANELS ── */
+  .guidelines-ref {
+    max-width: 1200px;
+    margin: 64px auto 0;
+    position: relative;
+  }
+
+  .guidelines-ref-label {
+    font-size: 9px;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--gold);
+    margin-bottom: 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .guidelines-ref-label::before {
+    content: '';
+    width: 20px;
+    height: 1px;
+    background: var(--gold);
+    opacity: 0.5;
+  }
+
+  .guidelines-ref-img {
+    width: 100%;
+    border-radius: 4px;
+    box-shadow: 0 20px 60px rgba(26,71,49,0.15);
+    display: block;
+    transition: transform 0.4s ease, box-shadow 0.4s ease;
+  }
+
+  .guidelines-ref-img:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 32px 80px rgba(26,71,49,0.22);
+  }
+
+  .guidelines-ref-dark {
+    max-width: 1200px;
+    margin: 64px auto 0;
+    position: relative;
+  }
+
+  .guidelines-ref-dark .guidelines-ref-label {
+    color: var(--gold-light);
+  }
+
+  .guidelines-ref-dark .guidelines-ref-label::before {
+    background: var(--gold-light);
+  }
+
+  .guidelines-ref-dark .guidelines-ref-img {
+    box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+  }
+
+  /* ── MISSION & VISION ── */
+  .mv-section {
+    background: var(--cream-warm);
+    padding: 120px 60px;
+  }
+
+  .mv-inner {
+    max-width: 1200px;
+    margin: 0 auto;
+  }
+
+  .mv-head {
+    margin-bottom: 64px;
+  }
+
+  .mv-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4px;
+  }
+
+  .mv-card {
+    padding: 60px 52px;
+    background: var(--white);
+    position: relative;
+    overflow: hidden;
+  }
+
+  .mv-card::before {
+    content: '';
+    position: absolute;
+    top: 0; left: 0; right: 0;
+    height: 3px;
+    background: var(--gold);
+  }
+
+  .mv-card-accent {
+    background: var(--forest);
+  }
+
+  .mv-card-accent::before {
+    background: linear-gradient(90deg, var(--gold), var(--forest-light));
+  }
+
+  .mv-card-label {
+    font-size: 9px;
+    letter-spacing: 0.35em;
+    text-transform: uppercase;
+    font-weight: 700;
+    color: var(--gold);
+    display: block;
+    margin-bottom: 20px;
+  }
+
+  .mv-card-title {
+    font-family: 'DM Serif Display', serif;
+    font-size: 32px;
+    color: var(--forest);
+    margin-bottom: 32px;
+    line-height: 1.1;
+  }
+
+  .mv-card-body {
+    font-size: 15px;
+    line-height: 1.85;
+    color: var(--ink-soft);
+    font-weight: 400;
+    margin-bottom: 16px;
+  }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 900px) {
+    .overview-grid, .type-grid, .voice-grid, .mv-grid { grid-template-columns: 1fr; gap: 0; }
+    .overview-left { padding: 80px 40px; }
+    .overview-right { min-height: 420px; }
+    .pillars-grid { grid-template-columns: 1fr 1fr; }
+    .color-swatches { grid-template-columns: repeat(3, 1fr); }
+    .logo-grid { grid-template-columns: 1fr; }
+    .icon-row { grid-template-columns: 1fr; }
+  }
+
+/* ── Tablet (≤900px) ── */
+@media (max-width: 900px) {
+  .hero {
+    grid-template-columns: 1fr;
+    min-height: auto;
+  }
+  .hero-bg-image {
+    min-height: 45vh;
+    order: -1;
+  }
+  .hero-bg-image::after {
+    background: linear-gradient(to bottom, transparent 50%, var(--forest) 100%);
+  }
+  .hero-text-panel {
+    padding: 60px 40px 80px;
+  }
+
+  .overview {
+    padding: 72px 40px;
+  }
+
+  .pillars-inner {
+    padding: 72px 40px;
+  }
+  .pillars-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .palette-inner {
+    padding: 72px 40px;
+  }
+
+  .type-inner {
+    padding: 72px 40px;
+  }
+  .type-grid {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+
+  .voice-inner {
+    padding: 72px 40px;
+  }
+  .voice-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .logo-inner {
+    padding: 72px 40px;
+  }
+  .logo-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .footer-inner {
+    padding: 48px 40px;
+  }
+  .footer-meta {
+    grid-template-columns: 1fr 1fr;
+    gap: 24px;
+  }
+}
+
+/* ── Mobile (≤600px) ── */
+@media (max-width: 600px) {
+  body { cursor: auto; }
+
+  .back-btn {
+    top: 16px;
+    left: 16px;
+    padding: 8px 14px 8px 10px;
+    font-size: 9px;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+  }
+  .hero-bg-image {
+    min-height: 38vh;
+  }
+  .hero-text-panel {
+    padding: 40px 20px 60px;
+  }
+  .hero-label {
+    margin-bottom: 32px;
+  }
+  .hero-logo-wrap {
+    margin-bottom: 36px;
+  }
+  .hero-logo-wrap img {
+    width: 160px;
+  }
+  .hero-scroll {
+    right: 20px;
+    bottom: 24px;
+  }
+
+  .overview,
+  .pillars-inner,
+  .palette-inner,
+  .type-inner,
+  .voice-inner,
+  .logo-inner {
+    padding: 56px 20px;
+  }
+
+  .pillars-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .color-swatches {
+    flex-direction: column;
+    gap: 2px;
+  }
+  .swatch-block {
+    height: 72px;
+  }
+
+  .font-card {
+    padding: 32px 24px;
+  }
+  .font-specimen-serif {
+    font-size: clamp(2.5rem, 12vw, 5rem);
+  }
+
+  .voice-words {
+    gap: 8px;
+  }
+
+  .logo-grid {
+    grid-template-columns: 1fr;
+    gap: 2px;
+  }
+  .icon-row {
+    grid-template-columns: 1fr 1fr 1fr;
+  }
+
+  .footer-inner {
+    padding: 40px 20px;
+  }
+  .footer-top {
+    flex-direction: column;
+    gap: 32px;
+  }
+  .footer-meta {
+    grid-template-columns: 1fr 1fr;
+    gap: 20px;
+  }
+  .footer-bottom {
+    flex-direction: column;
+    gap: 6px;
+    text-align: left;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- BACK BUTTON -->
+<a href="../index.html" class="back-btn">
+  <svg viewBox="0 0 24 24"><polyline points="15 18 9 12 15 6"/></svg>
+  Back to Portfolio
+</a>
+
+<!-- HERO -->
+<section class="hero">
+
+  <!-- LEFT: background image -->
+  <div class="hero-bg-image">
+    <img src="hero-bg.jpg" alt="Yau & You Hero">
+  </div>
+
+  <!-- RIGHT: text content -->
+  <div class="hero-text-panel">
+    <p class="hero-label">Brand Profile — 02 / 10 &nbsp;·&nbsp; Crust Media Portfolio</p>
+
+    <div class="hero-logo-wrap">
+      <img src="YAU LOGO.png" alt="Yau & You">
+    </div>
+
+    <h1 class="hero-headline">
+      Pour a <em>Cup.</em>
+    </h1>
+
+    <div class="hero-rule"></div>
+
+    <p class="hero-tagline">
+      Brewed from native yaupon holly.<br>
+      Crafted for how you actually live.<br>
+      Southern roots. Modern clarity.
+    </p>
+
+    <p class="hero-subline">Feel the Flow &nbsp;·&nbsp; Yaupon Tea &nbsp;·&nbsp; Est. 2026</p>
+
+    <div class="hero-scroll">
+      <div class="scroll-line"></div>
+      <span>Scroll</span>
+    </div>
+  </div>
+
+</section>
+
+<!-- BRAND OVERVIEW -->
+<section class="overview">
+  <div class="overview-grid">
+    <div class="overview-left sr">
+      <p class="section-label">Brand Overview</p>
+      <h2 class="overview-headline">
+        About Yau<br><em>&amp; You</em>
+      </h2>
+      <p class="overview-body">
+        Yau &amp; You is a Southern-grown botanical tea brand crafted from native yaupon holly — delivering smooth, <em style="color:var(--gold);font-style:italic;font-weight:600;">sustainable energy</em> designed for modern living.
+      </p>
+      <p class="overview-body">
+        An alternative to overstimulation. A return to rhythm. Where other energy brands shout, Yau &amp; You whispers. Where others spike, it flows. Rooted in the land, refined for the moment.
+      </p>
+      <div class="brand-stats">
+        <div class="stat">
+          <span class="stat-label">Category</span>
+          <span class="stat-value">Botanical Beverage</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Hero Ingredient</span>
+          <span class="stat-value">Native Yaupon Holly</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Origin</span>
+          <span class="stat-value">Southern United States</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Tagline</span>
+          <span class="stat-value">Feel the Flow</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Format</span>
+          <span class="stat-value">350ml Canned Tea</span>
+        </div>
+        <div class="stat">
+          <span class="stat-label">Launch</span>
+          <span class="stat-value">2026 · Brand Guidelines v1</span>
+        </div>
+      </div>
+    </div>
+    <div class="overview-right sr">
+      <div class="can-mockup-wrap">
+        <div class="can-bg-circle"></div>
+        <img src="1.png" alt="Yau & You Citrus Dew Can">
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- MISSION STRIP -->
+<div class="mission-strip">
+  <div class="mission-marquee-track">
+    <span>Feel the Flow</span><span>·</span>
+    <span><em>Native &amp; Sustainable</em></span><span>·</span>
+    <span>Brewed in the South</span><span>·</span>
+    <span>Balanced Clarity</span><span>·</span>
+    <span>Feel the Flow</span><span>·</span>
+    <span><em>Native &amp; Sustainable</em></span><span>·</span>
+    <span>Brewed in the South</span><span>·</span>
+    <span>Balanced Clarity</span><span>·</span>
+  </div>
+</div>
+
+<!-- MISSION & VISION -->
+<section class="mv-section">
+  <div class="mv-inner">
+    <div class="mv-head sr">
+      <p class="section-label" style="color:var(--gold);">Mission &amp; Vision</p>
+      <h2 class="palette-title">What we<br>exist to do</h2>
+    </div>
+    <div class="mv-grid">
+      <div class="mv-card sr">
+        <span class="mv-card-label">Mission</span>
+        <h3 class="mv-card-title">Why we exist</h3>
+        <p class="mv-card-body">To craft smooth, sustainable energy from native yaupon holly, honoring Southern roots while delivering balanced clarity for modern life.</p>
+        <p class="mv-card-body">We exist to offer an alternative to overstimulation.</p>
+        <p class="mv-card-body">Energy that supports focus without force.</p>
+      </div>
+      <div class="mv-card mv-card-accent sr">
+        <span class="mv-card-label" style="color:var(--gold-light);">Vision</span>
+        <h3 class="mv-card-title" style="color:var(--cream);">Where we're going</h3>
+        <p class="mv-card-body" style="color:rgba(247,243,236,0.7);">Create a future where yaupon becomes a household name.</p>
+        <p class="mv-card-body" style="color:rgba(247,243,236,0.7);">Where sustainability is standard, not a selling point. Where daily rituals are built around balance.</p>
+        <p class="mv-card-body" style="color:rgba(247,243,236,0.7);">Yau &amp; You aims to redefine how energy fits into everyday life.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- CORE PILLARS -->
+<section class="pillars">
+  <div class="pillars-bg-text">FLOW</div>
+  <div class="pillars-inner">
+    <div class="pillars-head sr">
+      <div>
+        <p class="section-label" style="color: var(--gold-light);">Core Pillars</p>
+        <h2 class="pillars-title">What we<br><em>stand for</em></h2>
+      </div>
+    </div>
+    <div class="pillars-grid">
+      <div class="pillar-card sr">
+        <span class="pillar-num">01</span>
+        <h3 class="pillar-name">Botanical Roots</h3>
+        <p class="pillar-desc">Yaupon holly is America's only native caffeinated plant. Yau &amp; You honors that heritage — indigenous, resilient, and deeply tied to Southern soil.</p>
+      </div>
+      <div class="pillar-card sr">
+        <span class="pillar-num">02</span>
+        <h3 class="pillar-name">Smooth Energy</h3>
+        <p class="pillar-desc">No spike. No crash. The natural theobromine in yaupon delivers calm, sustained focus — energy that fits your rhythm rather than forcing a new one.</p>
+      </div>
+      <div class="pillar-card sr">
+        <span class="pillar-num">03</span>
+        <h3 class="pillar-name">Sustainable Future</h3>
+        <p class="pillar-desc">Yaupon is native, resilient, and responsibly harvested. We prioritize mindful sourcing and intentional production practices. Progress should never come at the expense of the land.</p>
+      </div>
+      <div class="pillar-card sr">
+        <span class="pillar-num">04</span>
+        <h3 class="pillar-name">Clean Aesthetic</h3>
+        <p class="pillar-desc">Our design reflects our philosophy: simple, balanced, and purposeful. From packaging to digital presence, we value space, clarity, and restraint. What we leave out matters as much as what we include.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- COLOR PALETTE -->
+<section class="palette">
+  <div class="palette-inner">
+    <div class="palette-head sr">
+      <p class="section-label">Color Palette</p>
+      <h2 class="palette-title">Drawn from<br>the land</h2>
+    </div>
+    <div class="color-swatches">
+      <div class="swatch sr">
+        <div class="swatch-block" style="background:#1A4731; color:#F7F3EC;" data-hex="#1A4731"></div>
+        <span class="swatch-name">Deep Forest</span>
+        <span class="swatch-role">Primary · Authority</span>
+      </div>
+      <div class="swatch sr">
+        <div class="swatch-block" style="background:#2D6A4F; color:#F7F3EC;" data-hex="#2D6A4F"></div>
+        <span class="swatch-name">Forest Mid</span>
+        <span class="swatch-role">Secondary · Depth</span>
+      </div>
+      <div class="swatch sr">
+        <div class="swatch-block" style="background:#D4930A; color:#1A4731;" data-hex="#D4930A"></div>
+        <span class="swatch-name">Harvest Gold</span>
+        <span class="swatch-role">Accent · Vitality</span>
+      </div>
+      <div class="swatch sr">
+        <div class="swatch-block" style="background:#F0A500; color:#1A4731;" data-hex="#F0A500"></div>
+        <span class="swatch-name">Warm Gold</span>
+        <span class="swatch-role">Energy · Warmth</span>
+      </div>
+      <div class="swatch sr">
+        <div class="swatch-block" style="background:#F7F3EC; color:#1A4731; border:1px solid #E2D9C8;" data-hex="#F7F3EC"></div>
+        <span class="swatch-name">Cream</span>
+        <span class="swatch-role">Ground · Clarity</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- TYPOGRAPHY -->
+<section class="typography">
+  <div class="type-inner">
+    <div class="sr">
+      <p class="section-label" style="color:var(--gold-light)">Typography</p>
+      <h2 class="pillars-title" style="color:var(--cream)">Letters that <em>breathe</em></h2>
+    </div>
+    <div class="type-grid">
+      <div class="font-card sr">
+        <span class="font-label">Display / Headlines</span>
+        <div class="font-specimen-serif">
+          Yau &<br><em>You</em>
+        </div>
+        <p class="alphabet">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz</p>
+        <p class="font-name">Playfair Display — Serif · Italic for warmth</p>
+      </div>
+      <div class="font-card sr">
+        <span class="font-label">Body / UI</span>
+        <p class="font-specimen-sans">
+          Smooth, sustainable energy from native yaupon holly — designed for modern living and daily ritual.
+        </p>
+        <p class="alphabet" style="font-family:'Nunito',sans-serif;">ABCDEFGHIJKLMNOPQRSTUVWXYZ<br>abcdefghijklmnopqrstuvwxyz</p>
+        <p class="font-name">Nunito — Sans-serif · Light weight preferred</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- BRAND VOICE -->
+<section class="voice">
+  <div class="voice-inner">
+    <div class="sr">
+      <p class="section-label">Brand Voice</p>
+      <h2 class="palette-title" style="margin-bottom:8px;">How Yau &amp; You speaks</h2>
+    </div>
+    <div class="voice-grid">
+      <div class="voice-left sr">
+        <p style="font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:20px;">Tone Words</p>
+        <div class="voice-words">
+          <span class="voice-word accent">Grounded</span>
+          <span class="voice-word">Warm</span>
+          <span class="voice-word">Honest</span>
+          <span class="voice-word accent">Botanical</span>
+          <span class="voice-word">Calm</span>
+          <span class="voice-word">Southern</span>
+          <span class="voice-word accent">Purposeful</span>
+          <span class="voice-word">Clean</span>
+          <span class="voice-word">Flowing</span>
+          <span class="voice-word">Natural</span>
+        </div>
+        <div class="copy-sample">
+          <span class="copy-sample-label">✓ Do — headline copy</span>
+          <p class="copy-sample-text">"Your morning ritual, rooted in something real."</p>
+        </div>
+        <div class="copy-sample">
+          <span class="copy-sample-label">✓ Do — product copy</span>
+          <p class="copy-sample-text">"Brewed slow. Crafted for how you actually live."</p>
+        </div>
+      </div>
+      <div class="voice-right sr">
+        <p style="font-size:13px;letter-spacing:0.2em;text-transform:uppercase;color:var(--gold);font-weight:700;margin-bottom:20px;">Positioning</p>
+        <div class="copy-dont">
+          <span class="copy-dont-label">✗ Don't — overclaiming</span>
+          <p class="copy-dont-text">"MAXIMUM ENERGY BLAST — FEEL INVINCIBLE NOW"</p>
+        </div>
+        <div class="copy-dont">
+          <span class="copy-dont-label">✗ Don't — generic wellness</span>
+          <p class="copy-dont-text">"A healthy alternative for your wellness journey."</p>
+        </div>
+        <div style="padding:40px;background:var(--forest);margin-top:0;">
+          <span style="font-size:9px;letter-spacing:0.3em;text-transform:uppercase;color:var(--gold-light);font-weight:700;display:block;margin-bottom:16px;">Mission</span>
+          <p style="font-family:'DM Serif Display',serif;font-size:18px;color:var(--cream);line-height:1.6;font-style:italic;">"To craft smooth, sustainable energy from native yaupon holly — honoring Southern roots while delivering balanced clarity for modern life."</p>
+        </div>
+      </div>
+    </div>
+    <div class="guidelines-ref sr" style="margin-top:64px;">
+    </div>
+  </div>
+</section>
+
+<!-- LOGO SECTION -->
+<section class="logo-section">
+  <div class="logo-inner">
+    <div class="sr">
+      <p class="section-label">Logo System</p>
+      <h2 class="palette-title">Mark &amp; Lockup</h2>
+    </div>
+    <div class="logo-grid">
+      <div class="logo-card light">
+        <img src="6.png" alt="Logo on light">
+        <span class="logo-card-label">Primary · Light</span>
+      </div>
+      <div class="logo-card dark">
+        <img src="5.png" alt="Logo on dark">
+        
+      </div>
+      <div class="logo-card mid">
+        <img src="6.png" alt="Logo on cream">
+        <span class="logo-card-label">Primary · Warm</span>
+      </div>
+    </div>
+    <div class="icon-row">
+      <div class="icon-card f-green">
+        <img src="YAU LOGO.png" alt="Icon on green">
+        <span class="icon-card-label">Icon · Forest</span>
+      </div>
+      <div class="icon-card f-gold">
+        <img src="7.png" alt="Icon on gold">
+        <span class="icon-card-label">Icon · Gold</span>
+      </div>
+      <div class="icon-card f-cream">
+        <img src="7.png" alt="Icon on cream">
+        <span class="icon-card-label">Icon · Cream</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="footer-inner">
+    <div class="footer-top">
+      <div class="footer-logo">
+        <img src="5.png" alt="Yau & You">
+        
+      </div>
+      <div class="footer-meta">
+        <div class="footer-meta-col">
+          <span class="footer-meta-label">Brand</span>
+          <p class="footer-meta-value">Yau & You<br>Yaupon Tea</p>
+        </div>
+        <div class="footer-meta-col">
+          <span class="footer-meta-label">Category</span>
+          <p class="footer-meta-value">F&B · Botanical Beverage<br>Sustainable Energy</p>
+        </div>
+        <div class="footer-meta-col">
+          <span class="footer-meta-label">Portfolio</span>
+          <p class="footer-meta-value">02 of 10<br>Crust Media</p>
+        </div>
+        <div class="footer-meta-col">
+          <span class="footer-meta-label">Year</span>
+          <p class="footer-meta-value">2026<br>Brand Guidelines v1</p>
+        </div>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span class="footer-credit">Brand Identity by Crust Media · Nairobi, Kenya · 2026</span>
+      <span class="footer-credit">Find the Gem. Build the World.</span>
+    </div>
+  </div>
+  <div class="footer-brand-num">02</div>
+</footer>
+
+<script>
+  // Scroll reveal
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach((entry, i) => {
+      if (entry.isIntersecting) {
+        setTimeout(() => entry.target.classList.add('visible'), i * 80);
+      }
+    });
+  }, { threshold: 0.1, rootMargin: '0px 0px -40px 0px' });
+
+  document.querySelectorAll('.sr').forEach(el => observer.observe(el));
+</script>
+</body>
+</html>

@@ -1,0 +1,1264 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VØID — Social Content Kit</title>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Cormorant+Garamond:ital,wght@0,300;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --white: #F0EDE8;
+    --grey: #131313;
+    --mid: #242424;
+    --muted: #4A4A4A;
+    --accent: #C8FF00;
+    --red: #FF2D2D;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+    --font-body: 'Cormorant Garamond', serif;
+  }
+  *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-mono);
+    font-size: 13px;
+    overflow-x: hidden;
+  }
+  body::before {
+    content:'';
+    position:fixed;
+    inset:0;
+    background-image:url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity:0.035;
+    pointer-events:none;
+    z-index:9999;
+  }
+
+  /* NAV */
+  nav {
+    position: sticky;
+    top: 0;
+    z-index: 100;
+    background: rgba(8,8,8,0.95);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--mid);
+    padding: 0 60px;
+    display: flex;
+    align-items: center;
+    gap: 0;
+  }
+  .nav-brand {
+    font-family: var(--font-display);
+    font-size: 28px;
+    color: var(--white);
+    padding: 16px 0;
+    margin-right: 48px;
+    letter-spacing: 2px;
+  }
+  .nav-tabs {
+    display: flex;
+    gap: 0;
+  }
+  .nav-tab {
+    padding: 20px 24px;
+    font-size: 9px;
+    letter-spacing: 3px;
+    text-transform: uppercase;
+    color: var(--muted);
+    cursor: pointer;
+    border-bottom: 2px solid transparent;
+    transition: all 0.2s ease;
+    user-select: none;
+  }
+  .nav-tab:hover { color: var(--white); }
+  .nav-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
+
+  /* PANELS */
+  .panel { display: none; }
+  .panel.active { display: block; }
+
+  /* HERO BANNER */
+  .kit-hero {
+    padding: 60px 60px 40px;
+    border-bottom: 1px solid var(--mid);
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+  .kit-hero h1 {
+    font-family: var(--font-display);
+    font-size: clamp(64px, 8vw, 100px);
+    line-height: 0.9;
+    color: var(--white);
+  }
+  .kit-hero h1 span { color: var(--accent); }
+  .kit-hero-meta {
+    text-align: right;
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--muted);
+    line-height: 2.2;
+  }
+
+  /* POST GRID */
+  .posts-section {
+    padding: 60px;
+  }
+  .section-label {
+    font-size: 9px;
+    letter-spacing: 5px;
+    color: var(--accent);
+    text-transform: uppercase;
+    margin-bottom: 40px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+  .section-label::after { content:''; flex:1; max-width:80px; height:1px; background:var(--mid); }
+
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+  }
+
+  /* POST MOCKUP */
+  .post-mockup {
+    background: var(--grey);
+    display: flex;
+    flex-direction: column;
+    cursor: pointer;
+    transition: transform 0.2s ease;
+    animation: fadeUp 0.5s ease both;
+  }
+  .post-mockup:hover { transform: translateY(-4px); z-index:10; }
+  .post-mockup:nth-child(2) { animation-delay: 0.05s; }
+  .post-mockup:nth-child(3) { animation-delay: 0.1s; }
+  .post-mockup:nth-child(4) { animation-delay: 0.15s; }
+  .post-mockup:nth-child(5) { animation-delay: 0.2s; }
+  .post-mockup:nth-child(6) { animation-delay: 0.25s; }
+
+  /* Phone frame */
+  .phone-frame {
+    aspect-ratio: 9/16;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+  }
+
+  /* IG Square */
+  .ig-square-frame {
+    aspect-ratio: 1;
+    position: relative;
+    overflow: hidden;
+    background: #000;
+  }
+
+  /* TIKTOK specific layouts */
+  .tt-layout-1 {
+    width:100%; height:100%;
+    background: #0a0a0a;
+    display:flex; flex-direction:column; justify-content:flex-end;
+    padding: 28px 24px;
+    position:relative;
+  }
+  .tt-layout-1 .bg-text {
+    position:absolute;
+    top:50%;
+    left:50%;
+    transform:translate(-50%,-50%);
+    font-family: var(--font-display);
+    font-size: 180px;
+    color: rgba(240,237,232,0.03);
+    letter-spacing:-10px;
+    white-space:nowrap;
+    pointer-events:none;
+    line-height:1;
+  }
+  .tt-caption {
+    font-family: var(--font-body);
+    font-style: italic;
+    font-size: 22px;
+    color: var(--white);
+    line-height: 1.4;
+    margin-bottom: 16px;
+    max-width: 220px;
+  }
+  .tt-sub {
+    font-family: var(--font-mono);
+    font-size: 9px;
+    letter-spacing: 3px;
+    color: var(--muted);
+  }
+  .tt-ui {
+    position:absolute;
+    right:12px;
+    bottom:80px;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    gap:20px;
+  }
+  .tt-btn {
+    width:40px;
+    height:40px;
+    border-radius:50%;
+    background:rgba(240,237,232,0.1);
+    display:flex; align-items:center; justify-content:center;
+    font-size:18px;
+  }
+  .tt-btn-label {
+    font-size:8px;
+    color:rgba(240,237,232,0.5);
+    letter-spacing:1px;
+  }
+  .tt-progress {
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:2px;
+    background:rgba(240,237,232,0.15);
+  }
+  .tt-progress-fill {
+    height:100%;
+    background:var(--accent);
+    width:38%;
+  }
+  .tt-avatar {
+    position:absolute;
+    top:20px; left:16px;
+    display:flex; align-items:center; gap:10px;
+  }
+  .tt-avatar-circle {
+    width:32px; height:32px;
+    border-radius:50%;
+    background:var(--mid);
+    border:1.5px solid var(--accent);
+    display:flex; align-items:center; justify-content:center;
+    font-family:var(--font-display);
+    font-size:14px;
+    color:var(--white);
+  }
+  .tt-username {
+    font-size:9px;
+    letter-spacing:2px;
+    color:rgba(240,237,232,0.7);
+  }
+
+  .tt-layout-2 {
+    width:100%; height:100%;
+    background:#050505;
+    position:relative;
+    overflow:hidden;
+  }
+  .tt-layout-2 .grid-bg {
+    position:absolute; inset:0;
+    background-image: linear-gradient(rgba(200,255,0,0.04) 1px, transparent 1px),
+                      linear-gradient(90deg, rgba(200,255,0,0.04) 1px, transparent 1px);
+    background-size: 40px 40px;
+  }
+  .tt-layout-2 .content {
+    position:absolute; inset:0;
+    display:flex; flex-direction:column;
+    justify-content:center; align-items:center;
+    text-align:center; padding:32px;
+  }
+  .tt-big-text {
+    font-family:var(--font-display);
+    font-size:72px;
+    line-height:0.9;
+    color:var(--white);
+    letter-spacing:-2px;
+  }
+  .tt-big-sub {
+    font-family:var(--font-mono);
+    font-size:9px;
+    letter-spacing:4px;
+    color:var(--accent);
+    margin-top:20px;
+    text-transform:uppercase;
+  }
+  .tt-countdown {
+    margin-top:28px;
+    display:flex; gap:16px;
+  }
+  .tt-count-block {
+    background:rgba(240,237,232,0.06);
+    padding:12px 16px;
+    text-align:center;
+  }
+  .tt-count-num {
+    font-family:var(--font-display);
+    font-size:32px;
+    color:var(--accent);
+    display:block;
+  }
+  .tt-count-label {
+    font-size:7px;
+    letter-spacing:2px;
+    color:var(--muted);
+    text-transform:uppercase;
+  }
+
+  .tt-layout-3 {
+    width:100%; height:100%;
+    background:#080808;
+    display:flex; flex-direction:column;
+  }
+  .tt-layout-3 .vid-blocks {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr;
+    flex:1;
+    gap:2px;
+  }
+  .vid-block {
+    background:var(--mid);
+    display:flex; align-items:center; justify-content:center;
+    position:relative; overflow:hidden;
+  }
+  .vid-block-label {
+    font-size:7px; letter-spacing:3px;
+    color:rgba(240,237,232,0.3);
+    text-transform:uppercase;
+    text-align:center;
+    padding: 8px;
+  }
+  .vid-block-accent { background: rgba(200,255,0,0.08); }
+  .tt-layout-3 .bottom-bar {
+    padding:20px 24px;
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .tt-layout-3 .bottom-title {
+    font-family:var(--font-display);
+    font-size:28px; color:var(--white);
+  }
+  .tt-layout-3 .bottom-meta {
+    font-size:9px; letter-spacing:2px; color:var(--muted);
+  }
+
+  /* IG layouts */
+  .ig-layout-1 {
+    width:100%; height:100%;
+    background:#080808;
+    display:flex; flex-direction:column;
+    align-items:center; justify-content:center;
+    padding:40px;
+    text-align:center;
+    position:relative;
+  }
+  .ig-layout-1 .bg-circle {
+    position:absolute;
+    width:200%;
+    height:200%;
+    border-radius:50%;
+    border:1px solid rgba(240,237,232,0.04);
+    top:-50%; left:-50%;
+  }
+  .ig-layout-1 .bg-circle-2 {
+    position:absolute;
+    width:150%;
+    height:150%;
+    border-radius:50%;
+    border:1px solid rgba(240,237,232,0.03);
+    top:-25%; left:-25%;
+  }
+  .ig-wordmark {
+    font-family:var(--font-display);
+    font-size:72px;
+    color:var(--white);
+    letter-spacing:-2px;
+    line-height:0.9;
+    position:relative;
+    z-index:1;
+  }
+  .ig-drop-info {
+    margin-top:24px;
+    position:relative; z-index:1;
+  }
+  .ig-drop-line {
+    font-size:9px;
+    letter-spacing:4px;
+    color:var(--accent);
+    text-transform:uppercase;
+    margin-bottom:6px;
+  }
+  .ig-drop-sub {
+    font-size:9px;
+    letter-spacing:2px;
+    color:var(--muted);
+  }
+  .ig-border-accent {
+    position:absolute;
+    bottom:0; left:0; right:0;
+    height:2px;
+    background:var(--accent);
+  }
+
+  .ig-layout-2 {
+    width:100%; height:100%;
+    background:var(--white);
+    display:flex; flex-direction:column;
+    align-items:flex-start; justify-content:flex-end;
+    padding:32px;
+    position:relative;
+  }
+  .ig-layout-2 .big-num {
+    position:absolute;
+    top:-20px; right:24px;
+    font-family:var(--font-display);
+    font-size:160px;
+    color:rgba(8,8,8,0.06);
+    line-height:1;
+  }
+  .ig-layout-2 .quote-text {
+    font-family:var(--font-body);
+    font-style:italic;
+    font-size:20px;
+    color:#080808;
+    line-height:1.5;
+    max-width:280px;
+    margin-bottom:16px;
+  }
+  .ig-layout-2 .attr {
+    font-family:var(--font-mono);
+    font-size:9px;
+    letter-spacing:3px;
+    color:rgba(8,8,8,0.4);
+  }
+  .ig-layout-2 .accent-bar {
+    position:absolute;
+    top:0; left:0;
+    width:3px; height:100%;
+    background:var(--black);
+  }
+
+  .ig-layout-3 {
+    width:100%; height:100%;
+    background:#060606;
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    grid-template-rows:1fr 1fr;
+    gap:2px;
+  }
+  .ig-quad {
+    background:var(--grey);
+    display:flex; align-items:center; justify-content:center;
+    padding:16px; text-align:center;
+    flex-direction:column; gap:8px;
+    font-size:8px; letter-spacing:2px;
+    color:var(--muted);
+    text-transform:uppercase;
+    position:relative;
+    overflow:hidden;
+  }
+  .ig-quad-val {
+    font-family:var(--font-display);
+    font-size:40px;
+    color:var(--white);
+    line-height:1;
+  }
+  .ig-quad.highlight { background:rgba(200,255,0,0.05); }
+  .ig-quad.highlight .ig-quad-val { color:var(--accent); }
+
+  /* POST META / CAPTION */
+  .post-meta {
+    padding: 20px 24px;
+    border-top: 1px solid var(--mid);
+    flex:1;
+    display:flex; flex-direction:column; gap:10px;
+  }
+  .post-platform-badge {
+    display:inline-flex; align-items:center; gap:8px;
+    font-size:8px; letter-spacing:3px;
+    color:var(--accent); text-transform:uppercase;
+  }
+  .post-platform-badge::before {
+    content:'';
+    width:6px; height:6px;
+    border-radius:50%;
+    background:var(--accent);
+  }
+  .post-title {
+    font-family:var(--font-display);
+    font-size:22px; color:var(--white);
+    line-height:1.1;
+  }
+  .post-caption {
+    font-family:var(--font-body);
+    font-style:italic;
+    font-size:14px;
+    color:rgba(240,237,232,0.55);
+    line-height:1.7;
+  }
+  .post-tags {
+    display:flex; flex-wrap:wrap; gap:6px;
+    margin-top:4px;
+  }
+  .ptag {
+    font-size:8px; letter-spacing:2px;
+    color:var(--muted);
+    border:1px solid var(--mid);
+    padding:3px 8px;
+  }
+
+  /* CAPTION PANEL */
+  .captions-section {
+    padding: 60px;
+  }
+  .captions-grid {
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:2px;
+    margin-top:40px;
+  }
+  .caption-card {
+    background:var(--grey);
+    padding:36px;
+    position:relative;
+    overflow:hidden;
+    cursor:pointer;
+    transition:background 0.2s ease;
+  }
+  .caption-card:hover { background:#1c1c1c; }
+  .caption-card::after {
+    content:'CLICK TO COPY';
+    position:absolute;
+    bottom:20px; right:20px;
+    font-size:7px; letter-spacing:3px;
+    color:var(--accent);
+    opacity:0;
+    transition:opacity 0.2s ease;
+    text-transform:uppercase;
+  }
+  .caption-card:hover::after { opacity:1; }
+  .cap-platform {
+    font-size:8px; letter-spacing:4px; color:var(--accent); text-transform:uppercase; margin-bottom:8px;
+  }
+  .cap-type {
+    font-size:8px; letter-spacing:3px; color:var(--muted); text-transform:uppercase; margin-bottom:20px;
+  }
+  .cap-hook {
+    font-family:var(--font-body);
+    font-style:italic;
+    font-size:22px;
+    color:var(--white);
+    line-height:1.5;
+    border-left:2px solid var(--accent);
+    padding-left:20px;
+    margin-bottom:20px;
+  }
+  .cap-body {
+    font-size:11px;
+    color:rgba(240,237,232,0.45);
+    line-height:2;
+    white-space:pre-wrap;
+  }
+
+  /* PILLAR TABS */
+  .pillar-tabs {
+    display:flex; gap:2px; margin-bottom:2px; padding:0 60px;
+  }
+  .pillar-tab {
+    padding:16px 24px;
+    background:var(--grey);
+    font-size:9px; letter-spacing:3px;
+    color:var(--muted); text-transform:uppercase;
+    cursor:pointer; transition:all 0.2s ease;
+    border-bottom:2px solid transparent;
+    user-select:none;
+  }
+  .pillar-tab:hover { color:var(--white); }
+  .pillar-tab.active { color:var(--accent); border-bottom-color:var(--accent); background:var(--mid); }
+
+  .pillar-panel { display:none; }
+  .pillar-panel.active { display:block; }
+
+  /* CALENDAR */
+  .cal-section { padding:60px; }
+  .cal-grid {
+    display:grid;
+    grid-template-columns:repeat(7, 1fr);
+    gap:2px;
+    margin-top:40px;
+  }
+  .cal-header {
+    padding:12px 8px; text-align:center;
+    font-size:8px; letter-spacing:3px; color:var(--muted); text-transform:uppercase;
+  }
+  .cal-day {
+    padding:20px 8px;
+    background:var(--grey);
+    min-height:80px;
+    position:relative;
+    display:flex; flex-direction:column; gap:6px;
+  }
+  .cal-day-num {
+    font-family:var(--font-display);
+    font-size:20px; color:var(--muted); line-height:1;
+  }
+  .cal-event {
+    font-size:7px; letter-spacing:1px; text-transform:uppercase;
+    padding:4px 6px;
+    line-height:1.4;
+  }
+  .cal-event.tiktok { background:rgba(200,255,0,0.12); color:var(--accent); }
+  .cal-event.ig { background:rgba(240,237,232,0.08); color:rgba(240,237,232,0.7); }
+  .cal-event.drop { background:rgba(255,45,45,0.15); color:var(--red); }
+  .cal-day.today { background:var(--mid); }
+  .cal-day.today .cal-day-num { color:var(--white); }
+  .cal-day.empty { background:rgba(19,19,19,0.4); }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity:0; transform:translateY(12px); }
+    to { opacity:1; transform:translateY(0); }
+  }
+  .kit-hero { animation:fadeUp 0.6s ease both; }
+
+  @media (max-width:900px) {
+    .posts-grid { grid-template-columns:1fr 1fr; }
+    .captions-grid { grid-template-columns:1fr; }
+    .cal-grid { grid-template-columns:repeat(4,1fr); }
+    nav, .posts-section, .captions-section, .cal-section, .pillar-tabs { padding-left:24px; padding-right:24px; }
+    .kit-hero { flex-direction:column; gap:24px; padding:40px 24px; }
+  }
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-brand">V<span style="color:var(--accent)">Ø</span>ID</div>
+  <div class="nav-tabs">
+    <div class="nav-tab active" onclick="switchPanel('tiktok', this)">TikTok</div>
+    <div class="nav-tab" onclick="switchPanel('instagram', this)">Instagram</div>
+    <div class="nav-tab" onclick="switchPanel('captions', this)">Captions</div>
+    <div class="nav-tab" onclick="switchPanel('calendar', this)">Calendar</div>
+  </div>
+</nav>
+
+<!-- ===================== TIKTOK PANEL ===================== -->
+<div class="panel active" id="panel-tiktok">
+  <div class="kit-hero">
+    <h1>TIKTOK<br><span>CONTENT</span><br>KIT</h1>
+    <div class="kit-hero-meta">
+      <span>PLATFORM / TIKTOK</span>
+      <span>FORMAT / 9:16 VERTICAL</span>
+      <span>PILLAR COUNT / 04</span>
+      <span>POSTS SHOWN / 06</span>
+    </div>
+  </div>
+
+  <div class="pillar-tabs">
+    <div class="pillar-tab active" onclick="switchPillar('tt-all', this)">All Posts</div>
+    <div class="pillar-tab" onclick="switchPillar('tt-drop', this)">The Drop</div>
+    <div class="pillar-tab" onclick="switchPillar('tt-process', this)">Process</div>
+    <div class="pillar-tab" onclick="switchPillar('tt-culture', this)">Culture</div>
+    <div class="pillar-tab" onclick="switchPillar('tt-editorial', this)">Editorial</div>
+  </div>
+
+  <div class="pillar-panel active" id="tt-all">
+    <div class="posts-section">
+      <div class="section-label">TikTok Post Concepts</div>
+      <div class="posts-grid">
+
+        <!-- Post 1 - Drop Announcement -->
+        <div class="post-mockup">
+          <div class="phone-frame">
+            <div class="tt-layout-2">
+              <div class="grid-bg"></div>
+              <div class="content">
+                <div class="tt-avatar" style="position:relative;top:auto;left:auto;margin-bottom:40px;">
+                  <div class="tt-avatar-circle">VØ</div>
+                  <span class="tt-username">@void.official</span>
+                </div>
+                <div class="tt-big-text">DROP<br>007</div>
+                <div class="tt-big-sub">ARCHIVE SERIES — BLACK ONLY</div>
+                <div class="tt-countdown">
+                  <div class="tt-count-block">
+                    <span class="tt-count-num">04</span>
+                    <span class="tt-count-label">HRS</span>
+                  </div>
+                  <div class="tt-count-block">
+                    <span class="tt-count-num">22</span>
+                    <span class="tt-count-label">MIN</span>
+                  </div>
+                  <div class="tt-count-block">
+                    <span class="tt-count-num">11</span>
+                    <span class="tt-count-label">SEC</span>
+                  </div>
+                </div>
+              </div>
+              <div class="tt-ui">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <div class="tt-btn">♡</div>
+                  <div class="tt-btn-label">12.4K</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <div class="tt-btn">💬</div>
+                  <div class="tt-btn-label">847</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <div class="tt-btn">↗</div>
+                  <div class="tt-btn-label">3.2K</div>
+                </div>
+              </div>
+              <div class="tt-progress"><div class="tt-progress-fill"></div></div>
+            </div>
+          </div>
+          <div class="post-meta">
+            <span class="post-platform-badge">TikTok — The Drop</span>
+            <div class="post-title">COUNTDOWN DROP</div>
+            <div class="post-caption">"Drop 007. Archive Series. Black only. 200 made. Timer is live."</div>
+            <div class="post-tags">
+              <span class="ptag">NO VOICEOVER</span><span class="ptag">AMBIENT SOUND</span><span class="ptag">LIVE TIMER</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post 2 - Process -->
+        <div class="post-mockup">
+          <div class="phone-frame">
+            <div class="tt-layout-1">
+              <div class="bg-text">VØID</div>
+              <div class="tt-avatar">
+                <div class="tt-avatar-circle">VØ</div>
+                <span class="tt-username">@void.official</span>
+              </div>
+              <div class="tt-ui">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <div class="tt-btn">♡</div>
+                  <div class="tt-btn-label">8.1K</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <div class="tt-btn">💬</div>
+                  <div class="tt-btn-label">312</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <div class="tt-btn">↗</div>
+                  <div class="tt-btn-label">1.7K</div>
+                </div>
+              </div>
+              <div class="tt-caption">"11 hours of work.<br>Worn for 10 years."</div>
+              <div class="tt-sub">FABRIC SERIES 003 / HAND-FINISHED</div>
+              <div class="tt-progress"><div class="tt-progress-fill" style="width:55%"></div></div>
+            </div>
+          </div>
+          <div class="post-meta">
+            <span class="post-platform-badge">TikTok — Process</span>
+            <div class="post-title">FABRIC SERIES</div>
+            <div class="post-caption">Extreme close-up of hands on fabric. No cuts. Real time. Industrial sound only. No music, no voiceover.</div>
+            <div class="post-tags">
+              <span class="ptag">ASMR SOUND</span><span class="ptag">SINGLE TAKE</span><span class="ptag">NO CUTS</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post 3 - Culture -->
+        <div class="post-mockup">
+          <div class="phone-frame">
+            <div class="tt-layout-3">
+              <div class="vid-blocks">
+                <div class="vid-block">
+                  <div class="vid-block-label">BRUTALIST<br>ARCHITECTURE<br>WARSAW 1973</div>
+                </div>
+                <div class="vid-block vid-block-accent">
+                  <div class="vid-block-label" style="color:rgba(200,255,0,0.5);">UNDERGROUND<br>NOISE SHOW<br>BERLIN</div>
+                </div>
+                <div class="vid-block" style="background:rgba(30,30,30,1)">
+                  <div class="vid-block-label">CONCRETE<br>STAIRWELL<br>SERIES #4</div>
+                </div>
+                <div class="vid-block">
+                  <div class="vid-block-label">ABANDONED<br>FACTORY<br>DETROIT</div>
+                </div>
+              </div>
+              <div class="bottom-bar">
+                <div class="bottom-title">THIS WEEK<br>IN VOID</div>
+                <div class="bottom-meta">CULTURE CURATION / VOL 012</div>
+              </div>
+            </div>
+          </div>
+          <div class="post-meta">
+            <span class="post-platform-badge">TikTok — Culture</span>
+            <div class="post-title">VOID WORLD VOL 12</div>
+            <div class="post-caption">4-quadrant split-screen of the world VØID inhabits. Architecture, sound, spaces. Never clothes.</div>
+            <div class="post-tags">
+              <span class="ptag">SPLIT SCREEN</span><span class="ptag">CURATION</span><span class="ptag">NO PRODUCT</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post 4 - Editorial -->
+        <div class="post-mockup">
+          <div class="phone-frame">
+            <div class="tt-layout-1" style="background:#050505;">
+              <div class="bg-text" style="font-size:120px; opacity:0.02;">SILENCE</div>
+              <div class="tt-avatar">
+                <div class="tt-avatar-circle">VØ</div>
+                <span class="tt-username">@void.official</span>
+              </div>
+              <div class="tt-ui">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <div class="tt-btn">♡</div>
+                  <div class="tt-btn-label">21.3K</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <div class="tt-btn">💬</div>
+                  <div class="tt-btn-label">1.1K</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <div class="tt-btn">↗</div>
+                  <div class="tt-btn-label">8.7K</div>
+                </div>
+              </div>
+              <!-- editorial frame lines -->
+              <div style="position:absolute;top:0;left:0;right:0;height:1px;background:rgba(240,237,232,0.1)"></div>
+              <div style="position:absolute;top:0;bottom:0;left:60px;width:1px;background:rgba(240,237,232,0.05)"></div>
+              <div style="position:absolute;top:0;bottom:0;right:60px;width:1px;background:rgba(240,237,232,0.05)"></div>
+              <div class="tt-caption" style="font-size:28px;">"Wear nothing. Mean everything."</div>
+              <div class="tt-sub" style="margin-bottom:40px;">EDITORIAL 008 / LOCATION: UNDISCLOSED</div>
+              <div class="tt-progress"><div class="tt-progress-fill" style="width:20%"></div></div>
+            </div>
+          </div>
+          <div class="post-meta">
+            <span class="post-platform-badge">TikTok — Editorial</span>
+            <div class="post-title">LOOKBOOK REEL</div>
+            <div class="post-caption">Anonymous model. Derelict space. Slow pan. The garment breathes. No face shown. No context given.</div>
+            <div class="post-tags">
+              <span class="ptag">SLOW MOTION</span><span class="ptag">NO FACE</span><span class="ptag">LOCATION UNDISCLOSED</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post 5 - Drop Sold Out -->
+        <div class="post-mockup">
+          <div class="phone-frame">
+            <div class="tt-layout-2">
+              <div class="grid-bg" style="opacity:0.3"></div>
+              <div class="content">
+                <div style="font-size:8px;letter-spacing:5px;color:var(--red);text-transform:uppercase;margin-bottom:16px;">DROP 007</div>
+                <div class="tt-big-text" style="color:var(--red);">GONE.</div>
+                <div class="tt-big-sub" style="color:rgba(240,237,232,0.3);">200 UNITS — SOLD IN 6 MINUTES</div>
+                <div style="margin-top:32px;font-size:9px;letter-spacing:3px;color:var(--muted);text-align:center;line-height:2.2;">
+                  NO RESTOCK.<br>NO APOLOGY.<br>NEXT DROP: UNKNOWN.
+                </div>
+              </div>
+              <div class="tt-progress"><div class="tt-progress-fill" style="width:100%;background:var(--red)"></div></div>
+            </div>
+          </div>
+          <div class="post-meta">
+            <span class="post-platform-badge">TikTok — The Drop</span>
+            <div class="post-title">SOLD OUT SCREEN</div>
+            <div class="post-caption">"Gone. 200 units sold in 6 minutes. No restock. No apology." Posted exactly 10 minutes after sellout.</div>
+            <div class="post-tags">
+              <span class="ptag">POST-DROP</span><span class="ptag">RED ACCENT</span><span class="ptag">NO SORRY</span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Post 6 - Process 2 -->
+        <div class="post-mockup">
+          <div class="phone-frame">
+            <div class="tt-layout-1" style="background:#080808;">
+              <div class="bg-text" style="font-size:200px;letter-spacing:-20px;">Ø</div>
+              <div class="tt-avatar">
+                <div class="tt-avatar-circle">VØ</div>
+                <span class="tt-username">@void.official</span>
+              </div>
+              <div class="tt-ui">
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <div class="tt-btn">♡</div>
+                  <div class="tt-btn-label">5.4K</div>
+                </div>
+                <div style="display:flex;flex-direction:column;align-items:center;gap:4px">
+                  <div class="tt-btn">💬</div>
+                  <div class="tt-btn-label">228</div>
+                </div>
+              </div>
+              <div style="position:absolute;top:50%;left:24px;right:80px;transform:translateY(-50%);border-top:1px solid rgba(200,255,0,0.2);border-bottom:1px solid rgba(200,255,0,0.2);padding:20px 0;text-align:center;">
+                <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:3px;color:var(--accent);margin-bottom:8px;">STITCH COUNT</div>
+                <div style="font-family:var(--font-display);font-size:56px;color:var(--white);line-height:1;">2,840</div>
+                <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:2px;color:var(--muted);">PER GARMENT / HAND-DONE</div>
+              </div>
+              <div class="tt-caption" style="font-size:16px;">"We count them.<br>Every one."</div>
+              <div class="tt-sub">CRAFT DATA / SERIES 001</div>
+              <div class="tt-progress"><div class="tt-progress-fill" style="width:72%"></div></div>
+            </div>
+          </div>
+          <div class="post-meta">
+            <span class="post-platform-badge">TikTok — Process</span>
+            <div class="post-title">CRAFT DATA</div>
+            <div class="post-caption">Single data point displayed on screen. No explanation. The number speaks. "2,840 stitches per garment. Hand-done."</div>
+            <div class="post-tags">
+              <span class="ptag">DATA VISUAL</span><span class="ptag">MINIMAL COPY</span><span class="ptag">CRAFT</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== INSTAGRAM PANEL ===================== -->
+<div class="panel" id="panel-instagram">
+  <div class="kit-hero">
+    <h1>INSTA<br><span>GRAM</span><br>KIT</h1>
+    <div class="kit-hero-meta">
+      <span>PLATFORM / INSTAGRAM</span>
+      <span>FORMAT / 1:1 + 4:5 + STORIES</span>
+      <span>GRID PHILOSOPHY / SILENT</span>
+      <span>POSTS SHOWN / 06</span>
+    </div>
+  </div>
+
+  <div class="posts-section">
+    <div class="section-label">Instagram Post Concepts</div>
+    <div class="posts-grid">
+
+      <!-- IG Post 1 - Drop Announcement -->
+      <div class="post-mockup">
+        <div class="ig-square-frame">
+          <div class="ig-layout-1">
+            <div class="ig-border-accent"></div>
+            <div class="bg-circle"></div>
+            <div class="bg-circle-2"></div>
+            <div class="ig-wordmark">V<span style="color:var(--accent)">Ø</span>ID</div>
+            <div class="ig-drop-info">
+              <div class="ig-drop-line">DROP 007 — LIVE NOW</div>
+              <div class="ig-drop-sub">LINK IN BIO / 200 UNITS / NO RESTOCK</div>
+            </div>
+          </div>
+        </div>
+        <div class="post-meta">
+          <span class="post-platform-badge">Instagram — Feed</span>
+          <div class="post-title">DROP LIVE POST</div>
+          <div class="post-caption">"Drop 007. Link in bio. You already know."</div>
+          <div class="post-tags"><span class="ptag">STATIC IMAGE</span><span class="ptag">1:1</span><span class="ptag">WORDMARK ONLY</span></div>
+        </div>
+      </div>
+
+      <!-- IG Post 2 - Quote -->
+      <div class="post-mockup">
+        <div class="ig-square-frame">
+          <div class="ig-layout-2">
+            <div class="ig-layout-2 accent-bar"></div>
+            <div class="big-num">Ø</div>
+            <div class="quote-text">"The most radical thing you can wear is nothing that shouts."</div>
+            <div class="attr">— VØID MANIFESTO / 2024</div>
+          </div>
+        </div>
+        <div class="post-meta">
+          <span class="post-platform-badge">Instagram — Feed</span>
+          <div class="post-title">MANIFESTO CARD</div>
+          <div class="post-caption">Bone background. Black serif text. A single quote. No product. Pure brand philosophy.</div>
+          <div class="post-tags"><span class="ptag">TYPOGRAPHY</span><span class="ptag">PHILOSOPHY</span><span class="ptag">SAVEABLE</span></div>
+        </div>
+      </div>
+
+      <!-- IG Post 3 - Stats -->
+      <div class="post-mockup">
+        <div class="ig-square-frame">
+          <div class="ig-layout-3">
+            <div class="ig-quad">
+              <div class="ig-quad-val">200</div>
+              UNITS MADE
+            </div>
+            <div class="ig-quad highlight">
+              <div class="ig-quad-val">06</div>
+              MINUTES TO SELL
+            </div>
+            <div class="ig-quad highlight">
+              <div class="ig-quad-val">0</div>
+              RESTOCKS EVER
+            </div>
+            <div class="ig-quad">
+              <div class="ig-quad-val">∞</div>
+              WAITLIST
+            </div>
+          </div>
+        </div>
+        <div class="post-meta">
+          <span class="post-platform-badge">Instagram — Feed</span>
+          <div class="post-title">BRAND STATS</div>
+          <div class="post-caption">Four-quadrant data grid. No explanation. The numbers do all the work.</div>
+          <div class="post-tags"><span class="ptag">DATA</span><span class="ptag">SHAREABLE</span><span class="ptag">BOLD</span></div>
+        </div>
+      </div>
+
+      <!-- IG Post 4 - Editorial -->
+      <div class="post-mockup">
+        <div class="ig-square-frame">
+          <div style="width:100%;height:100%;background:#050505;display:flex;align-items:flex-end;justify-content:flex-start;padding:28px;position:relative;">
+            <!-- Rule lines -->
+            <div style="position:absolute;top:40px;left:28px;right:28px;height:1px;background:rgba(240,237,232,0.08)"></div>
+            <div style="position:absolute;bottom:80px;left:28px;right:28px;height:1px;background:rgba(240,237,232,0.08)"></div>
+            <div style="position:absolute;top:40px;bottom:0;left:28px;width:1px;background:rgba(240,237,232,0.06)"></div>
+
+            <!-- Center ghost icon -->
+            <div style="position:absolute;top:50%;left:50%;transform:translate(-50%,-50%)">
+              <svg width="120" height="120" viewBox="0 0 160 160" fill="none">
+                <ellipse cx="80" cy="80" rx="60" ry="60" stroke="rgba(240,237,232,0.06)" stroke-width="8" fill="none"/>
+                <line x1="30" y1="30" x2="130" y2="130" stroke="rgba(240,237,232,0.06)" stroke-width="8" stroke-linecap="round"/>
+              </svg>
+            </div>
+
+            <div>
+              <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:3px;color:var(--accent);margin-bottom:8px;">EDITORIAL 008</div>
+              <div style="font-family:var(--font-body);font-style:italic;font-size:18px;color:var(--white);line-height:1.4;">The space between<br>the garment and the body<br>is where we work.</div>
+            </div>
+          </div>
+        </div>
+        <div class="post-meta">
+          <span class="post-platform-badge">Instagram — Feed</span>
+          <div class="post-title">EDITORIAL FRAME</div>
+          <div class="post-caption">Technical grid layout. Ghost icon. Cryptic editorial line. No product shown. Atmospheric.</div>
+          <div class="post-tags"><span class="ptag">EDITORIAL</span><span class="ptag">GRID LINES</span><span class="ptag">ATMOSPHERIC</span></div>
+        </div>
+      </div>
+
+      <!-- IG Post 5 - Process -->
+      <div class="post-mockup">
+        <div class="ig-square-frame">
+          <div style="width:100%;height:100%;background:#0a0a0a;position:relative;overflow:hidden;display:flex;align-items:center;justify-content:center;">
+            <!-- Fabric texture simulation -->
+            <div style="position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(240,237,232,0.02) 0px,rgba(240,237,232,0.02) 1px,transparent 1px,transparent 8px),repeating-linear-gradient(-45deg,rgba(240,237,232,0.02) 0px,rgba(240,237,232,0.02) 1px,transparent 1px,transparent 8px)"></div>
+            <div style="text-align:center;position:relative;z-index:1">
+              <div style="font-family:var(--font-display);font-size:96px;color:rgba(240,237,232,0.08);line-height:1;letter-spacing:-4px;">400</div>
+              <div style="font-family:var(--font-mono);font-size:10px;letter-spacing:4px;color:var(--accent);margin-top:-16px;">THREAD DENSITY</div>
+              <div style="font-family:var(--font-mono);font-size:8px;letter-spacing:3px;color:var(--muted);margin-top:12px;">PER CM² / ARCHIVE SERIES</div>
+              <div style="width:40px;height:1px;background:var(--accent);margin:20px auto;"></div>
+              <div style="font-family:var(--font-body);font-style:italic;font-size:16px;color:rgba(240,237,232,0.5);">You can feel the difference.</div>
+            </div>
+          </div>
+        </div>
+        <div class="post-meta">
+          <span class="post-platform-badge">Instagram — Feed</span>
+          <div class="post-title">SPEC CARD</div>
+          <div class="post-caption">"400 thread density. Per cm². You can feel the difference." Product spec as poetry.</div>
+          <div class="post-tags"><span class="ptag">CRAFT DATA</span><span class="ptag">SAVEABLE</span><span class="ptag">TEXTURE</span></div>
+        </div>
+      </div>
+
+      <!-- IG Post 6 - Black Silence -->
+      <div class="post-mockup">
+        <div class="ig-square-frame">
+          <div style="width:100%;height:100%;background:#000;display:flex;align-items:center;justify-content:center;position:relative;">
+            <div style="position:absolute;inset:0;background:radial-gradient(ellipse at center,rgba(200,255,0,0.04),transparent 70%)"></div>
+            <div style="font-family:var(--font-mono);font-size:9px;letter-spacing:6px;color:rgba(240,237,232,0.2);text-transform:uppercase;text-align:center;line-height:3;">
+              NOTHING<br>TO<br>SHOW<br>YOU.
+            </div>
+          </div>
+        </div>
+        <div class="post-meta">
+          <span class="post-platform-badge">Instagram — Feed</span>
+          <div class="post-title">THE VOID POST</div>
+          <div class="post-caption">Posted between drops. Pure black. Almost invisible text. Caption: "." — Just a period. Watch the comments fill themselves.</div>
+          <div class="post-tags"><span class="ptag">ANTI-CONTENT</span><span class="ptag">PERIOD CAPTION</span><span class="ptag">ENGAGEMENT TRAP</span></div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CAPTIONS PANEL ===================== -->
+<div class="panel" id="panel-captions">
+  <div class="kit-hero">
+    <h1>CAPTION<br><span>BANK</span></h1>
+    <div class="kit-hero-meta">
+      <span>VOICE / COLD — MINIMAL — PRECISE</span>
+      <span>CLICK ANY CARD TO COPY</span>
+    </div>
+  </div>
+
+  <div class="captions-section">
+    <div class="section-label">Ready-to-Use Captions</div>
+    <div class="captions-grid">
+
+      <div class="caption-card" onclick="copyCaption(this)">
+        <div class="cap-platform">TIKTOK / INSTAGRAM</div>
+        <div class="cap-type">Drop Announcement</div>
+        <div class="cap-hook">"Drop 007. Black only. 200 made. Link goes live in 4 hours."</div>
+        <div class="cap-body">#vøid #streetwear #drop #limitededition</div>
+      </div>
+
+      <div class="caption-card" onclick="copyCaption(this)">
+        <div class="cap-platform">TIKTOK / INSTAGRAM</div>
+        <div class="cap-type">Sold Out</div>
+        <div class="cap-hook">"Gone. 6 minutes. No restock. No apology."</div>
+        <div class="cap-body">#vøid #soldout #limitededition</div>
+      </div>
+
+      <div class="caption-card" onclick="copyCaption(this)">
+        <div class="cap-platform">INSTAGRAM</div>
+        <div class="cap-type">Philosophy</div>
+        <div class="cap-hook">"You already know if this is for you."</div>
+        <div class="cap-body">No further explanation needed.</div>
+      </div>
+
+      <div class="caption-card" onclick="copyCaption(this)">
+        <div class="cap-platform">TIKTOK</div>
+        <div class="cap-type">Process / Craft</div>
+        <div class="cap-hook">"2,840 hand stitches per garment. We count them. Every one."</div>
+        <div class="cap-body">ARCHIVE SERIES 003 / FABRIC SERIES / HAND-FINISHED / 200 UNITS<br>#vøid #craft #streetwear</div>
+      </div>
+
+      <div class="caption-card" onclick="copyCaption(this)">
+        <div class="cap-platform">INSTAGRAM</div>
+        <div class="cap-type">Manifesto / Saveable</div>
+        <div class="cap-hook">"The logo is the absence of a logo."</div>
+        <div class="cap-body">VØID — 2024</div>
+      </div>
+
+      <div class="caption-card" onclick="copyCaption(this)">
+        <div class="cap-platform">TIKTOK / INSTAGRAM</div>
+        <div class="cap-type">Teaser</div>
+        <div class="cap-hook">"We made 150. We're keeping 20."</div>
+        <div class="cap-body">DROP DATE: UNKNOWN. FOLLOW FOR SIGNAL.<br>#vøid #comingsoon</div>
+      </div>
+
+      <div class="caption-card" onclick="copyCaption(this)">
+        <div class="cap-platform">INSTAGRAM</div>
+        <div class="cap-type">Culture Curation</div>
+        <div class="cap-hook">"This building was meant to last 1000 years. It lasted 40. The coat will outlast both."</div>
+        <div class="cap-body">CULTURE / BRUTALIST ARCHITECTURE / WARSAW 1973<br>#vøid #brutalism #architecture</div>
+      </div>
+
+      <div class="caption-card" onclick="copyCaption(this)">
+        <div class="cap-platform">TIKTOK</div>
+        <div class="cap-type">The Void Post</div>
+        <div class="cap-hook">"."</div>
+        <div class="cap-body">Post a completely black image. Caption is a single period. No hashtags. No context. Watch what happens.</div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ===================== CALENDAR PANEL ===================== -->
+<div class="panel" id="panel-calendar">
+  <div class="kit-hero">
+    <h1>POST<br><span>CALENDAR</span></h1>
+    <div class="kit-hero-meta">
+      <span>CADENCE / 3–4 POSTS / WEEK</span>
+      <span>PHILOSOPHY / LESS IS MORE</span>
+      <span>DROP WEEK / HEAVY</span>
+    </div>
+  </div>
+
+  <div class="cal-section">
+    <div class="section-label">Sample Month — Drop Week Strategy</div>
+
+    <div style="display:flex;gap:16px;margin-bottom:32px;flex-wrap:wrap;">
+      <div style="display:flex;align-items:center;gap:8px;font-size:9px;letter-spacing:2px;color:var(--accent);text-transform:uppercase;">
+        <div style="width:10px;height:10px;background:rgba(200,255,0,0.2)"></div>TikTok
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:9px;letter-spacing:2px;color:rgba(240,237,232,0.6);text-transform:uppercase;">
+        <div style="width:10px;height:10px;background:rgba(240,237,232,0.1)"></div>Instagram
+      </div>
+      <div style="display:flex;align-items:center;gap:8px;font-size:9px;letter-spacing:2px;color:var(--red);text-transform:uppercase;">
+        <div style="width:10px;height:10px;background:rgba(255,45,45,0.2)"></div>Drop Day
+      </div>
+    </div>
+
+    <div class="cal-grid">
+      <div class="cal-header">MON</div>
+      <div class="cal-header">TUE</div>
+      <div class="cal-header">WED</div>
+      <div class="cal-header">THU</div>
+      <div class="cal-header">FRI</div>
+      <div class="cal-header">SAT</div>
+      <div class="cal-header">SUN</div>
+
+      <div class="cal-day empty"><div class="cal-day-num" style="opacity:0.2">29</div></div>
+      <div class="cal-day empty"><div class="cal-day-num" style="opacity:0.2">30</div></div>
+      <div class="cal-day"><div class="cal-day-num">01</div><div class="cal-event ig">Culture Curation Vol.12</div></div>
+      <div class="cal-day"><div class="cal-day-num">02</div></div>
+      <div class="cal-day"><div class="cal-day-num">03</div><div class="cal-event tiktok">Fabric Series #3</div></div>
+      <div class="cal-day"><div class="cal-day-num">04</div></div>
+      <div class="cal-day"><div class="cal-day-num">05</div><div class="cal-event ig">Manifesto Card</div></div>
+
+      <div class="cal-day"><div class="cal-day-num">06</div></div>
+      <div class="cal-day"><div class="cal-day-num">07</div><div class="cal-event tiktok">Craft Data Post</div></div>
+      <div class="cal-day"><div class="cal-day-num">08</div><div class="cal-event ig">Spec Card</div></div>
+      <div class="cal-day"><div class="cal-day-num">09</div><div class="cal-event tiktok">VOID World Vol.12</div></div>
+      <div class="cal-day"><div class="cal-day-num">10</div></div>
+      <div class="cal-day"><div class="cal-day-num">11</div><div class="cal-event ig">Editorial 008</div></div>
+      <div class="cal-day"><div class="cal-day-num">12</div></div>
+
+      <!-- DROP WEEK -->
+      <div class="cal-day today"><div class="cal-day-num">13</div><div class="cal-event tiktok">Teaser — Black Screen</div><div class="cal-event ig">Teaser Story</div></div>
+      <div class="cal-day today"><div class="cal-day-num">14</div><div class="cal-event tiktok">Countdown Timer Live</div><div class="cal-event ig">Countdown Reel</div></div>
+      <div class="cal-day today"><div class="cal-day-num">15</div><div class="cal-event drop">DROP 007 — LIVE</div><div class="cal-event tiktok">Drop Announcement</div><div class="cal-event ig">Drop Post</div></div>
+      <div class="cal-day today"><div class="cal-day-num">16</div><div class="cal-event drop">SOLD OUT POST</div><div class="cal-event tiktok">6 Min Sold Out</div></div>
+      <div class="cal-day today"><div class="cal-day-num">17</div><div class="cal-event ig">The Void Post (".")</div></div>
+      <div class="cal-day"><div class="cal-day-num">18</div></div>
+      <div class="cal-day"><div class="cal-day-num">19</div></div>
+
+      <div class="cal-day"><div class="cal-day-num">20</div><div class="cal-event tiktok">Process Deep Dive</div></div>
+      <div class="cal-day"><div class="cal-day-num">21</div></div>
+      <div class="cal-day"><div class="cal-day-num">22</div><div class="cal-event ig">Culture Curation Vol.13</div></div>
+      <div class="cal-day"><div class="cal-day-num">23</div><div class="cal-event tiktok">Archive Lookbook</div></div>
+      <div class="cal-day"><div class="cal-day-num">24</div></div>
+      <div class="cal-day"><div class="cal-day-num">25</div><div class="cal-event ig">Brand Stats Card</div></div>
+      <div class="cal-day"><div class="cal-day-num">26</div></div>
+
+      <div class="cal-day"><div class="cal-day-num">27</div><div class="cal-event tiktok">Stitch Count Post</div></div>
+      <div class="cal-day"><div class="cal-day-num">28</div></div>
+      <div class="cal-day"><div class="cal-day-num">29</div><div class="cal-event ig">Philosophy Quote</div></div>
+      <div class="cal-day"><div class="cal-day-num">30</div><div class="cal-event tiktok">Next Drop Teaser</div></div>
+      <div class="cal-day empty"><div class="cal-day-num" style="opacity:0.2">01</div></div>
+      <div class="cal-day empty"><div class="cal-day-num" style="opacity:0.2">02</div></div>
+      <div class="cal-day empty"><div class="cal-day-num" style="opacity:0.2">03</div></div>
+    </div>
+
+    <div style="margin-top:40px;background:var(--grey);padding:32px;display:grid;grid-template-columns:repeat(3,1fr);gap:32px;">
+      <div>
+        <div style="font-size:9px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:12px;">Drop Week Rule</div>
+        <p style="font-size:11px;color:var(--muted);line-height:2;">Go heavy during drop week — 2 posts/day. Then go silent. The quiet after the drop is part of the brand language.</p>
+      </div>
+      <div>
+        <div style="font-size:9px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:12px;">Non-Drop Week Rule</div>
+        <p style="font-size:11px;color:var(--muted);line-height:2;">Max 3 posts per week. Never more. Scarcity applies to content too. Every post must earn its place.</p>
+      </div>
+      <div>
+        <div style="font-size:9px;letter-spacing:3px;color:var(--accent);text-transform:uppercase;margin-bottom:12px;">The Silence Rule</div>
+        <p style="font-size:11px;color:var(--muted);line-height:2;">At least one full silent day after every drop. No stories. No reposts. Complete absence. Let the audience feel it.</p>
+      </div>
+    </div>
+  </div>
+</div>
+
+<script>
+  function switchPanel(name, el) {
+    document.querySelectorAll('.panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.nav-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById('panel-' + name).classList.add('active');
+    el.classList.add('active');
+  }
+
+  function switchPillar(name, el) {
+    document.querySelectorAll('.pillar-panel').forEach(p => p.classList.remove('active'));
+    document.querySelectorAll('.pillar-tab').forEach(t => t.classList.remove('active'));
+    document.getElementById(name).classList.add('active');
+    el.classList.add('active');
+  }
+
+  function copyCaption(card) {
+    const hook = card.querySelector('.cap-hook').textContent;
+    const body = card.querySelector('.cap-body').textContent;
+    const full = hook + '\n\n' + body;
+    navigator.clipboard.writeText(full).then(() => {
+      card.style.background = 'rgba(200,255,0,0.05)';
+      card.style.borderLeft = '2px solid var(--accent)';
+      setTimeout(() => {
+        card.style.background = '';
+        card.style.borderLeft = '';
+      }, 1200);
+    });
+  }
+</script>
+</body>
+</html>

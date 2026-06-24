@@ -1,0 +1,1728 @@
+<!DOCTYPE html>
+<!-- saved from url=(0082)# -->
+<html lang="en"><head><meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Crust Media — Find the Gem</title>
+<link rel="preconnect" href="https://fonts.googleapis.com/">
+<link href="./Crust Media — Find the Gem_files/css2" rel="stylesheet">
+<style>
+
+/* ═══════════════════════════════════════════
+   TOKENS
+═══════════════════════════════════════════ */
+:root {
+  --void:       #07050300;
+  --bg:         #080604;
+  --bg-raised:  #0F0B08;
+  --surface:    #161009;
+  --border:     #241A10;
+  --border-mid: #3A2A1A;
+  --ash:        #6B5A48;
+  --muted:      #9C8B7A;
+  --bone:       #F2EDE4;
+  --bone-70:    rgba(242,237,228,0.7);
+  --bone-30:    rgba(242,237,228,0.3);
+  --bone-10:    rgba(242,237,228,0.08);
+  --ruby:       #C41E3A;
+  --ruby-bright:#E8263F;
+  --ruby-dim:   #7A0F22;
+  --ruby-glow:  rgba(196,30,58,0.25);
+  --gold:       #B8925A;
+
+  --f-display: 'Playfair Display', serif;
+  --f-sans:    'Syne', sans-serif;
+  --f-mono:    'IBM Plex Mono', monospace;
+
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1);
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1);
+}
+
+/* ═══════════════════════════════════════════
+   RESET + BASE
+═══════════════════════════════════════════ */
+*, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  background: var(--bg);
+  color: var(--bone);
+  font-family: var(--f-sans);
+  overflow-x: hidden;
+  cursor: none;
+}
+a, button, input, textarea, select, label,
+.work-card, .service-card, .value-row,
+.contact-method, .hero-stat, .process-step,
+.nav-cta, .form-submit, [role="button"] {
+  cursor: none !important;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+
+/* ═══════════════════════════════════════════
+   GRAIN OVERLAY
+═══════════════════════════════════════════ */
+body::before {
+  content: '';
+  position: fixed; inset: 0; z-index: 9000;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.8' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  opacity: 0.038;
+  pointer-events: none;
+}
+
+/* ═══════════════════════════════════════════
+   CUSTOM CURSOR
+═══════════════════════════════════════════ */
+#cursor {
+  position: fixed; z-index: 9999;
+  width: 16px; height: 16px;
+  pointer-events: none;
+  transform: translate(-50%, -50%);
+  transition: transform 0.05s linear;
+}
+#cursor-dot {
+  position: absolute; inset: 0;
+  background: none;
+  clip-path: none;
+  transition: all 0.2s var(--ease-out);
+}
+#cursor-dot::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url('images/navigate.png');
+  background-size: contain;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+#cursor-ring {
+  position: fixed;
+  width: 36px; height: 36px;
+  border: 1px solid rgba(196,30,58,0.4);
+  border-radius: 50%;
+  pointer-events: none;
+  z-index: 9998;
+  transform: translate(-50%, -50%);
+  transition: width 0.3s var(--ease-out), height 0.3s var(--ease-out), border-color 0.3s;
+}
+body.cursor-hover #cursor-dot {
+  transform: scale(1.4);
+  filter: brightness(1.3);
+}
+body.cursor-hover #cursor-ring {
+  width: 56px; height: 56px;
+  border-color: rgba(196,30,58,0.25);
+}
+
+/* ═══════════════════════════════════════════
+   NAV
+═══════════════════════════════════════════ */
+nav {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 800;
+  height: 68px;
+  padding: 0 60px;
+  display: flex; align-items: center; justify-content: space-between;
+  transition: background 0.4s ease, border-color 0.4s ease;
+  border-bottom: 1px solid transparent;
+}
+nav.scrolled {
+  background: rgba(8,6,4,0.92);
+  backdrop-filter: blur(16px);
+  border-bottom-color: var(--border);
+}
+.nav-brand {
+  display: flex; align-items: center; gap: 12px;
+  font-family: var(--f-sans);
+  font-weight: 800; font-size: 12px;
+  letter-spacing: 0.3em; text-transform: uppercase;
+}
+.nav-gem-icon {
+  width: 18px; height: 20px; flex-shrink: 0;
+  clip-path: polygon(50% 0%, 85% 22%, 100% 55%, 72% 100%, 28% 100%, 0% 55%, 15% 22%);
+  background: linear-gradient(135deg, var(--ruby-bright), var(--ruby-dim));
+}
+.nav-brand span { color: var(--ruby); }
+.nav-links {
+  display: flex; align-items: center; gap: 48px;
+}
+.nav-links a {
+  font-family: var(--f-mono);
+  font-size: 9px; letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--ash);
+  transition: color 0.2s;
+  position: relative;
+}
+.nav-links a::after {
+  content: '';
+  position: absolute; bottom: -3px; left: 0; right: 0;
+  height: 1px; background: var(--ruby);
+  transform: scaleX(0); transform-origin: left;
+  transition: transform 0.3s var(--ease-out);
+}
+.nav-links a:hover { color: var(--bone); }
+.nav-links a:hover::after { transform: scaleX(1); }
+.nav-cta {
+  font-family: var(--f-mono);
+  font-size: 9px; letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--ruby);
+  border: 1px solid var(--ruby-dim);
+  padding: 10px 22px;
+  transition: all 0.25s;
+}
+.nav-cta:hover {
+  background: var(--ruby);
+  color: var(--bone);
+  border-color: var(--ruby);
+}
+
+/* ═══════════════════════════════════════════
+   HERO
+═══════════════════════════════════════════ */
+#hero {
+  min-height: 100vh;
+  display: flex; flex-direction: column;
+  justify-content: flex-end;
+  padding: 0 0 0 0;
+  position: relative;
+  overflow: hidden;
+  border-bottom: 1px solid var(--border);
+}
+
+/* Ambient background glow */
+.hero-glow {
+  position: absolute; inset: 0; z-index: 0;
+  background:
+    radial-gradient(ellipse 70% 50% at 80% 30%, rgba(196,30,58,0.07) 0%, transparent 60%),
+    radial-gradient(ellipse 50% 70% at 15% 70%, rgba(184,146,90,0.04) 0%, transparent 55%);
+}
+
+/* Grid lines */
+.hero-grid {
+  position: absolute; inset: 0; z-index: 0;
+  background-image:
+    linear-gradient(rgba(242,237,228,0.025) 1px, transparent 1px),
+    linear-gradient(90deg, rgba(242,237,228,0.025) 1px, transparent 1px);
+  background-size: 80px 80px;
+}
+
+.hero-inner {
+  position: relative; z-index: 2;
+  padding: 140px 60px 80px;
+  display: grid;
+  grid-template-columns: 1fr 360px;
+  gap: 60px;
+  align-items: end;
+}
+
+.hero-left {}
+
+.hero-tag {
+  font-family: var(--f-mono);
+  font-size: 9px; letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--ruby);
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 48px;
+  opacity: 0;
+  animation: rise 1s 0.2s var(--ease-out) forwards;
+}
+.hero-tag::before {
+  content: ''; width: 36px; height: 1px; background: var(--ruby);
+}
+
+.hero-headline {
+  font-family: var(--f-display);
+  font-size: clamp(4.5rem, 8.5vw, 10rem);
+  font-weight: 900;
+  line-height: 0.88;
+  letter-spacing: -0.02em;
+  opacity: 0;
+  animation: rise 1.1s 0.3s var(--ease-out) forwards;
+}
+.hero-headline .line-1 { color: var(--bone); display: block; }
+.hero-headline .line-2 { color: var(--ruby); font-style: italic; display: block; }
+.hero-headline .line-3 { color: var(--bone); display: block; }
+
+.hero-sub {
+  margin-top: 44px;
+  font-size: 15px; line-height: 1.85;
+  color: var(--muted);
+  max-width: 520px;
+  opacity: 0;
+  animation: rise 1s 0.5s var(--ease-out) forwards;
+}
+.hero-sub strong { color: var(--bone); font-weight: 600; }
+
+.hero-cta-row {
+  margin-top: 52px;
+  display: flex; align-items: center; gap: 32px;
+  opacity: 0;
+  animation: rise 1s 0.65s var(--ease-out) forwards;
+}
+.btn-primary {
+  font-family: var(--f-mono);
+  font-size: 9px; letter-spacing: 0.28em;
+  text-transform: uppercase;
+  background: var(--ruby);
+  color: var(--bone);
+  padding: 16px 36px;
+  display: inline-block;
+  transition: all 0.25s;
+  border: 1px solid var(--ruby);
+}
+.btn-primary:hover { background: var(--ruby-bright); border-color: var(--ruby-bright); }
+.btn-ghost {
+  font-family: var(--f-mono);
+  font-size: 9px; letter-spacing: 0.28em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.2s;
+  display: flex; align-items: center; gap: 10px;
+}
+.btn-ghost::after { content: '→'; transition: transform 0.2s; }
+.btn-ghost:hover { color: var(--bone); }
+.btn-ghost:hover::after { transform: translateX(4px); }
+
+.hero-right {
+  display: flex; flex-direction: column; gap: 2px;
+  opacity: 0;
+  animation: rise 1s 0.7s var(--ease-out) forwards;
+}
+.hero-stat {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  padding: 24px 28px;
+  border-left: 2px solid var(--border-mid);
+  transition: border-left-color 0.3s;
+}
+.hero-stat:hover { border-left-color: var(--ruby); }
+.hero-stat-val {
+  font-family: var(--f-display);
+  font-weight: 700; font-size: 32px;
+  color: var(--bone); line-height: 1;
+  margin-bottom: 6px;
+}
+.hero-stat-val span { color: var(--ruby); }
+.hero-stat-label {
+  font-family: var(--f-mono);
+  font-size: 8px; letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+
+/* Marquee */
+.hero-marquee {
+  border-top: 1px solid var(--border);
+  position: relative; z-index: 2;
+  overflow: hidden;
+  height: 48px;
+  display: flex; align-items: center;
+  background: var(--surface);
+}
+.marquee-track {
+  display: flex; gap: 0;
+  animation: marquee 30s linear infinite;
+  white-space: nowrap;
+}
+.marquee-item {
+  font-family: var(--f-mono);
+  font-size: 9px; letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ash);
+  padding: 0 36px;
+  display: flex; align-items: center; gap: 36px;
+  flex-shrink: 0;
+}
+.marquee-item .dot {
+  width: 4px; height: 4px;
+  clip-path: polygon(50% 0%, 85% 22%, 100% 55%, 72% 100%, 28% 100%, 0% 55%, 15% 22%);
+  background: var(--ruby);
+  flex-shrink: 0;
+}
+
+/* ═══════════════════════════════════════════
+   ABOUT
+═══════════════════════════════════════════ */
+#about {
+  padding: 120px 60px;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 100px;
+  align-items: start;
+}
+.about-label {
+  font-family: var(--f-mono);
+  font-size: 8px; letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--ruby);
+  display: flex; align-items: center; gap: 14px;
+  margin-bottom: 20px;
+}
+.about-label::after { content: ''; flex: 0 0 60px; height: 1px; background: var(--border-mid); }
+.about-headline {
+  font-family: var(--f-display);
+  font-size: clamp(3rem, 5vw, 5.5rem);
+  font-weight: 900; line-height: 0.92;
+  letter-spacing: -0.015em;
+  margin-bottom: 40px;
+}
+.about-headline em { font-style: italic; color: var(--ruby); }
+.about-body p {
+  font-size: 15px; line-height: 1.9;
+  color: var(--muted); margin-bottom: 22px;
+}
+.about-body p strong { color: var(--bone); font-weight: 600; }
+.about-body p em { color: var(--ruby); font-style: normal; }
+.about-pullquote {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: clamp(1.4rem, 2.2vw, 2rem);
+  line-height: 1.35;
+  color: var(--bone);
+  border-left: 2px solid var(--ruby);
+  padding: 20px 28px;
+  margin: 40px 0;
+}
+
+.about-right {}
+.about-gem-display {
+  position: relative;
+  height: 380px;
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 40px;
+}
+/* Gem rings */
+.gem-ring {
+  position: absolute;
+  border: 1px solid var(--border);
+  border-radius: 50%;
+  animation: ring-spin 25s linear infinite;
+}
+.gem-ring:nth-child(1) { width: 300px; height: 300px; border-color: rgba(196,30,58,0.08); animation-duration: 30s; }
+.gem-ring:nth-child(2) { width: 220px; height: 220px; border-color: rgba(196,30,58,0.12); animation-duration: 20s; animation-direction: reverse; }
+.gem-ring:nth-child(3) { width: 140px; height: 140px; border-color: rgba(196,30,58,0.18); animation-duration: 15s; }
+
+.gem-ring::before {
+  content: '';
+  position: absolute; top: -3px; left: 50%;
+  width: 6px; height: 6px;
+  background: var(--ruby);
+  clip-path: polygon(50% 0%, 85% 22%, 100% 55%, 72% 100%, 28% 100%, 0% 55%, 15% 22%);
+  transform: translateX(-50%);
+}
+
+.gem-center {
+  position: relative; z-index: 10;
+  width: 90px; height: 104px;
+  clip-path: polygon(50% 0%, 90% 22%, 100% 55%, 72% 100%, 28% 100%, 0% 55%, 10% 22%);
+  background: linear-gradient(140deg, #E8263F 0%, #C0172E 30%, #7A0F1E 65%, #3A0810 100%);
+  box-shadow: 0 0 80px rgba(196,30,58,0.4), 0 0 200px rgba(196,30,58,0.15);
+  animation: gem-breathe 4s ease-in-out infinite;
+}
+
+.about-values {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.value-row {
+  display: flex; align-items: flex-start; gap: 20px;
+  background: var(--surface);
+  padding: 22px 24px;
+  border-left: 2px solid transparent;
+  transition: border-left-color 0.25s, background 0.25s;
+}
+.value-row:hover { border-left-color: var(--ruby); background: var(--bg-raised); }
+.val-n {
+  font-family: var(--f-mono);
+  font-size: 8px; letter-spacing: 0.2em;
+  color: var(--ruby); flex-shrink: 0; margin-top: 2px;
+}
+.val-body h4 {
+  font-family: var(--f-sans);
+  font-weight: 700; font-size: 12px;
+  letter-spacing: 0.08em; text-transform: uppercase;
+  color: var(--bone); margin-bottom: 4px;
+}
+.val-body p {
+  font-size: 12px; line-height: 1.7; color: var(--muted);
+}
+
+/* ═══════════════════════════════════════════
+   WORK
+═══════════════════════════════════════════ */
+#work {
+  border-bottom: 1px solid var(--border);
+}
+.work-header {
+  padding: 80px 60px 0;
+  display: flex; align-items: flex-end; justify-content: space-between;
+}
+.section-label {
+  font-family: var(--f-mono);
+  font-size: 8px; letter-spacing: 0.45em;
+  text-transform: uppercase;
+  color: var(--ruby);
+  margin-bottom: 16px;
+}
+.section-title {
+  font-family: var(--f-display);
+  font-size: clamp(2.8rem, 5vw, 5rem);
+  font-weight: 900; line-height: 0.92;
+  letter-spacing: -0.015em;
+}
+.section-title em { font-style: italic; color: var(--ruby); }
+.work-view-all {
+  font-family: var(--f-mono);
+  font-size: 9px; letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ash);
+  transition: color 0.2s;
+  display: flex; align-items: center; gap: 10px;
+  padding-bottom: 8px;
+}
+.work-view-all::after { content: '→'; transition: transform 0.2s; }
+.work-view-all:hover { color: var(--ruby); }
+.work-view-all:hover::after { transform: translateX(4px); }
+
+.work-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 2px;
+  padding: 40px 60px 80px;
+}
+.work-card {
+  position: relative;
+  aspect-ratio: 3/4;
+  background: var(--surface);
+  overflow: hidden;
+  border: 1px solid var(--border);
+}
+/* The visual fill for each brand — each unique */
+.work-card-bg {
+  position: absolute; inset: 0;
+  transition: transform 0.6s var(--ease-out);
+}
+.work-card:hover .work-card-bg { transform: scale(1.06); }
+
+/* Brand-specific backgrounds */
+.work-card[data-brand="void"] .work-card-bg {
+  background-image: url('images/void-cover.png');
+  background-size: cover;
+  background-position: center;
+}
+.work-card[data-brand="yau"] .work-card-bg {
+  background-image: url('images/yau-tea.png');
+  background-size: cover;
+  background-position: center;
+}
+.work-card[data-brand="ageless"] .work-card-bg {
+  background-image: url('images/Totebag_4.png');
+  background-size: cover;
+  background-position: center;
+}
+.work-card[data-brand="nocturne"] .work-card-bg {
+  background: linear-gradient(160deg, #040408 0%, #08041A 50%, #100830 100%);
+}
+.work-card[data-brand="maison"] .work-card-bg {
+  background: linear-gradient(145deg, #0E0C0A 0%, #1A1610 50%, #2C2416 100%);
+}
+.work-card[data-brand="fluxr"] .work-card-bg {
+  background: linear-gradient(155deg, #040E10 0%, #041820 50%, #082A30 100%);
+}
+.work-card[data-brand="meridian"] .work-card-bg {
+  background: linear-gradient(150deg, #080C0A 0%, #0C1810 40%, #142418 100%);
+}
+.work-card[data-brand="neonrift"] .work-card-bg {
+  background: linear-gradient(140deg, #050010 0%, #0A0020 40%, #200040 70%, #100080 100%);
+}
+.work-card[data-brand="cartograph"] .work-card-bg {
+  background: linear-gradient(155deg, #0C0C08 0%, #1A1A0C 50%, #282810 100%);
+}
+.work-card[data-brand="groundwork"] .work-card-bg {
+  background: linear-gradient(145deg, #0C0A06 0%, #1C1408 50%, #301C08 100%);
+}
+
+/* Decorative accent per card */
+.work-card-accent {
+  position: absolute;
+  width: 60px; height: 60px;
+  bottom: 60px; right: 20px;
+  opacity: 0.15;
+  transition: opacity 0.4s;
+}
+.work-card:hover .work-card-accent { opacity: 0.4; }
+
+.work-card-info {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 20px;
+  background: linear-gradient(to top, rgba(4,2,1,0.9) 0%, rgba(4,2,1,0.4) 45%, transparent 70%);
+}
+.work-card-num {
+  font-family: var(--f-mono);
+  font-size: 8px; letter-spacing: 0.3em;
+  color: var(--ruby); margin-bottom: 8px;
+}
+.work-card-name {
+  font-family: var(--f-sans);
+  font-weight: 800; font-size: 16px;
+  letter-spacing: 0.03em;
+  color: var(--bone); line-height: 1;
+  margin-bottom: 4px;
+}
+.work-card-cat {
+  font-family: var(--f-mono);
+  font-size: 8px; letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  transition: color 0.3s;
+}
+.work-card:hover .work-card-cat { color: var(--ruby); }
+
+/* Hover overlay */
+.work-card-overlay {
+  position: absolute; inset: 0;
+  background: rgba(196,30,58,0.08);
+  opacity: 0;
+  transition: opacity 0.4s;
+  border: 1px solid rgba(196,30,58,0.25);
+}
+.work-card:hover .work-card-overlay { opacity: 1; }
+
+/* ═══════════════════════════════════════════
+   SERVICES
+═══════════════════════════════════════════ */
+#services {
+  padding: 120px 60px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg-raised);
+}
+.services-top {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  margin-bottom: 80px;
+  align-items: end;
+}
+.services-intro {
+  font-size: 15px; line-height: 1.9;
+  color: var(--muted); max-width: 480px;
+}
+.services-intro strong { color: var(--bone); }
+.services-count {
+  text-align: right;
+}
+.services-count .big-num {
+  font-family: var(--f-display);
+  font-weight: 900; font-size: 90px;
+  line-height: 1;
+  color: var(--border-mid);
+  letter-spacing: -0.04em;
+}
+.services-count .big-label {
+  font-family: var(--f-mono);
+  font-size: 9px; letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 2px;
+}
+.service-card {
+  background: var(--surface);
+  padding: 48px 40px;
+  border-top: 2px solid var(--border);
+  position: relative;
+  overflow: hidden;
+  transition: border-top-color 0.3s;
+}
+.service-card:hover { border-top-color: var(--ruby); }
+.service-card::after {
+  content: '';
+  position: absolute;
+  bottom: -60px; right: -60px;
+  width: 160px; height: 160px;
+  clip-path: polygon(50% 0%, 85% 22%, 100% 55%, 72% 100%, 28% 100%, 0% 55%, 15% 22%);
+  background: var(--ruby);
+  opacity: 0.03;
+  transition: opacity 0.4s, transform 0.4s;
+}
+.service-card:hover::after { opacity: 0.08; transform: scale(1.1); }
+
+.service-num {
+  font-family: var(--f-mono);
+  font-size: 9px; letter-spacing: 0.3em;
+  color: var(--ruby); margin-bottom: 36px;
+}
+.service-title {
+  font-family: var(--f-display);
+  font-weight: 700;
+  font-size: clamp(1.6rem, 2.5vw, 2.2rem);
+  line-height: 1.1;
+  color: var(--bone); margin-bottom: 20px;
+}
+.service-desc {
+  font-size: 14px; line-height: 1.85;
+  color: var(--muted); margin-bottom: 32px;
+}
+.service-list {
+  list-style: none;
+  display: flex; flex-direction: column; gap: 8px;
+}
+.service-list li {
+  font-family: var(--f-mono);
+  font-size: 10px; letter-spacing: 0.1em;
+  color: var(--ash);
+  display: flex; align-items: center; gap: 10px;
+}
+.service-list li::before {
+  content: '—'; color: var(--ruby-dim);
+}
+
+/* ═══════════════════════════════════════════
+   PROCESS
+═══════════════════════════════════════════ */
+#process {
+  padding: 120px 60px;
+  border-bottom: 1px solid var(--border);
+}
+.process-header { margin-bottom: 72px; }
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  position: relative;
+}
+/* Connecting line */
+.process-steps::before {
+  content: '';
+  position: absolute;
+  top: 28px; left: calc(12.5% + 10px); right: calc(12.5% + 10px);
+  height: 1px;
+  background: linear-gradient(to right, var(--ruby-dim), var(--border-mid), var(--ruby-dim));
+}
+.process-step {
+  padding: 0 32px;
+  position: relative;
+}
+.process-step:first-child { padding-left: 0; }
+.process-step:last-child { padding-right: 0; }
+
+.process-dot {
+  width: 56px; height: 56px;
+  clip-path: polygon(50% 0%, 85% 22%, 100% 55%, 72% 100%, 28% 100%, 0% 55%, 15% 22%);
+  background: var(--surface);
+  border: 1px solid var(--border-mid);
+  display: flex; align-items: center; justify-content: center;
+  margin-bottom: 32px;
+  position: relative; z-index: 1;
+  transition: background 0.3s;
+}
+.process-step:hover .process-dot {
+  background: linear-gradient(135deg, var(--ruby-bright), var(--ruby-dim));
+}
+.process-dot span {
+  font-family: var(--f-mono);
+  font-size: 11px; font-weight: 500;
+  color: var(--ruby);
+  transition: color 0.3s;
+}
+.process-step:hover .process-dot span { color: var(--bone); }
+
+.process-step-label {
+  font-family: var(--f-mono);
+  font-size: 8px; letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--ruby); margin-bottom: 12px;
+}
+.process-step-title {
+  font-family: var(--f-display);
+  font-weight: 700; font-size: 28px;
+  color: var(--bone); margin-bottom: 14px;
+  line-height: 1.1;
+}
+.process-step-desc {
+  font-size: 13px; line-height: 1.8;
+  color: var(--muted);
+}
+
+/* ═══════════════════════════════════════════
+   MANIFESTO STRIP
+═══════════════════════════════════════════ */
+#manifesto {
+  background: var(--ruby);
+  padding: 100px 60px;
+  position: relative;
+  overflow: hidden;
+}
+.manifesto-marquee {
+  position: absolute;
+  top: 50%; left: 0;
+  transform: translateY(-50%);
+  width: 100%;
+  overflow: hidden;
+  pointer-events: none;
+  z-index: 0;
+}
+.manifesto-marquee-track {
+  display: flex;
+  gap: 80px;
+  width: max-content;
+  animation: marquee-slide 18s linear infinite;
+}
+.manifesto-marquee-track span {
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-size: 20vw;
+  letter-spacing: -0.04em;
+  color: rgba(0,0,0,0.08);
+  white-space: nowrap;
+  line-height: 1;
+  flex-shrink: 0;
+}
+@keyframes marquee-slide {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.manifesto-inner-text {
+  position: relative; z-index: 1;
+  text-align: center;
+}
+.manifesto-eyebrow {
+  font-family: var(--f-mono);
+  font-size: 9px; letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: rgba(242,237,228,0.4);
+  margin-bottom: 36px;
+}
+.manifesto-statement {
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-size: clamp(2.2rem, 4.5vw, 4.2rem);
+  line-height: 1.08;
+  color: var(--bone);
+  max-width: 860px;
+  margin: 0 auto 36px;
+}
+.manifesto-statement em {
+  font-style: italic;
+  color: rgba(242,237,228,0.45);
+}
+.manifesto-credit {
+  font-family: var(--f-mono);
+  font-size: 9px; letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: rgba(242,237,228,0.35);
+}
+
+/* ═══════════════════════════════════════════
+   CONTACT
+═══════════════════════════════════════════ */
+#contact {
+  padding: 120px 60px;
+  border-bottom: 1px solid var(--border);
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 80px;
+  align-items: start;
+}
+.contact-left {}
+.contact-headline {
+  font-family: var(--f-display);
+  font-weight: 900;
+  font-size: clamp(3rem, 5vw, 5rem);
+  line-height: 0.9; letter-spacing: -0.015em;
+  margin-bottom: 40px;
+}
+.contact-headline em { font-style: italic; color: var(--ruby); }
+.contact-body {
+  font-size: 15px; line-height: 1.9;
+  color: var(--muted); max-width: 460px;
+  margin-bottom: 48px;
+}
+.contact-body strong { color: var(--bone); }
+.contact-methods {
+  display: flex; flex-direction: column; gap: 2px;
+}
+.contact-method {
+  display: flex; align-items: center; gap: 20px;
+  background: var(--surface);
+  padding: 20px 24px;
+  border-left: 2px solid transparent;
+  transition: border-left-color 0.25s, background 0.25s;
+}
+.contact-method:hover { border-left-color: var(--ruby); background: var(--bg-raised); }
+.cm-icon {
+  font-family: var(--f-mono);
+  font-size: 9px; letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--ruby); min-width: 60px;
+}
+.cm-value {
+  font-size: 13px; color: var(--bone);
+}
+
+.contact-right {
+  padding-top: 8px;
+}
+.contact-form-label {
+  font-family: var(--f-mono);
+  font-size: 8px; letter-spacing: 0.4em;
+  text-transform: uppercase;
+  color: var(--ruby); margin-bottom: 28px;
+}
+.form-group {
+  margin-bottom: 16px;
+}
+.form-group label {
+  font-family: var(--f-mono);
+  font-size: 8px; letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ash);
+  display: block; margin-bottom: 8px;
+}
+.form-group input,
+.form-group textarea {
+  width: 100%;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom: 1px solid var(--border-mid);
+  color: var(--bone);
+  font-family: var(--f-sans);
+  font-size: 14px;
+  padding: 14px 16px;
+  outline: none;
+  transition: border-color 0.2s, background 0.2s;
+  resize: none;
+}
+.form-group input:focus,
+.form-group textarea:focus {
+  border-color: var(--ruby);
+  background: var(--bg-raised);
+}
+.form-group input::placeholder,
+.form-group textarea::placeholder {
+  color: var(--ash);
+  font-size: 13px;
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; }
+.form-submit {
+  margin-top: 24px;
+  font-family: var(--f-mono);
+  font-size: 9px; letter-spacing: 0.28em;
+  text-transform: uppercase;
+  background: var(--ruby);
+  color: var(--bone);
+  border: none;
+  padding: 16px 40px;
+  cursor: none;
+  transition: background 0.25s;
+  display: flex; align-items: center; gap: 14px;
+}
+.form-submit:hover { background: var(--ruby-bright); }
+.form-submit::after { content: '→'; }
+
+/* ═══════════════════════════════════════════
+   FOOTER
+═══════════════════════════════════════════ */
+footer {
+  padding: 60px 60px 48px;
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 60px;
+  border-top: 1px solid var(--border);
+}
+.footer-brand {}
+.footer-gem-lockup {
+  display: flex; align-items: center; gap: 12px;
+  margin-bottom: 20px;
+}
+.footer-gem-shape {
+  width: 28px; height: 32px;
+  clip-path: polygon(50% 0%, 90% 22%, 100% 55%, 72% 100%, 28% 100%, 0% 55%, 10% 22%);
+  background: linear-gradient(135deg, var(--ruby-bright), var(--ruby-dim));
+  opacity: 0.5;
+}
+.footer-wordmark {
+  font-family: var(--f-sans);
+  font-weight: 800; font-size: 14px;
+  letter-spacing: 0.28em; text-transform: uppercase;
+  color: var(--muted);
+}
+.footer-wordmark span { color: var(--ruby-dim); }
+.footer-tagline {
+  font-family: var(--f-display);
+  font-style: italic;
+  font-size: 14px; color: var(--ash); line-height: 1.5;
+}
+.footer-col-label {
+  font-family: var(--f-mono);
+  font-size: 8px; letter-spacing: 0.35em;
+  text-transform: uppercase;
+  color: var(--ruby-dim); margin-bottom: 20px;
+}
+.footer-links {
+  display: flex; flex-direction: column; gap: 10px;
+}
+.footer-links a {
+  font-size: 13px; color: var(--ash);
+  transition: color 0.2s;
+}
+.footer-links a:hover { color: var(--bone); }
+.footer-bottom {
+  grid-column: 1 / -1;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+  display: flex; justify-content: space-between; align-items: center;
+}
+.footer-copy {
+  font-family: var(--f-mono);
+  font-size: 8px; letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ash);
+}
+.footer-copy span { color: var(--ruby-dim); }
+
+/* ═══════════════════════════════════════════
+   SCROLL REVEAL SYSTEM
+═══════════════════════════════════════════ */
+.sr {
+  opacity: 0;
+  transform: translateY(36px);
+  transition: opacity 0.9s var(--ease-out), transform 0.9s var(--ease-out);
+}
+.sr.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+.sr-delay-1 { transition-delay: 0.1s; }
+.sr-delay-2 { transition-delay: 0.2s; }
+.sr-delay-3 { transition-delay: 0.3s; }
+.sr-delay-4 { transition-delay: 0.4s; }
+
+/* ═══════════════════════════════════════════
+   ANIMATIONS
+═══════════════════════════════════════════ */
+@keyframes rise {
+  from { opacity: 0; transform: translateY(28px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+@keyframes ring-spin {
+  from { transform: rotate(0deg); }
+  to   { transform: rotate(360deg); }
+}
+@keyframes gem-breathe {
+  0%, 100% { box-shadow: 0 0 60px rgba(196,30,58,0.35), 0 0 160px rgba(196,30,58,0.12); }
+  50%       { box-shadow: 0 0 100px rgba(232,38,63,0.55), 0 0 240px rgba(196,30,58,0.2); }
+}
+@keyframes float-y {
+  0%, 100% { transform: translateY(0); }
+  50%       { transform: translateY(-8px); }
+}
+
+.nav-hamburger {
+  display: none;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+  width: 36px; height: 36px;
+  background: none;
+  border: none;
+  padding: 4px;
+  cursor: pointer;
+}
+.nav-hamburger span {
+  display: block;
+  width: 22px; height: 1.5px;
+  background: var(--bone);
+  transition: all 0.3s var(--ease-out);
+}
+.nav-hamburger.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.nav-hamburger.open span:nth-child(2) { opacity: 0; }
+.nav-hamburger.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+
+.nav-mobile-menu {
+  display: none;
+  position: fixed;
+  top: 56px; left: 0; right: 0;
+  background: rgba(8,6,4,0.97);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+  flex-direction: column;
+  padding: 28px 20px 36px;
+  gap: 4px;
+  z-index: 799;
+}
+.nav-mobile-menu.open { display: flex; }
+.nav-mobile-menu a {
+  font-family: var(--f-mono);
+  font-size: 11px; letter-spacing: 0.25em;
+  text-transform: uppercase;
+  color: var(--ash);
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+  transition: color 0.2s;
+}
+.nav-mobile-menu a:hover { color: var(--bone); }
+.nav-mobile-menu a:last-child { border-bottom: none; }
+
+@media (max-width: 900px) {
+  .nav-hamburger { display: flex; }
+}
+
+</style>
+</head>
+<body class="cursor-hover">
+
+<!-- CURSOR -->
+<div id="cursor" style="left: 595px; top: 388px;"><div id="cursor-dot"></div></div>
+<div id="cursor-ring" style="left: 594.4px; top: 388.8px;"></div>
+
+<!-- NAV -->
+<nav id="navbar" class="scrolled">
+  <div class="nav-brand">
+    <img src="./images/crust-logo.png" alt="Crust Media" style="height: 26px; width: auto;">
+    CRUST <span>MEDIA</span>
+  </div>
+  <div class="nav-links">
+    <a href="#about">Studio</a>
+    <a href="#work">Work</a>
+    <a href="#services">Services</a>
+    <a href="#process">Process</a>
+    <a href="#contact">Contact</a>
+  </div>
+  <a href="#contact" class="nav-cta">Start a Project</a>
+</nav>
+
+<button class="nav-hamburger" id="navHamburger" aria-label="Open menu">
+  <span></span><span></span><span></span>
+</button>
+<div class="nav-mobile-menu" id="navMobileMenu">
+  <a href="#about" onclick="closeMobileNav()">Studio</a>
+  <a href="#work" onclick="closeMobileNav()">Work</a>
+  <a href="#services" onclick="closeMobileNav()">Services</a>
+  <a href="#process" onclick="closeMobileNav()">Process</a>
+  <a href="#contact" onclick="closeMobileNav()">Contact</a>
+  <a href="#contact" class="nav-cta" onclick="closeMobileNav()" style="width:fit-content;margin-top:8px;">Start a Project</a>
+</div>
+
+<!-- ═══════════ HERO ═══════════ -->
+<section id="hero">
+  <div class="hero-glow"></div>
+  <div class="hero-grid"></div>
+
+  <div class="hero-inner">
+    <div class="hero-left">
+      <div class="hero-tag">Nairobi, Kenya — Creative Studio — Est. 2026</div>
+      <h1 class="hero-headline">
+        <span class="line-1">Every brand</span>
+        <span class="line-2">has a gem</span>
+        <span class="line-3">inside it.</span>
+      </h1>
+      <p class="hero-sub">
+        <strong>Crust Media</strong> is a full-service creative studio operating across brand identity,
+        video production, and strategic design. We don't apply templates to brands —
+        we excavate what's already there and build a world around it.
+      </p>
+      <div class="hero-cta-row">
+        <a href="#work" class="btn-primary">See the Work</a>
+        <a href="#about" class="btn-ghost">Our Philosophy</a>
+      </div>
+    </div>
+    <div class="hero-right">
+      <div class="hero-stat">
+        <div class="hero-stat-val"><span>10</span></div>
+        <div class="hero-stat-label">Brand Worlds Built</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">03</div>
+        <div class="hero-stat-label">Core Disciplines</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val"><span>01</span></div>
+        <div class="hero-stat-label">Founding Philosophy</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">∞</div>
+        <div class="hero-stat-label">Creative Range</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="hero-marquee">
+    <div class="marquee-track" id="marquee">
+      <div class="marquee-item">Brand Identity <span class="dot"></span></div>
+      <div class="marquee-item">Video Production <span class="dot"></span></div>
+      <div class="marquee-item">Strategic Design <span class="dot"></span></div>
+      <div class="marquee-item">VØID <span class="dot"></span></div>
+      <div class="marquee-item">Yau &amp; You <span class="dot"></span></div>
+      <div class="marquee-item">Ageless <span class="dot"></span></div>
+      <div class="marquee-item">Nocturne <span class="dot"></span></div>
+      <div class="marquee-item">Maison Veld <span class="dot"></span></div>
+      <div class="marquee-item">Fluxr <span class="dot"></span></div>
+      <div class="marquee-item">The Meridian <span class="dot"></span></div>
+      <div class="marquee-item">Neon Rift <span class="dot"></span></div>
+      <div class="marquee-item">Cartograph <span class="dot"></span></div>
+      <div class="marquee-item">Groundwork <span class="dot"></span></div>
+      <div class="marquee-item">Find the Gem <span class="dot"></span></div>
+      <!-- Duplicate for seamless loop -->
+      <div class="marquee-item">Brand Identity <span class="dot"></span></div>
+      <div class="marquee-item">Video Production <span class="dot"></span></div>
+      <div class="marquee-item">Strategic Design <span class="dot"></span></div>
+      <div class="marquee-item">VØID <span class="dot"></span></div>
+      <div class="marquee-item">Yau &amp; You <span class="dot"></span></div>
+      <div class="marquee-item">Ageless <span class="dot"></span></div>
+      <div class="marquee-item">Nocturne <span class="dot"></span></div>
+      <div class="marquee-item">Maison Veld <span class="dot"></span></div>
+      <div class="marquee-item">Fluxr <span class="dot"></span></div>
+      <div class="marquee-item">The Meridian <span class="dot"></span></div>
+      <div class="marquee-item">Neon Rift <span class="dot"></span></div>
+      <div class="marquee-item">Cartograph <span class="dot"></span></div>
+      <div class="marquee-item">Groundwork <span class="dot"></span></div>
+      <div class="marquee-item">Find the Gem <span class="dot"></span></div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ ABOUT ═══════════ -->
+<section id="about">
+  <div class="about-left sr visible">
+    <div class="about-label">01 — Studio</div>
+    <h2 class="about-headline">We dig.<br>We <em>cut.</em><br>We build.</h2>
+    <div class="about-body">
+      <p>
+        <strong>Crust Media was named for the layer you cut through to find what matters.</strong>
+        In geology, the crust is the outermost shell — the surface the world sees.
+        Beneath it: everything of value. Diamonds, rubies, gold.
+      </p>
+      <p>
+        We work on both sides of that line. We strip the surface of what a brand
+        has become — the tired language, the derivative visuals, the borrowed
+        personality — and find what it <em>actually is.</em> Then we build an entire
+        world around that truth.
+      </p>
+      <div class="about-pullquote">
+        "We don't make things look good.<br>
+        We make them mean something."
+      </div>
+      <p>
+        This portfolio represents ten fully realized brand worlds — each with its own
+        philosophy, visual system, audience, voice, and content strategy.
+        None of them borrow from each other. <strong>All of them are unmistakably Crust.</strong>
+      </p>
+    </div>
+  </div>
+
+  <div class="about-right sr sr-delay-2 visible">
+    <div class="about-gem-display">
+  <img src="./images/crust-logo.png" alt="Crust Media" style="width: 260px; height: auto;
+              filter: drop-shadow(0 0 40px rgba(192,23,46,0.4));
+              display: block; margin: 0 auto;">
+</div>
+
+    <div class="about-values">
+      <div class="value-row">
+        <div class="val-n">V.01</div>
+        <div class="val-body">
+          <h4>Precision Over Volume</h4>
+          <p>Every decision carries weight. Nothing ships without earning its place in the system.</p>
+        </div>
+      </div>
+      <div class="value-row">
+        <div class="val-n">V.02</div>
+        <div class="val-body">
+          <h4>The Work Is the Argument</h4>
+          <p>No credentials. No borrowed authority. The portfolio closes the case.</p>
+        </div>
+      </div>
+      <div class="value-row">
+        <div class="val-n">V.03</div>
+        <div class="val-body">
+          <h4>Africa-Rooted, Global Standard</h4>
+          <p>Nairobi is a vantage point, not a limitation. The work proves it.</p>
+        </div>
+      </div>
+      <div class="value-row">
+        <div class="val-n">V.04</div>
+        <div class="val-body">
+          <h4>Range Without Compromise</h4>
+          <p>Ten brands. Ten worlds. Zero aesthetic borrowing between them.</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ WORK ═══════════ -->
+<section id="work">
+  <div class="work-header sr visible">
+    <div>
+      <div class="section-label">02 — Selected Work</div>
+      <h2 class="section-title">Ten worlds.<br><em>One studio.</em></h2>
+    </div>
+    <a href="#contact" class="work-view-all">Commission a Brand</a>
+  </div>
+
+  <div class="work-grid sr visible">
+
+    <a href="void/void-brand-profile.html" class="work-card" data-brand="void" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s, transform 0.6s;">
+      <div class="work-card-bg"></div>
+      <div class="work-card-overlay"></div>
+      <img src="images/crust-logo.png" alt="Crust Media" style="position: absolute; bottom: 16px; right: 16px; height: 28px; width: auto; opacity: 0.15; transition: opacity 0.3s;">
+      <div class="work-card-info">
+        <div class="work-card-num">01</div>
+        <div class="work-card-name">VØID</div>
+        <div class="work-card-cat">Fashion &amp; Streetwear</div>
+      </div>
+    </a>
+
+    <a href="yau-and-you/yau-and-you-brand-profile.html" class="work-card" data-brand="yau" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s 0.05s, transform 0.6s 0.05s;">
+      <div class="work-card-bg"></div>
+      <div class="work-card-overlay"></div>
+      <img src="images/crust-logo.png" alt="Crust Media" style="position: absolute; bottom: 16px; right: 16px; height: 28px; width: auto; opacity: 0.15; transition: opacity 0.3s;">
+      <div class="work-card-info">
+        <div class="work-card-num">02</div>
+        <div class="work-card-name">YAU &amp; YOU</div>
+        <div class="work-card-cat">Botanical Beverage</div>
+      </div>
+    </a>
+
+    <a href="ageless/ageless-brand-profile.html" class="work-card" data-brand="ageless" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s 0.1s, transform 0.6s 0.1s;">
+      <div class="work-card-bg"></div>
+      <div class="work-card-overlay"></div>
+      <img src="images/crust-logo.png" alt="Crust Media" style="position: absolute; bottom: 16px; right: 16px; height: 28px; width: auto; opacity: 0.15; transition: opacity 0.3s;">
+      <div class="work-card-info">
+        <div class="work-card-num">03</div>
+        <div class="work-card-name">AGELESS</div>
+        <div class="work-card-cat">Wearable Art</div>
+      </div>
+    </a>
+
+    <div class="work-card" data-brand="nocturne" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s 0.15s, transform 0.6s 0.15s;">
+      <div class="work-card-bg"></div>
+      <div class="work-card-overlay"></div>
+      <img src="images/crust-logo.png" alt="Crust Media" style="position: absolute; bottom: 16px; right: 16px; height: 28px; width: auto; opacity: 0.15; transition: opacity 0.3s;">
+      <div class="work-card-info">
+        <div class="work-card-num">04</div>
+        <div class="work-card-name">NOCTURNE</div>
+        <div class="work-card-cat">Music &amp; Entertainment</div>
+        <div style="font-family:var(--f-mono); font-size:8px; letter-spacing:0.25em; text-transform:uppercase; color:rgba(196,30,58,0.5); margin-top:8px;">Coming Soon</div>
+      </div>
+    </div>
+
+    <div class="work-card" data-brand="maison" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s 0.2s, transform 0.6s 0.2s;">
+      <div class="work-card-bg"></div>
+      <div class="work-card-overlay"></div>
+      <img src="images/crust-logo.png" alt="Crust Media" style="position: absolute; bottom: 16px; right: 16px; height: 28px; width: auto; opacity: 0.15; transition: opacity 0.3s;">
+      <div class="work-card-info">
+        <div class="work-card-num">05</div>
+        <div class="work-card-name">MAISON VELD</div>
+        <div class="work-card-cat">Luxury &amp; Lifestyle</div>
+        <div style="font-family:var(--f-mono); font-size:8px; letter-spacing:0.25em; text-transform:uppercase; color:rgba(196,30,58,0.5); margin-top:8px;">Coming Soon</div>
+      </div>
+    </div>
+
+    <div class="work-card" data-brand="fluxr" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s 0.25s, transform 0.6s 0.25s;">
+      <div class="work-card-bg"></div>
+      <div class="work-card-overlay"></div>
+      <img src="images/crust-logo.png" alt="Crust Media" style="position: absolute; bottom: 16px; right: 16px; height: 28px; width: auto; opacity: 0.15; transition: opacity 0.3s;">
+      <div class="work-card-info">
+        <div class="work-card-num">06</div>
+        <div class="work-card-name">FLUXR</div>
+        <div class="work-card-cat">Creative Marketplace</div>
+        <div style="font-family:var(--f-mono); font-size:8px; letter-spacing:0.25em; text-transform:uppercase; color:rgba(196,30,58,0.5); margin-top:8px;">Coming Soon</div>
+      </div>
+    </div>
+
+    <div class="work-card" data-brand="meridian" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s 0.3s, transform 0.6s 0.3s;">
+      <div class="work-card-bg"></div>
+      <div class="work-card-overlay"></div>
+      <img src="images/crust-logo.png" alt="Crust Media" style="position: absolute; bottom: 16px; right: 16px; height: 28px; width: auto; opacity: 0.15; transition: opacity 0.3s;">
+      <div class="work-card-info">
+        <div class="work-card-num">07</div>
+        <div class="work-card-name">THE MERIDIAN</div>
+        <div class="work-card-cat">Hospitality</div>
+        <div style="font-family:var(--f-mono); font-size:8px; letter-spacing:0.25em; text-transform:uppercase; color:rgba(196,30,58,0.5); margin-top:8px;">Coming Soon</div>
+      </div>
+    </div>
+
+    <div class="work-card" data-brand="neonrift" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s 0.35s, transform 0.6s 0.35s;">
+      <div class="work-card-bg"></div>
+      <div class="work-card-overlay"></div>
+      <img src="images/crust-logo.png" alt="Crust Media" style="position: absolute; bottom: 16px; right: 16px; height: 28px; width: auto; opacity: 0.15; transition: opacity 0.3s;">
+      <div class="work-card-info">
+        <div class="work-card-num">08</div>
+        <div class="work-card-name">NEON RIFT</div>
+        <div class="work-card-cat">Gaming</div>
+        <div style="font-family:var(--f-mono); font-size:8px; letter-spacing:0.25em; text-transform:uppercase; color:rgba(196,30,58,0.5); margin-top:8px;">Coming Soon</div>
+      </div>
+    </div>
+
+    <div class="work-card" data-brand="cartograph" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s 0.4s, transform 0.6s 0.4s;">
+      <div class="work-card-bg"></div>
+      <div class="work-card-overlay"></div>
+      <img src="images/crust-logo.png" alt="Crust Media" style="position: absolute; bottom: 16px; right: 16px; height: 28px; width: auto; opacity: 0.15; transition: opacity 0.3s; filter: brightness(0) saturate(100%) invert(18%) sepia(85%) saturate(2000%) hue-rotate(340deg) brightness(90%);"> 
+      <div class="work-card-info">
+        <div class="work-card-num">09</div>
+        <div class="work-card-name">CARTOGRAPH</div>
+        <div class="work-card-cat">Adventure Travel</div>
+        <div style="font-family:var(--f-mono); font-size:8px; letter-spacing:0.25em; text-transform:uppercase; color:rgba(196,30,58,0.5); margin-top:8px;">Coming Soon</div>
+      </div>
+    </div>
+
+    <div class="work-card" data-brand="groundwork" style="opacity: 1; transform: translateY(0px); transition: opacity 0.6s 0.45s, transform 0.6s 0.45s;">
+      <div class="work-card-bg"></div>
+      <div class="work-card-overlay"></div>
+      <img src="images/crust-logo.png" alt="Crust Media" style="position: absolute; bottom: 16px; right: 16px; height: 28px; width: auto; opacity: 0.15; transition: opacity 0.3s;">
+      <div class="work-card-info">
+        <div class="work-card-num">10</div>
+        <div class="work-card-name">GROUNDWORK</div>
+        <div class="work-card-cat">Urban Development</div>
+        <div style="font-family:var(--f-mono); font-size:8px; letter-spacing:0.25em; text-transform:uppercase; color:rgba(196,30,58,0.5); margin-top:8px;">Coming Soon</div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ═══════════ SERVICES ═══════════ -->
+<section id="services">
+  <div class="services-top sr visible">
+    <div>
+      <div class="section-label">03 — Services</div>
+      <h2 class="section-title">Three disciplines.<br><em>One system.</em></h2>
+      <p class="services-intro" style="margin-top:28px;">
+        We don't offer everything — we offer the three things every brand actually needs
+        to exist in the world: a <strong>visual identity</strong>, a <strong>content presence</strong>,
+        and the <strong>strategic thinking</strong> that makes both coherent.
+      </p>
+    </div>
+    <div class="services-count">
+      <div class="big-num">03</div>
+      <div class="big-label">Disciplines</div>
+    </div>
+  </div>
+
+  <div class="services-grid sr visible">
+    <div class="service-card">
+      <div class="service-num">S.01</div>
+      <h3 class="service-title">Brand Identity</h3>
+      <p class="service-desc">
+        From naming to full visual systems. Logo, typography, colour, voice, and the rules
+        that make every application feel like it came from the same mind.
+        We build brands that don't just look good — they communicate something real.
+      </p>
+      <ul class="service-list">
+        <li>Logo design &amp; mark development</li>
+        <li>Full visual identity systems</li>
+        <li>Brand guidelines &amp; usage rules</li>
+        <li>Packaging design</li>
+        <li>Brand voice &amp; tone guides</li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">S.02</div>
+      <h3 class="service-title">Video Production</h3>
+      <p class="service-desc">
+        Brand films, social reels, corporate content, and motion graphics. We put brands
+        in motion — and keep eyes on them. Every frame is a brand decision.
+        Every cut is intentional.
+      </p>
+      <ul class="service-list">
+        <li>Brand films &amp; commercials</li>
+        <li>Social media reels &amp; TikTok</li>
+        <li>Corporate video production</li>
+        <li>Motion graphics &amp; animation</li>
+        <li>After Effects automation</li>
+      </ul>
+    </div>
+
+    <div class="service-card">
+      <div class="service-num">S.03</div>
+      <h3 class="service-title">Strategic Design</h3>
+      <p class="service-desc">
+        The thinking before the doing. Content strategy, social media systems, competitive
+        analysis, and the brand architecture that makes every creative decision coherent
+        and every output compound in value.
+      </p>
+      <ul class="service-list">
+        <li>Content strategy &amp; pillars</li>
+        <li>Social media system design</li>
+        <li>Competitive brand analysis</li>
+        <li>Campaign concepting</li>
+        <li>Portfolio consultation</li>
+      </ul>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ PROCESS ═══════════ -->
+<section id="process">
+  <div class="process-header sr visible">
+    <div class="section-label">04 — Process</div>
+    <h2 class="section-title">How we<br><em>excavate.</em></h2>
+  </div>
+  <div class="process-steps sr sr-delay-1 visible">
+    <div class="process-step" style="opacity: 1; transform: none; transition: opacity 0.7s, transform 0.7s;">
+      <div class="process-dot"><span>01</span></div>
+      <div class="process-step-label">Phase One</div>
+      <h3 class="process-step-title">Dig</h3>
+      <p class="process-step-desc">We ask the questions nobody else asks. Deep-dive into what the brand actually is, not what it says it is. This is where the gem gets found.</p>
+    </div>
+    <div class="process-step" style="opacity: 1; transform: none; transition: opacity 0.7s 0.12s, transform 0.7s 0.12s;">
+      <div class="process-dot"><span>02</span></div>
+      <div class="process-step-label">Phase Two</div>
+      <h3 class="process-step-title">Cut</h3>
+      <p class="process-step-desc">Precision removal. Everything that isn't the gem gets stripped — the borrowed language, the generic visuals, the identity that belongs to someone else.</p>
+    </div>
+    <div class="process-step" style="opacity: 1; transform: none; transition: opacity 0.7s 0.24s, transform 0.7s 0.24s;">
+      <div class="process-dot"><span>03</span></div>
+      <div class="process-step-label">Phase Three</div>
+      <h3 class="process-step-title">Polish</h3>
+      <p class="process-step-desc">The full world gets built. Visual system, voice, content strategy. Everything is designed to cohere — not to impress in isolation, but to mean something together.</p>
+    </div>
+    <div class="process-step" style="opacity: 1; transform: none; transition: opacity 0.7s 0.36s, transform 0.7s 0.36s;">
+      <div class="process-dot"><span>04</span></div>
+      <div class="process-step-label">Phase Four</div>
+      <h3 class="process-step-title">Deploy</h3>
+      <p class="process-step-desc">The brand goes into the world. We don't disappear at delivery. We measure, refine, and make sure the gem keeps catching light.</p>
+    </div>
+  </div>
+</section>
+
+<!-- ═══════════ MANIFESTO ═══════════ -->
+<section id="manifesto">
+  <div class="manifesto-marquee">
+  <div class="manifesto-marquee-track">
+    <span>FIND THE GEM</span>
+    <span>FIND THE GEM</span>
+    <span>FIND THE GEM</span>
+    <span>FIND THE GEM</span>
+  </div>
+</div>
+  <div class="manifesto-inner-text">
+    <div class="manifesto-eyebrow">Crust Media — Studio Manifesto — Nairobi, 2026</div>
+    <div class="manifesto-statement">
+      Every brand has a gem inside it.
+      <em>Most never find it.</em>
+      We dig until we do.
+    </div>
+    <div class="manifesto-credit">crustmedia.co · Find the Gem · Nairobi, Kenya</div>
+  </div>
+</section>
+
+<!-- ═══════════ CONTACT ═══════════ -->
+<section id="contact">
+  <div class="contact-left sr visible">
+    <div class="section-label">05 — Contact</div>
+    <h2 class="contact-headline">Let's find<br>your <em>gem.</em></h2>
+    <p class="contact-body">
+      Every great brand starts with one conversation.
+      <strong>Tell us what you're building</strong> — and we'll tell you what
+      it could actually be.
+    </p>
+    <div class="contact-methods">
+      <div class="contact-method">
+        <div class="cm-icon">Email</div>
+        <div class="cm-value">hello@crustmedia.co</div>
+      </div>
+      <div class="contact-method">
+        <div class="cm-icon">Studio</div>
+        <div class="cm-value">Nairobi, Kenya</div>
+      </div>
+      <div class="contact-method">
+        <div class="cm-icon">Instagram</div>
+        <div class="cm-value">@crustmedia</div>
+      </div>
+      <div class="contact-method">
+        <div class="cm-icon">TikTok</div>
+        <div class="cm-value">@crustmedia</div>
+      </div>
+    </div>
+  </div>
+
+  <div class="contact-right sr sr-delay-2 visible">
+    <div class="contact-form-label">Start a Conversation</div>
+    <div class="form-row">
+      <div class="form-group">
+        <label>Name</label>
+        <input type="text" placeholder="Your name">
+      </div>
+      <div class="form-group">
+        <label>Company</label>
+        <input type="text" placeholder="Your brand or company">
+      </div>
+    </div>
+    <div class="form-group">
+      <label>Email</label>
+      <input type="email" placeholder="your@email.com">
+    </div>
+    <div class="form-group">
+      <label>What are you building?</label>
+      <textarea rows="5" placeholder="Tell us about your brand, what you need, and what the gem might be..."></textarea>
+    </div>
+    <button class="form-submit">Send Message</button>
+  </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+  <div class="footer-brand">
+    <div class="footer-gem-lockup">
+      <img src="./images/crust-logo.png" alt="Crust Media" style="height: 36px; width: auto; opacity: 0.5;">
+      <div class="footer-wordmark">CRUST <span>MEDIA</span></div>
+    </div>
+    <div class="footer-tagline">"Find the gem.<br>Build the world."</div>
+  </div>
+
+  <div>
+  <div class="footer-col-label">Brand Roster</div>
+  <div class="footer-links">
+    <a href="void/void-brand-profile.html">VØID — Fashion</a>
+    <a href="yau-and-you/yau-and-you-brand-profile.html">Yau &amp; You — F&amp;B</a>
+    <a href="ageless/ageless-brand-profile.html">Ageless — Wearable Art</a>
+    <a href="#work">Nocturne — Music</a>
+    <a href="#work">Maison Veld — Luxury</a>
+    <a href="#work">Fluxr — Tech</a>
+    <a href="#work">The Meridian — Hospitality</a>
+    <a href="#work">Neon Rift — Gaming</a>
+    <a href="#work">Cartograph — Travel</a>
+    <a href="#work">Groundwork — Urban</a>
+  </div>
+</div>
+
+  <div>
+    <div class="footer-col-label">Studio</div>
+    <div class="footer-links">
+      <a href="#about">About</a>
+      <a href="#services">Services</a>
+      <a href="#process">Process</a>
+      <a href="#contact">Contact</a>
+    </div>
+    <div class="footer-col-label" style="margin-top:32px;">Disciplines</div>
+    <div class="footer-links">
+      <a href="#">Brand Identity</a>
+      <a href="#">Video Production</a>
+      <a href="#">Strategic Design</a>
+    </div>
+  </div>
+
+  <div class="footer-bottom">
+    <div class="footer-copy">© 2026 <span>Crust Media</span> — Nairobi, Kenya — All Rights Reserved</div>
+    <div class="footer-copy">Built by <span>Crust Media</span> · crustmedia.co</div>
+  </div>
+</footer>
+
+<script>
+/* ── Custom Cursor ── */
+const cursor = document.getElementById('cursor');
+const ring = document.getElementById('cursor-ring');
+let mx = 0, my = 0, rx = 0, ry = 0;
+
+document.addEventListener('mousemove', e => {
+  mx = e.clientX; my = e.clientY;
+  cursor.style.left = mx + 'px';
+  cursor.style.top  = my + 'px';
+});
+function animateRing() {
+  rx += (mx - rx) * 0.22;
+  ry += (my - ry) * 0.22;
+  ring.style.left = Math.round(rx * 10) / 10 + 'px';
+  ring.style.top  = Math.round(ry * 10) / 10 + 'px';
+  requestAnimationFrame(animateRing);
+}
+animateRing();
+
+const hovers = document.querySelectorAll('a, button, .work-card, .value-row, .service-card, .process-step, .contact-method, .hero-stat');
+hovers.forEach(el => {
+  el.addEventListener('mouseenter', () => document.body.classList.add('cursor-hover'));
+  el.addEventListener('mouseleave', () => document.body.classList.remove('cursor-hover'));
+});
+
+/* ── Nav scroll state ── */
+const navbar = document.getElementById('navbar');
+window.addEventListener('scroll', () => {
+  navbar.classList.toggle('scrolled', window.scrollY > 60);
+});
+
+/* ── Scroll Reveal ── */
+const srEls = document.querySelectorAll('.sr');
+const srObs = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+}, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+srEls.forEach(el => srObs.observe(el));
+
+/* ── Work grid stagger ── */
+const workCards = document.querySelectorAll('.work-card');
+workCards.forEach((card, i) => {
+  card.style.opacity = '0';
+  card.style.transform = 'translateY(24px)';
+  card.style.transition = `opacity 0.6s ${i * 0.05}s ease, transform 0.6s ${i * 0.05}s ease`;
+});
+const gridObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      workCards.forEach(card => {
+        card.style.opacity = '1';
+        card.style.transform = 'translateY(0)';
+      });
+    }
+  });
+}, { threshold: 0.05 });
+const wg = document.querySelector('.work-grid');
+if (wg) gridObs.observe(wg);
+
+/* ── Process steps stagger ── */
+const processSteps = document.querySelectorAll('.process-step');
+processSteps.forEach((step, i) => {
+  step.style.opacity = '0';
+  step.style.transform = 'translateY(20px)';
+  step.style.transition = `opacity 0.7s ${i * 0.12}s ease, transform 0.7s ${i * 0.12}s ease`;
+});
+const procObs = new IntersectionObserver(entries => {
+  entries.forEach(e => {
+    if (e.isIntersecting) {
+      processSteps.forEach(s => { s.style.opacity = '1'; s.style.transform = 'none'; });
+    }
+  });
+}, { threshold: 0.1 });
+const ps = document.querySelector('.process-steps');
+if (ps) procObs.observe(ps);
+
+/* ── Smooth anchor scroll ── */
+document.querySelectorAll('a[href^="#"]').forEach(a => {
+  a.addEventListener('click', e => {
+    const target = document.querySelector(a.getAttribute('href'));
+    if (target) { e.preventDefault(); target.scrollIntoView({ behavior: 'smooth' }); }
+  });
+});
+
+/* ── Mobile nav ── */
+const hamburger = document.getElementById('navHamburger');
+const mobileMenu = document.getElementById('navMobileMenu');
+
+hamburger.addEventListener('click', () => {
+  hamburger.classList.toggle('open');
+  mobileMenu.classList.toggle('open');
+  document.body.style.overflow = mobileMenu.classList.contains('open') ? 'hidden' : '';
+});
+
+function closeMobileNav() {
+  hamburger.classList.remove('open');
+  mobileMenu.classList.remove('open');
+  document.body.style.overflow = '';
+}
+</script>
+
+
+</body></html>

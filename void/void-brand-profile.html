@@ -1,0 +1,1503 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>VØID — Brand Profile</title>
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&family=Crimson+Pro:ital,wght@0,300;0,400;1,300;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --black: #080808;
+    --white: #f0ede8;
+    --off: #1a1a1a;
+    --mid: #2e2e2e;
+    --dim: #5a5a5a;
+    --acid: #c8ff00;
+    --red: #e8222a;
+    --font-display: 'Bebas Neue', sans-serif;
+    --font-mono: 'Space Mono', monospace;
+    --font-body: 'Crimson Pro', serif;
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--white);
+    font-family: var(--font-body);
+    overflow-x: hidden;
+    cursor: crosshair;
+  }
+
+  /* NOISE OVERLAY */
+  body::before {
+    content: '';
+    position: fixed;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+    pointer-events: none;
+    z-index: 9999;
+    opacity: 0.6;
+  }
+
+  /* HERO */
+  .hero {
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    padding: 4rem;
+    position: relative;
+    border-bottom: 1px solid var(--mid);
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute;
+    inset: 0;
+    background: 
+      radial-gradient(ellipse 60% 40% at 80% 20%, rgba(200,255,0,0.04) 0%, transparent 60%),
+      radial-gradient(ellipse 40% 60% at 10% 80%, rgba(232,34,42,0.06) 0%, transparent 50%);
+  }
+
+  .hero-eyebrow {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 1.5rem;
+    animation: fadeUp 1s ease both;
+  }
+
+  .hero-title {
+    font-family: var(--font-display);
+    font-size: clamp(8rem, 22vw, 20rem);
+    line-height: 0.85;
+    letter-spacing: -0.01em;
+    color: var(--white);
+    animation: fadeUp 1s 0.1s ease both;
+    position: relative;
+  }
+
+  .hero-title .slash {
+    color: var(--acid);
+  }
+
+  .hero-tagline {
+    font-family: var(--font-mono);
+    font-size: 0.75rem;
+    letter-spacing: 0.25em;
+    color: var(--dim);
+    margin-top: 2rem;
+    text-transform: uppercase;
+    animation: fadeUp 1s 0.2s ease both;
+  }
+
+  .hero-meta {
+    position: absolute;
+    top: 4rem;
+    right: 4rem;
+    text-align: right;
+    animation: fadeUp 1s 0.3s ease both;
+  }
+
+  .hero-meta span {
+    display: block;
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    text-transform: uppercase;
+    line-height: 2;
+  }
+
+  .hero-meta span strong {
+    color: var(--white);
+    font-weight: 400;
+  }
+
+  .scroll-hint {
+    position: absolute;
+    bottom: 2rem;
+    right: 4rem;
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: var(--dim);
+    text-transform: uppercase;
+    animation: pulse 2s ease infinite;
+  }
+
+  /* SECTIONS */
+  section {
+    padding: 6rem 4rem;
+    border-bottom: 1px solid var(--mid);
+    animation: fadeUp 0.8s ease both;
+  }
+
+  .section-label {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.4em;
+    color: var(--acid);
+    text-transform: uppercase;
+    margin-bottom: 3rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+  }
+
+  .section-label::after {
+    content: '';
+    flex: 1;
+    height: 1px;
+    background: var(--mid);
+    max-width: 200px;
+  }
+
+  .section-title {
+    font-family: var(--font-display);
+    font-size: clamp(3rem, 8vw, 7rem);
+    line-height: 0.9;
+    margin-bottom: 3rem;
+    letter-spacing: 0.02em;
+  }
+
+  /* IDENTITY */
+  .identity-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+  }
+
+  .identity-block h3 {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: var(--dim);
+    margin-bottom: 1rem;
+  }
+
+  .identity-block p {
+    font-size: 1.15rem;
+    line-height: 1.7;
+    color: var(--white);
+    font-weight: 300;
+  }
+
+  .identity-block p em {
+    font-style: italic;
+    color: #b0ad a8;
+  }
+
+  .tagline-big {
+    font-family: var(--font-display);
+    font-size: clamp(2rem, 5vw, 4.5rem);
+    line-height: 1;
+    color: var(--white);
+    border-left: 2px solid var(--acid);
+    padding-left: 2rem;
+    margin: 3rem 0;
+  }
+
+  /* PALETTE */
+  .palette-row {
+    display: flex;
+    gap: 0;
+    height: 120px;
+    margin-bottom: 2rem;
+    overflow: hidden;
+  }
+
+  .swatch {
+    flex: 1;
+    display: flex;
+    align-items: flex-end;
+    padding: 0.75rem;
+    transition: flex 0.4s ease;
+    position: relative;
+    cursor: default;
+  }
+
+  .swatch:hover { flex: 2; }
+
+  .swatch-label {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+
+  .swatch-name { display: block; font-weight: 700; }
+  .swatch-hex { display: block; opacity: 0.6; }
+
+  .sw-black { background: #080808; }
+  .sw-void { background: #111111; }
+  .sw-slate { background: #1e1e1e; }
+  .sw-ash { background: #3d3d3d; }
+  .sw-bone { background: #f0ede8; color: #080808; }
+  .sw-acid { background: #c8ff00; color: #080808; }
+  .sw-blood { background: #e8222a; }
+
+  /* TYPOGRAPHY */
+  .type-showcase {
+    margin: 3rem 0;
+  }
+
+  .type-row {
+    border-top: 1px solid var(--mid);
+    padding: 1.5rem 0;
+    display: grid;
+    grid-template-columns: 200px 1fr;
+    gap: 2rem;
+    align-items: center;
+  }
+
+  .type-meta {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    text-transform: uppercase;
+    line-height: 1.8;
+  }
+
+  .type-sample-display {
+    font-family: var(--font-display);
+    font-size: 3rem;
+    letter-spacing: 0.05em;
+  }
+
+  .type-sample-mono {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    letter-spacing: 0.1em;
+  }
+
+  .type-sample-body {
+    font-family: var(--font-body);
+    font-size: 1.2rem;
+    font-weight: 300;
+    font-style: italic;
+    line-height: 1.5;
+  }
+
+  /* AUDIENCE */
+  .persona-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 3rem;
+  }
+
+  .persona-card {
+    background: var(--off);
+    padding: 2.5rem 2rem;
+    position: relative;
+    transition: background 0.3s;
+  }
+
+  .persona-card:hover { background: var(--mid); }
+
+  .persona-card::before {
+    content: attr(data-num);
+    position: absolute;
+    top: 1.5rem;
+    right: 1.5rem;
+    font-family: var(--font-display);
+    font-size: 4rem;
+    color: var(--black);
+    line-height: 1;
+  }
+
+  .persona-card h3 {
+    font-family: var(--font-display);
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+    position: relative;
+  }
+
+  .persona-card .age {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    color: var(--acid);
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+    display: block;
+  }
+
+  .persona-card p {
+    font-size: 0.95rem;
+    line-height: 1.7;
+    color: #a0a0a0;
+    font-weight: 300;
+  }
+
+  .persona-tags {
+    margin-top: 1.5rem;
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+  }
+
+  .tag {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.15em;
+    text-transform: uppercase;
+    padding: 0.3rem 0.7rem;
+    border: 1px solid var(--mid);
+    color: var(--dim);
+  }
+
+  /* VOICE */
+  .voice-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+    margin: 3rem 0;
+  }
+
+  .voice-card {
+    padding: 2.5rem;
+    background: var(--off);
+  }
+
+  .voice-card.yes { border-top: 2px solid var(--acid); }
+  .voice-card.no { border-top: 2px solid var(--red); }
+
+  .voice-card h3 {
+    font-family: var(--font-mono);
+    font-size: 0.65rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    margin-bottom: 1.5rem;
+  }
+
+  .voice-card.yes h3 { color: var(--acid); }
+  .voice-card.no h3 { color: var(--red); }
+
+  .voice-card ul {
+    list-style: none;
+  }
+
+  .voice-card ul li {
+    font-size: 1rem;
+    line-height: 1.9;
+    color: #a0a0a0;
+    font-weight: 300;
+    padding-left: 1rem;
+    position: relative;
+  }
+
+  .voice-card.yes ul li::before { content: '+'; position: absolute; left: 0; color: var(--acid); font-family: var(--font-mono); }
+  .voice-card.no ul li::before { content: '—'; position: absolute; left: 0; color: var(--red); font-family: var(--font-mono); }
+
+  .caption-example {
+    background: var(--off);
+    border-left: 2px solid var(--acid);
+    padding: 2rem;
+    margin: 2rem 0;
+    font-family: var(--font-mono);
+    font-size: 0.8rem;
+    line-height: 2;
+    color: var(--white);
+  }
+
+  .caption-example .platform {
+    display: block;
+    font-size: 0.55rem;
+    letter-spacing: 0.3em;
+    color: var(--dim);
+    text-transform: uppercase;
+    margin-bottom: 1rem;
+  }
+
+  /* CONTENT PILLARS */
+  .pillar-list {
+    margin-top: 3rem;
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+
+  .pillar {
+    display: grid;
+    grid-template-columns: 80px 1fr 1fr;
+    gap: 2rem;
+    align-items: start;
+    padding: 2.5rem 2rem;
+    background: var(--off);
+    transition: background 0.3s;
+  }
+
+  .pillar:hover { background: var(--mid); }
+
+  .pillar-num {
+    font-family: var(--font-display);
+    font-size: 4rem;
+    color: var(--mid);
+    line-height: 1;
+    transition: color 0.3s;
+  }
+
+  .pillar:hover .pillar-num { color: var(--acid); }
+
+  .pillar-name {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .pillar-desc {
+    font-size: 0.95rem;
+    color: #a0a0a0;
+    font-weight: 300;
+    line-height: 1.6;
+  }
+
+  .pillar-formats {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.15em;
+    color: var(--dim);
+    text-transform: uppercase;
+    line-height: 2.2;
+  }
+
+  /* POST CONCEPTS */
+  .posts-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 2px;
+    margin-top: 3rem;
+  }
+
+  .post-card {
+    background: var(--off);
+    padding: 0;
+    overflow: hidden;
+    position: relative;
+    aspect-ratio: 9/14;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .post-visual {
+    flex: 1;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .post-visual-content {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  .post-v1 { background: #111; }
+  .post-v2 { background: #0d0d0d; }
+  .post-v3 { background: #0a0a0a; }
+
+  .post-text-art {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    color: rgba(240,237,232,0.06);
+    text-align: center;
+    line-height: 0.85;
+    padding: 1rem;
+    letter-spacing: 0.05em;
+  }
+
+  .post-accent {
+    position: absolute;
+    width: 1px;
+    background: var(--acid);
+    top: 15%;
+    bottom: 15%;
+    left: 50%;
+    opacity: 0.4;
+  }
+
+  .post-dot {
+    width: 4px;
+    height: 4px;
+    background: var(--acid);
+    border-radius: 50%;
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    box-shadow: 0 0 20px var(--acid);
+  }
+
+  .post-circle {
+    width: 60%;
+    height: auto;
+    aspect-ratio: 1;
+    border: 1px solid rgba(240,237,232,0.08);
+    border-radius: 50%;
+    position: absolute;
+  }
+
+  .post-type {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.3em;
+    color: var(--acid);
+    text-transform: uppercase;
+    padding: 0.75rem 1rem;
+    background: rgba(0,0,0,0.5);
+  }
+
+  .post-info {
+    padding: 1.25rem;
+    background: var(--off);
+  }
+
+  .post-title {
+    font-family: var(--font-display);
+    font-size: 1.1rem;
+    margin-bottom: 0.5rem;
+    letter-spacing: 0.05em;
+  }
+
+  .post-caption {
+    font-size: 0.75rem;
+    line-height: 1.6;
+    color: #7a7a7a;
+    font-weight: 300;
+    font-family: var(--font-mono);
+  }
+
+  /* PRODUCT / PACKAGING */
+  .packaging-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 4rem;
+    margin-top: 3rem;
+  }
+
+  .package-item h3 {
+    font-family: var(--font-display);
+    font-size: 2rem;
+    margin-bottom: 1rem;
+  }
+
+  .package-item p {
+    font-size: 1rem;
+    line-height: 1.8;
+    color: #a0a0a0;
+    font-weight: 300;
+  }
+
+  .package-visual {
+    background: var(--off);
+    aspect-ratio: 4/3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-bottom: 1.5rem;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .package-visual-inner {
+    font-family: var(--font-display);
+    font-size: 0.7rem;
+    letter-spacing: 0.5em;
+    color: rgba(240,237,232,0.15);
+    text-transform: uppercase;
+    position: relative;
+  }
+
+  .package-visual::before {
+    content: '';
+    position: absolute;
+    inset: 1.5rem;
+    border: 1px solid rgba(240,237,232,0.06);
+  }
+
+  /* TIKTOK */
+  .tiktok-section {
+    background: var(--off);
+    padding: 4rem;
+    margin: 3rem 0;
+  }
+
+  .hook-list {
+    margin-top: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .hook {
+    padding: 1.5rem 2rem;
+    background: var(--black);
+    border-left: 2px solid transparent;
+    transition: border-color 0.3s;
+    display: grid;
+    grid-template-columns: 1fr auto;
+    align-items: center;
+    gap: 2rem;
+  }
+
+  .hook:hover { border-color: var(--acid); }
+
+  .hook-text {
+    font-family: var(--font-mono);
+    font-size: 0.85rem;
+    line-height: 1.6;
+    color: var(--white);
+  }
+
+  .hook-type {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    text-transform: uppercase;
+    white-space: nowrap;
+  }
+
+  /* FOOTER */
+  footer {
+    padding: 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-end;
+  }
+
+  footer .logo {
+    font-family: var(--font-display);
+    font-size: 5rem;
+    color: var(--mid);
+    line-height: 1;
+  }
+
+  footer .credits {
+    font-family: var(--font-mono);
+    font-size: 0.55rem;
+    letter-spacing: 0.2em;
+    color: var(--dim);
+    text-align: right;
+    line-height: 2;
+  }
+
+  /* ANIMATIONS */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  @keyframes pulse {
+    0%, 100% { opacity: 0.3; }
+    50% { opacity: 0.8; }
+  }
+
+  /* NAV */
+  nav {
+    position: fixed;
+    top: 30px;
+    left: 0;
+    right: 0;
+    z-index: 100;
+    padding: 1.5rem 4rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(8,8,8,0.85);
+    backdrop-filter: blur(10px);
+    border-bottom: 1px solid var(--mid);
+  }
+
+  nav .nav-logo {
+    font-family: var(--font-display);
+    font-size: 1.5rem;
+    letter-spacing: 0.1em;
+  }
+
+  nav .nav-links {
+    display: flex;
+    gap: 2.5rem;
+  }
+
+  nav .nav-links a {
+    font-family: var(--font-mono);
+    font-size: 0.6rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: var(--dim);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+
+  nav .nav-links a:hover { color: var(--white); }
+
+  .divider {
+    height: 1px;
+    background: linear-gradient(to right, transparent, var(--mid), transparent);
+    margin: 3rem 0;
+  }
+
+  blockquote {
+    font-family: var(--font-body);
+    font-size: clamp(1.4rem, 3vw, 2.5rem);
+    font-style: italic;
+    font-weight: 300;
+    line-height: 1.4;
+    color: var(--white);
+    padding: 3rem 4rem;
+    border-top: 1px solid var(--mid);
+    border-bottom: 1px solid var(--mid);
+    position: relative;
+    margin: 3rem 0;
+  }
+
+  blockquote::before {
+    content: '"';
+    font-family: var(--font-display);
+    font-size: 8rem;
+    color: var(--acid);
+    position: absolute;
+    top: -1rem;
+    left: 2rem;
+    line-height: 1;
+    opacity: 0.2;
+  }
+  /* ── CRUST MEDIA PARENT BAR ── */
+  #crust-bar {
+    position: fixed;
+    top: 0; left: 0; right: 0;
+    z-index: 9000;
+    height: 30px;
+    background: #050505;
+    border-bottom: 1px solid rgba(200,255,0,0.1);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 2.5rem;
+  }
+  #crust-bar-back {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.3em;
+    text-transform: uppercase;
+    color: rgba(200,255,0,0.4);
+    text-decoration: none;
+    transition: color 0.2s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  #crust-bar-back:hover { color: var(--acid); }
+  #crust-bar-label {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(240,237,232,0.15);
+    position: absolute;
+    left: 50%;
+    transform: translateX(-50%);
+  }
+  #crust-bar-right {
+    font-family: var(--font-mono);
+    font-size: 0.5rem;
+    letter-spacing: 0.25em;
+    text-transform: uppercase;
+    color: rgba(240,237,232,0.2);
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+  #crust-bar-right a {
+    color: rgba(200,255,0,0.35);
+    text-decoration: none;
+    transition: color 0.2s;
+  }
+  #crust-bar-right a:hover { color: var(--acid); }
+  
+  
+
+/* ── Tablet (≤900px) ── */
+@media (max-width: 900px) {
+  .hero {
+    padding: 3rem 2.5rem;
+  }
+  .hero-title {
+    font-size: clamp(5rem, 18vw, 12rem);
+  }
+  .hero-meta {
+    top: 2.5rem;
+    right: 2.5rem;
+  }
+
+  section {
+    padding: 4rem 2.5rem;
+  }
+
+  .identity-grid {
+    grid-template-columns: 1fr;
+    gap: 2.5rem;
+  }
+
+  .persona-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .voice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pillar {
+    grid-template-columns: 60px 1fr;
+    gap: 1.5rem;
+  }
+  .pillar-formats {
+    grid-column: 2 / -1;
+  }
+
+  .posts-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .packaging-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .type-row {
+    grid-template-columns: 140px 1fr;
+  }
+
+  .tiktok-section {
+    padding: 2rem;
+  }
+
+  footer {
+    padding: 3rem 2.5rem;
+  }
+}
+
+/* ── Mobile (≤600px) ── */
+@media (max-width: 600px) {
+  body { cursor: auto; }
+
+  .hero {
+    padding: 2.5rem 1.25rem;
+    justify-content: flex-end;
+    min-height: 100svh;
+  }
+  .hero-title {
+    font-size: clamp(4.5rem, 22vw, 9rem);
+    line-height: 0.88;
+  }
+  .hero-tagline {
+    font-size: 0.65rem;
+    letter-spacing: 0.2em;
+  }
+  .hero-meta {
+    position: static;
+    text-align: left;
+    margin-bottom: 1.5rem;
+  }
+  .hero-meta span {
+    line-height: 1.8;
+  }
+
+  section {
+    padding: 3rem 1.25rem;
+  }
+  .section-title {
+    font-size: clamp(2.2rem, 10vw, 4rem);
+  }
+
+  .identity-grid {
+    grid-template-columns: 1fr;
+    gap: 2rem;
+  }
+  .tagline-big {
+    font-size: clamp(1.5rem, 6vw, 2.5rem);
+    padding-left: 1.25rem;
+  }
+
+  .palette-row {
+    height: 88px;
+  }
+
+  .type-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+  .type-meta {
+    padding-bottom: 0.75rem;
+  }
+  .type-sample-display {
+    font-size: 2.2rem;
+  }
+
+  .persona-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .voice-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .pillar {
+    grid-template-columns: 1fr;
+    gap: 0.75rem;
+  }
+  .pillar-num {
+    font-size: 2.5rem;
+    line-height: 1;
+  }
+  .pillar-formats {
+    padding-top: 0.5rem;
+    border-top: 1px solid var(--mid);
+  }
+
+  .hook-list {
+    gap: 0;
+  }
+
+  .posts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .packaging-grid {
+    grid-template-columns: 1fr;
+  }
+
+  footer {
+    padding: 2.5rem 1.25rem;
+    text-align: left;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<!-- CRUST MEDIA PARENT BAR -->
+<div id="crust-bar">
+  <a href="../index.html" id="crust-bar-back">← Crust Media</a>
+  <div id="crust-bar-label">Crust Media — Brand Portfolio 2025</div>
+  <div id="crust-bar-right">
+    Brand 01 / 10
+    <a href="void-social-content-kit.html">Content Kit →</a>
+  </div>
+</div>
+
+<nav>
+  <span class="nav-logo">VØID</span>
+  <div class="nav-links">
+    <a href="#identity">Identity</a>
+    <a href="#palette">Palette</a>
+    <a href="#audience">Audience</a>
+    <a href="#voice">Voice</a>
+    <a href="#content">Content</a>
+    <a href="#posts">Posts</a>
+    <a href="#packaging">Packaging</a>
+  </div>
+</nav>
+
+<!-- HERO -->
+<section class="hero">
+  <div class="hero-bg"></div>
+  <div class="hero-meta">
+    <span>Industry <strong>Fashion & Streetwear</strong></span>
+    <span>Founded <strong>—</strong></span>
+    <span>HQ <strong>No fixed address</strong></span>
+    <span>Category <strong>Anti-Hype Apparel</strong></span>
+    <span>Brand No. <strong>01 / 10</strong></span>
+  </div>
+  <p class="hero-eyebrow">Crust Media — Brand Portfolio 2025</p>
+  <h1 class="hero-title">V<span class="slash">Ø</span>ID</h1>
+  <p class="hero-tagline">Wear nothing. Mean everything.</p>
+  <span class="scroll-hint">↓ Scroll to explore</span>
+</section>
+
+<!-- IDENTITY -->
+<section id="identity">
+  <p class="section-label">01 — Brand Identity</p>
+  <h2 class="section-title">WHO IS<br>VØID?</h2>
+
+  <div class="identity-grid">
+    <div class="identity-block">
+      <h3>Origin Story</h3>
+      <p>VØID was born in a storage unit somewhere between Tokyo and East London. No investors. No mood boards. No PR firm. Just the conviction that fashion had become noise — and silence was the only honest response.<br><br>
+      Every piece is a refusal. A refusal to explain. A refusal to perform. A refusal to apologize for taking up space without announcing it.</p>
+    </div>
+    <div class="identity-block">
+      <h3>Brand Essence</h3>
+      <p>VØID doesn't sell clothes. It sells the absence of effort that comes from absolute certainty. The brand exists in the negative space — what's removed, stripped back, unsaid.<br><br>
+      Its customers don't need to be seen. They already know who they are. VØID is the uniform of people who have stopped trying to convince anyone of anything.</p>
+    </div>
+  </div>
+
+  <div class="tagline-big">
+    Wear nothing.<br>Mean everything.
+  </div>
+
+  <div class="identity-grid">
+    <div class="identity-block">
+      <h3>Mission</h3>
+      <p>To strip streetwear down to its skeleton — and find out what's actually left when you remove the hype, the collab, the drop, the algorithm, and the clout.</p>
+    </div>
+    <div class="identity-block">
+      <h3>Vision</h3>
+      <p>A world where what you don't wear says more than what you do. Where restraint is the loudest flex. Where buying less, choosing harder, and meaning it deeply is the only trend that matters.</p>
+    </div>
+  </div>
+
+  <blockquote>
+    The most dangerous thing you can do in fashion is nothing. VØID does nothing — with extreme precision.
+  </blockquote>
+
+  <div class="identity-grid">
+    <div class="identity-block">
+      <h3>Brand Archetype</h3>
+      <p><strong>The Outlaw + The Creator.</strong> VØID rejects the establishment's rules entirely — not out of rebellion for its own sake, but because the rules were always someone else's. It creates from the rubble.</p>
+    </div>
+    <div class="identity-block">
+      <h3>Brand Values</h3>
+      <p><strong>Restraint.</strong> Less is not a budget decision — it's a philosophical one.<br><br>
+      <strong>Permanence.</strong> Trends don't live here. Only things worth keeping.<br><br>
+      <strong>Radical honesty.</strong> No aspirational fiction. No lifestyle performance.</p>
+    </div>
+  </div>
+</section>
+
+<!-- PALETTE -->
+<section id="palette">
+  <p class="section-label">02 — Visual Identity</p>
+  <h2 class="section-title">COLOR &<br>TYPOGRAPHY</h2>
+
+  <div class="palette-row">
+    <div class="swatch sw-black">
+      <div class="swatch-label">
+        <span class="swatch-name">Abyss</span>
+        <span class="swatch-hex">#080808</span>
+      </div>
+    </div>
+    <div class="swatch sw-void">
+      <div class="swatch-label">
+        <span class="swatch-name">VØID Black</span>
+        <span class="swatch-hex">#111111</span>
+      </div>
+    </div>
+    <div class="swatch sw-slate">
+      <div class="swatch-label">
+        <span class="swatch-name">Dead Slate</span>
+        <span class="swatch-hex">#1e1e1e</span>
+      </div>
+    </div>
+    <div class="swatch sw-ash">
+      <div class="swatch-label">
+        <span class="swatch-name">Cold Ash</span>
+        <span class="swatch-hex">#3d3d3d</span>
+      </div>
+    </div>
+    <div class="swatch sw-bone">
+      <div class="swatch-label">
+        <span class="swatch-name">Bone</span>
+        <span class="swatch-hex">#f0ede8</span>
+      </div>
+    </div>
+    <div class="swatch sw-acid">
+      <div class="swatch-label">
+        <span class="swatch-name">Acid Signal</span>
+        <span class="swatch-hex">#c8ff00</span>
+      </div>
+    </div>
+    <div class="swatch sw-blood">
+      <div class="swatch-label">
+        <span class="swatch-name">Archive Red</span>
+        <span class="swatch-hex">#e8222a</span>
+      </div>
+    </div>
+  </div>
+
+  <div class="type-showcase">
+    <div class="type-row">
+      <div class="type-meta">
+        Display / Headlines<br>Bebas Neue<br>All caps, tight tracking
+      </div>
+      <div class="type-sample-display">THE ABSENCE IS THE STATEMENT</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        Data / Labels / UI<br>Space Mono<br>Small, wide tracking
+      </div>
+      <div class="type-sample-mono">DROP 001 — LIMITED RUN — EST. MMXXV</div>
+    </div>
+    <div class="type-row">
+      <div class="type-meta">
+        Body / Editorial<br>Crimson Pro Italic<br>Light weight, generous leading
+      </div>
+      <div class="type-sample-body">
+        <em>Nothing about this is accidental. Everything about this is considered. We made fewer choices so each one could carry more weight.</em>
+      </div>
+    </div>
+  </div>
+
+  <div class="identity-grid" style="margin-top: 3rem;">
+    <div class="identity-block">
+      <h3>Logo Philosophy</h3>
+      <p>The Ø is the only decoration VØID allows. A letter interrupted by its own negation. The word void rendered in a typeface that doesn't ask for permission. No icon. No wordmark flourish. Just weight and emptiness in balance.</p>
+    </div>
+    <div class="identity-block">
+      <h3>Photography Style</h3>
+      <p>Shot on grain-heavy film or aggressively desaturated digital. Models who look like they're not modeling. Environments that feel abandoned but chosen. Movement over pose. Blur over perfection. No studio light.</p>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section id="audience">
+  <p class="section-label">03 — Target Audience</p>
+  <h2 class="section-title">WHO WEARS<br>THE VOID?</h2>
+
+  <div class="persona-grid">
+    <div class="persona-card" data-num="I">
+      <h3>The Architect</h3>
+      <span class="age">Ages 22–30 · Urban · Creative Industry</span>
+      <p>Works in design, architecture, or music. Reads Susan Sontag. Owns twelve all-black outfits and no bright ones. Has strong opinions about typography and says almost nothing at parties — but everyone remembers them when they leave.</p>
+      <div class="persona-tags">
+        <span class="tag">Dieter Rams</span>
+        <span class="tag">Brutalism</span>
+        <span class="tag">Raf Simons</span>
+        <span class="tag">Film Photography</span>
+        <span class="tag">Record Collector</span>
+      </div>
+    </div>
+    <div class="persona-card" data-num="II">
+      <h3>The Quiet Kid</h3>
+      <span class="age">Ages 18–25 · Any city · Online-native</span>
+      <p>Discovered VØID through a Reddit deep-dive or an obscure corner of TikTok. Anti-hype before anti-hype was a brand strategy. Suspicious of anything with a waiting list. Buys one thing a season, wears it into the ground.</p>
+      <div class="persona-tags">
+        <span class="tag">Slow Fashion</span>
+        <span class="tag">Anti-Hypebeast</span>
+        <span class="tag">Ambient Music</span>
+        <span class="tag">Zine Culture</span>
+      </div>
+    </div>
+    <div class="persona-card" data-num="III">
+      <h3>The Convert</h3>
+      <span class="age">Ages 28–40 · Ex-Hype · Maturing</span>
+      <p>Sold the Yeezys. Deleted the sneaker apps. Had an awakening about what all those drops actually cost — in money, in time, in identity. Now buys for keeps. Respects craft. Can explain why a seam matters. Doesn't post about it.</p>
+      <div class="persona-tags">
+        <span class="tag">Post-Hype</span>
+        <span class="tag">Investment Pieces</span>
+        <span class="tag">Provenance</span>
+        <span class="tag">Heritage</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- VOICE -->
+<section id="voice">
+  <p class="section-label">04 — Brand Voice</p>
+  <h2 class="section-title">HOW VØID<br>SPEAKS</h2>
+
+  <div class="voice-grid">
+    <div class="voice-card yes">
+      <h3>VØID is</h3>
+      <ul>
+        <li>Declarative. Sparse. Each sentence earns its place.</li>
+        <li>Philosophical without being pretentious</li>
+        <li>Cold but not indifferent — precise and considered</li>
+        <li>Dry wit. One-liners that land like a closed door.</li>
+        <li>Comfortable with silence and negative space in copy</li>
+        <li>Lowercase in casual contexts. All-caps in display.</li>
+        <li>Never exclamatory. Never urgent.</li>
+      </ul>
+    </div>
+    <div class="voice-card no">
+      <h3>VØID is never</h3>
+      <ul>
+        <li>Hyped. Limited. Exclusive. Shop now. Don't miss out.</li>
+        <li>Aspirational in a lifestyle-porn way</li>
+        <li>Emoji-heavy or trend-chasing in language</li>
+        <li>Overly wordy or explanatory</li>
+        <li>Humble-bragging or credentialing</li>
+        <li>Friendly in a performative brand-voice way</li>
+        <li>Self-congratulatory about its own ethos</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="caption-example">
+    <span class="platform">Instagram — Product Launch Caption</span>
+    black hoodie. no print. nothing to prove.<br><br>
+    drop 003. available until it isn't.<br><br>
+    voidstudio.co
+  </div>
+
+  <div class="caption-example">
+    <span class="platform">TikTok — Text Overlay (Silence format)</span>
+    [black screen. single white word fades in:]<br><br>
+    enough.<br><br>
+    [cut to product. no music. ambient room sound.]
+  </div>
+
+  <div class="caption-example">
+    <span class="platform">Instagram — Brand Story Post</span>
+    we don't do seasons.<br>
+    we don't do drops.<br>
+    we make things when we have something to say.<br><br>
+    right now we have something to say.
+  </div>
+</section>
+
+<!-- CONTENT PILLARS -->
+<section id="content">
+  <p class="section-label">05 — Content Strategy</p>
+  <h2 class="section-title">CONTENT<br>PILLARS</h2>
+
+  <div class="pillar-list">
+    <div class="pillar">
+      <div class="pillar-num">01</div>
+      <div>
+        <div class="pillar-name">THE VOID SPEAKS</div>
+        <p class="pillar-desc">Philosophical, minimalist copy posts. Short declarations. Questions with no easy answers. The brand's inner monologue made public. Designed to stop the scroll through negative space and weight.</p>
+      </div>
+      <div class="pillar-formats">
+        Reels — black screen text<br>
+        Static — single word / phrase<br>
+        Story — white text on black<br>
+        TikTok — silent or ambient<br>
+        Frequency: 3x / week
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-num">02</div>
+      <div>
+        <div class="pillar-name">ARCHIVE</div>
+        <p class="pillar-desc">Behind the design. The process. What got cut. Stitching details. Decisions and the reasoning behind them. Anti-glamour production content that treats the audience as intelligent collaborators, not consumers.</p>
+      </div>
+      <div class="pillar-formats">
+        Long-form TikTok<br>
+        Carousel — process shots<br>
+        YouTube Shorts — no voiceover<br>
+        ASMR — fabric / sewing<br>
+        Frequency: 1–2x / week
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-num">03</div>
+      <div>
+        <div class="pillar-name">WORN</div>
+        <p class="pillar-desc">Real people in real environments wearing real VØID. Not styled. Not posed. Not perfect. Submitted by the community or captured candidly. The anti-lookbook lookbook. B&W or heavily desaturated.</p>
+      </div>
+      <div class="pillar-formats">
+        UGC Reels / TikTok<br>
+        Static carousel<br>
+        Story reshare<br>
+        Community feature<br>
+        Frequency: 2x / week
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-num">04</div>
+      <div>
+        <div class="pillar-name">AGAINST</div>
+        <p class="pillar-desc">Cultural commentary without naming names. What VØID is a response to. Fashion weeks, hype culture, drops, influencer economics, sustainability theater. Sharp, spare, and unflinching. Never preachy.</p>
+      </div>
+      <div class="pillar-formats">
+        TikTok talking head — rare<br>
+        Text-only posts<br>
+        Long-caption static<br>
+        Frequency: 1x / week
+      </div>
+    </div>
+
+    <div class="pillar">
+      <div class="pillar-num">05</div>
+      <div>
+        <div class="pillar-name">SIGNAL</div>
+        <p class="pillar-desc">Curation. Music, architecture, film, design and literature that VØID is in dialogue with. Not "inspired by" — in dialogue with. Builds a world around the brand without expanding the logo.</p>
+      </div>
+      <div class="pillar-formats">
+        Playlist drops<br>
+        Book / film recommendation<br>
+        Architecture / art static<br>
+        Frequency: 1x / week
+      </div>
+    </div>
+  </div>
+
+  <!-- TIKTOK HOOKS -->
+  <div class="tiktok-section">
+    <p class="section-label" style="margin-bottom: 1.5rem;">TikTok — Opening Hook Library</p>
+    <p style="font-family: var(--font-body); font-size: 1rem; color: #a0a0a0; font-weight: 300; margin-bottom: 2rem;">First 2 seconds determine everything. VØID hooks interrupt the algorithm's logic.</p>
+    <div class="hook-list">
+      <div class="hook">
+        <span class="hook-text">"I spent three years learning how to make something you'd never notice."</span>
+        <span class="hook-type">Archive / Process</span>
+      </div>
+      <div class="hook">
+        <span class="hook-text">[Black screen. Silence. One word appears: "enough."]</span>
+        <span class="hook-type">Void Speaks / Ambient</span>
+      </div>
+      <div class="hook">
+        <span class="hook-text">"This is what it looks like when a brand stops trying to be a brand."</span>
+        <span class="hook-type">Against / Editorial</span>
+      </div>
+      <div class="hook">
+        <span class="hook-text">"We cut this piece eight times before the seam was right. You'll never see the seam."</span>
+        <span class="hook-type">Archive / Craft</span>
+      </div>
+      <div class="hook">
+        <span class="hook-text">"POV: you stopped buying things for the photo and started buying for the decade."</span>
+        <span class="hook-type">Worn / Audience Mirror</span>
+      </div>
+      <div class="hook">
+        <span class="hook-text">"We don't have a launch. We have a release."</span>
+        <span class="hook-type">Drop / Anti-Hype</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- POST CONCEPTS -->
+<section id="posts">
+  <p class="section-label">06 — Sample Post Concepts</p>
+  <h2 class="section-title">CONTENT<br>IN THE WILD</h2>
+
+  <div class="posts-grid">
+    <!-- Post 1 -->
+    <div class="post-card">
+      <div class="post-type">Instagram Static — The Void Speaks</div>
+      <div class="post-visual post-v1">
+        <div class="post-visual-content" style="flex-direction: column; padding: 2rem; text-align: center;">
+          <div style="font-family: 'Bebas Neue', sans-serif; font-size: 3rem; letter-spacing: 0.1em; line-height: 1; color: rgba(240,237,232,0.9);">LOUDEST<br>ROOM<br>WINS<br><span style="color: #c8ff00;">NOTHING.</span></div>
+        </div>
+      </div>
+      <div class="post-info">
+        <div class="post-title">The Statement</div>
+        <div class="post-caption">Black bg. Bone type. Single acid-green word. No caption. No hashtags. Just a period.</div>
+      </div>
+    </div>
+
+    <!-- Post 2 -->
+    <div class="post-card">
+      <div class="post-type">TikTok Reel — Archive Process</div>
+      <div class="post-visual post-v2">
+        <div class="post-visual-content" style="flex-direction: column; align-items: flex-start; padding: 2rem; gap: 1rem;">
+          <div class="post-accent"></div>
+          <div style="font-family: 'Space Mono', monospace; font-size: 0.55rem; letter-spacing: 0.3em; color: #c8ff00; text-transform: uppercase;">Take 08 of 08</div>
+          <div style="font-family: 'Crimson Pro', serif; font-size: 1rem; font-style: italic; color: rgba(240,237,232,0.7); line-height: 1.5;">"We recut the collar until we stopped noticing it."</div>
+          <div style="margin-top: auto; font-family: 'Space Mono', monospace; font-size: 0.5rem; letter-spacing: 0.2em; color: #3d3d3d; text-transform: uppercase;">Atelier footage · No music</div>
+        </div>
+      </div>
+      <div class="post-info">
+        <div class="post-title">The Making-Of</div>
+        <div class="post-caption">45s. Raw footage. Ambient sound only. Text overlay. Shows the 8th iteration of a collar cut.</div>
+      </div>
+    </div>
+
+    <!-- Post 3 -->
+    <div class="post-card">
+      <div class="post-type">Instagram Carousel — Worn</div>
+      <div class="post-visual post-v3">
+        <div class="post-visual-content" style="flex-direction: column; align-items: center; justify-content: center; gap: 1rem;">
+          <div class="post-circle"></div>
+          <div class="post-circle" style="width: 40%; opacity: 0.4;"></div>
+          <div style="position: absolute; font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem; letter-spacing: 0.3em; color: rgba(240,237,232,0.5);">WORN</div>
+        </div>
+      </div>
+      <div class="post-info">
+        <div class="post-title">Community Worn</div>
+        <div class="post-caption">5-slide carousel. Heavy grain filter. B&W. Submitted by @thearchitect. Caption: "berlin. 3am. still."</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PACKAGING -->
+<section id="packaging">
+  <p class="section-label">07 — Packaging & Product Design</p>
+  <h2 class="section-title">OBJECT<br>DESIGN</h2>
+
+  <div class="packaging-grid">
+    <div class="package-item">
+      <div class="package-visual">
+        <div class="package-visual-inner">
+          VØID<br>
+          <span style="font-size: 0.5rem; letter-spacing: 0.8em;">STUDIO</span>
+        </div>
+        <div style="position: absolute; bottom: 1.5rem; right: 1.5rem; font-family: 'Space Mono', monospace; font-size: 0.45rem; color: rgba(240,237,232,0.15); letter-spacing: 0.2em;">001 / 100</div>
+      </div>
+      <h3>SHIPPING BOX</h3>
+      <p>Matte black corrugated. Stamped — not printed — with VØID in bone. A single acid-green sticker seal. Inside: black tissue, no receipts, one card. The card reads: "you already know." Nothing else.</p>
+    </div>
+
+    <div class="package-item">
+      <div class="package-visual">
+        <div style="display: flex; flex-direction: column; align-items: center; gap: 0.5rem;">
+          <div style="width: 40px; height: 4px; background: rgba(240,237,232,0.15);"></div>
+          <div class="package-visual-inner" style="border: 1px solid rgba(240,237,232,0.1); padding: 1rem 2rem; font-size: 0.6rem;">VØID STUDIO</div>
+          <div style="width: 40px; height: 4px; background: rgba(240,237,232,0.15);"></div>
+        </div>
+      </div>
+      <h3>HANG TAGS</h3>
+      <p>Single-sided kraft card. Bone stock, black ink. One side: VØID. Other side: care instructions only — no marketing language, no "handcrafted with love," no social handles. A string, not a ribbon. Natural twine.</p>
+    </div>
+
+    <div class="package-item">
+      <div class="package-visual">
+        <div style="font-family: 'Bebas Neue', sans-serif; font-size: 2.5rem; letter-spacing: 0.1em; color: rgba(240,237,232,0.07); text-align: center; line-height: 1.1;">
+          DROP 001<br>VOID BLACK<br>HOODIE<br><span style="color: rgba(200,255,0,0.2);">002 / 050</span>
+        </div>
+      </div>
+      <h3>GARMENT LABEL</h3>
+      <p>Woven in black thread on black fabric — intentionally hard to read. VØID STUDIO. Country of manufacture. Care. No slogans. The brand mark is present but demands close attention. Privacy as branding.</p>
+    </div>
+
+    <div class="package-item">
+      <div class="package-visual">
+        <div style="display: flex; flex-direction: column; gap: 0.5rem; align-items: flex-start; padding: 2rem;">
+          <div style="width: 80%; height: 1px; background: rgba(240,237,232,0.08);"></div>
+          <div style="font-family: 'Space Mono', monospace; font-size: 0.5rem; color: rgba(240,237,232,0.2); letter-spacing: 0.2em;">VOID STUDIO — DROP 001</div>
+          <div style="width: 50%; height: 1px; background: rgba(240,237,232,0.04);"></div>
+          <div style="font-family: 'Space Mono', monospace; font-size: 0.45rem; color: rgba(200,255,0,0.3); letter-spacing: 0.15em; margin-top: 0.5rem;">QTY 01 · COLOURWAY BONE</div>
+        </div>
+      </div>
+      <h3>MAILER INSERT</h3>
+      <p>A single folded sheet, uncoated. One sentence per inside panel. "You didn't need this." / "You got it anyway." / "Now make it mean something." No calls to action. No discount codes. No follow us.</p>
+    </div>
+  </div>
+</section>
+
+<!-- FOOTER -->
+<footer>
+  <div class="logo">VØID</div>
+  <div class="credits">
+    A Crust Media Brand World — crustmedia.co<br>
+    Brand No. 01 of 10<br>
+    Industry: Fashion & Streetwear<br>
+    Concept, Identity & Strategy ©2025<br>
+    <span style="color: var(--acid);">→ Next: EMBER & SALT (02/10)</span>
+  </div>
+</footer>
+
+</body>
+</html>

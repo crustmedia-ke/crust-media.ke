@@ -1,0 +1,733 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Ageless — Brand Profile</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400;1,600&family=DM+Sans:wght@300;400;500;600&family=Dancing+Script:wght@600;700&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --cream:     #F5F0E8;
+    --cream-mid: #EDE6D6;
+    --cream-deep:#E0D5C0;
+    --ink:       #1C1812;
+    --ink-mid:   #4A4030;
+    --ink-light: #9A8E7A;
+    --blush:     #D4826A;
+    --blush-dim: #C06850;
+    --blush-pale:#F0C4B0;
+    --sage:      #7A9E7E;
+    --sage-dim:  #5A7E5E;
+    --gold:      #C8A050;
+    --white:     #FDFAF5;
+    --border:    rgba(28,24,18,0.1);
+    --f-display: 'Cormorant Garamond', serif;
+    --f-script:  'Dancing Script', cursive;
+    --f-body:    'DM Sans', sans-serif;
+  }
+  *, *::before, *::after { margin: 0; padding: 0; box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body { background: var(--cream); color: var(--ink); font-family: var(--f-body); overflow-x: hidden; }
+  body::before {
+    content: ''; position: fixed; inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 512 512' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.72' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+    opacity: 0.025; pointer-events: none; z-index: 9999;
+  }
+
+  /* CRUST BAR */
+  #crust-bar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 9000; height: 30px;
+    background: var(--ink); border-bottom: 1px solid rgba(212,130,106,0.2);
+    display: flex; align-items: center; justify-content: space-between; padding: 0 2.5rem;
+  }
+  #crust-bar-back { font-family: var(--f-body); font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(212,130,106,0.6); text-decoration: none; transition: color 0.2s; }
+  #crust-bar-back:hover { color: var(--blush); }
+  #crust-bar-label { font-family: var(--f-body); font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(245,240,232,0.2); position: absolute; left: 50%; transform: translateX(-50%); }
+  #crust-bar-right { font-family: var(--f-body); font-size: 9px; letter-spacing: 0.25em; text-transform: uppercase; color: rgba(245,240,232,0.25); }
+
+  /* NAV */
+  nav { position: fixed; top: 30px; left: 0; right: 0; z-index: 500; height: 60px; padding: 0 56px; display: flex; justify-content: space-between; align-items: center; background: rgba(245,240,232,0.92); backdrop-filter: blur(12px); border-bottom: 1px solid var(--border); }
+  .nav-logo { font-family: var(--f-script); font-size: 26px; color: var(--ink); }
+  .nav-links { display: flex; gap: 36px; }
+  .nav-links a { font-family: var(--f-body); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-decoration: none; transition: color 0.2s; }
+  .nav-links a:hover { color: var(--ink); }
+  .nav-tag { font-family: var(--f-body); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--blush); border: 1px solid var(--blush-dim); padding: 6px 16px; }
+
+  /* HERO */
+  .hero { min-height: 100vh; padding-top: 90px; display: grid; grid-template-columns: 1fr 1fr; border-bottom: 1px solid var(--border); overflow: hidden; }
+  .hero-left { padding: 80px 56px; display: flex; flex-direction: column; justify-content: center; border-right: 1px solid var(--border); }
+  .hero-eyebrow { font-family: var(--f-body); font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: var(--blush); margin-bottom: 32px; display: flex; align-items: center; gap: 14px; opacity: 0; animation: rise 1s 0.1s ease forwards; }
+  .hero-eyebrow::before { content: ''; width: 32px; height: 1px; background: var(--blush); }
+  .hero-name { font-family: var(--f-script); font-size: clamp(5rem, 10vw, 9rem); line-height: 0.95; color: var(--ink); opacity: 0; animation: rise 1s 0.2s ease forwards; }
+  .hero-tagline { font-family: var(--f-display); font-style: italic; font-size: clamp(1.2rem, 2vw, 1.8rem); color: var(--ink-mid); margin-top: 20px; line-height: 1.4; opacity: 0; animation: rise 1s 0.3s ease forwards; }
+  .hero-divider { width: 48px; height: 1px; background: var(--blush); margin: 32px 0; opacity: 0; animation: rise 1s 0.4s ease forwards; }
+  .hero-desc { font-size: 14px; line-height: 1.9; color: var(--ink-mid); max-width: 460px; opacity: 0; animation: rise 1s 0.5s ease forwards; }
+  .hero-desc strong { color: var(--ink); }
+  .hero-desc em { color: var(--blush); font-style: italic; }
+  .hero-meta { display: flex; gap: 48px; margin-top: 48px; opacity: 0; animation: rise 1s 0.6s ease forwards; }
+  .hero-meta-val { font-family: var(--f-display); font-size: 32px; font-weight: 600; color: var(--ink); line-height: 1; }
+  .hero-meta-val em { color: var(--blush); font-style: normal; }
+  .hero-meta-label { font-family: var(--f-body); font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-light); margin-top: 4px; }
+  .hero-right { background: var(--ink); display: flex; flex-direction: column; justify-content: center; align-items: center; padding: 80px 56px; position: relative; overflow: hidden; opacity: 0; animation: rise 1.2s 0.4s ease forwards; }
+  .hero-right::before { content: 'Ageless'; position: absolute; font-family: var(--f-script); font-size: 22vw; color: rgba(245,240,232,0.03); white-space: nowrap; pointer-events: none; line-height: 1; }
+  .hero-product-stack { position: relative; z-index: 1; text-align: center; }
+  .hero-product-badge { display: inline-block; font-family: var(--f-body); font-size: 8px; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(212,130,106,0.6); border: 1px solid rgba(212,130,106,0.2); padding: 6px 16px; margin-bottom: 32px; }
+  .hero-manifesto { font-family: var(--f-display); font-style: italic; font-size: clamp(2rem, 4vw, 3.5rem); line-height: 1.2; color: var(--cream); text-align: center; max-width: 400px; }
+  .hero-manifesto em { font-style: normal; color: var(--blush); }
+  .hero-manifesto-sub { font-family: var(--f-body); font-size: 10px; letter-spacing: 0.3em; text-transform: uppercase; color: rgba(245,240,232,0.3); margin-top: 28px; text-align: center; }
+
+  /* SECTIONS */
+  section { border-bottom: 1px solid var(--border); }
+  .sec-inner { padding: 96px 56px; }
+  .sec-label { font-family: var(--f-body); font-size: 9px; letter-spacing: 0.45em; text-transform: uppercase; color: var(--blush); display: flex; align-items: center; gap: 16px; margin-bottom: 16px; }
+  .sec-label::after { content: ''; flex: 1; max-width: 80px; height: 1px; background: var(--border); }
+  .sec-title { font-family: var(--f-display); font-size: clamp(3rem, 6vw, 5rem); font-weight: 600; line-height: 0.95; color: var(--ink); margin-bottom: 48px; }
+  .sec-title em { font-style: italic; color: var(--blush); }
+
+  /* ORIGIN */
+  .origin-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 80px; align-items: start; }
+  .origin-copy p { font-size: 16px; line-height: 1.95; color: var(--ink-mid); margin-bottom: 24px; }
+  .origin-copy p strong { color: var(--ink); }
+  .origin-copy p em { color: var(--blush); font-style: italic; }
+  .origin-pullquote { font-family: var(--f-display); font-style: italic; font-size: clamp(1.4rem, 2.5vw, 2rem); line-height: 1.4; color: var(--ink); border-left: 2px solid var(--blush); padding: 16px 28px; margin: 36px 0; }
+  .origin-card { background: var(--white); border: 1px solid var(--border); border-top: 2px solid var(--blush); padding: 28px; margin-bottom: 2px; }
+  .origin-card-label { font-family: var(--f-body); font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 10px; }
+  .origin-card-value { font-family: var(--f-body); font-weight: 500; font-size: 14px; color: var(--ink); line-height: 1.5; }
+  .origin-card-value.accent { color: var(--blush); }
+  .origin-card-value.sage { color: var(--sage-dim); }
+
+  /* AGAINST */
+  .against-section { background: var(--ink); }
+  .against-inner { padding: 100px 56px; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+  .against-left .sec-label { color: var(--blush); }
+  .against-left .sec-label::after { background: rgba(245,240,232,0.1); }
+  .against-title { font-family: var(--f-display); font-size: clamp(3rem, 6vw, 5rem); font-weight: 600; line-height: 0.95; color: var(--cream); margin-bottom: 32px; }
+  .against-title em { font-style: italic; color: var(--blush); }
+  .against-body { font-size: 15px; line-height: 1.9; color: rgba(245,240,232,0.5); max-width: 480px; }
+  .against-body strong { color: var(--cream); }
+  .against-right { display: flex; flex-direction: column; gap: 2px; }
+  .against-item { background: rgba(245,240,232,0.04); border-left: 2px solid transparent; padding: 28px 32px; transition: border-color 0.3s, background 0.3s; cursor: default; }
+  .against-item:hover { border-left-color: var(--blush); background: rgba(245,240,232,0.07); }
+  .against-item h4 { font-family: var(--f-body); font-weight: 600; font-size: 12px; letter-spacing: 0.1em; text-transform: uppercase; color: var(--cream); margin-bottom: 8px; }
+  .against-item p { font-size: 13px; line-height: 1.75; color: rgba(245,240,232,0.45); }
+
+  /* AUDIENCE */
+  .audience-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 48px; }
+  .persona-card { background: var(--white); padding: 40px 32px; border-top: 2px solid var(--border); transition: border-top-color 0.3s; cursor: default; }
+  .persona-card:hover { border-top-color: var(--blush); }
+  .persona-num { font-family: var(--f-body); font-size: 9px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--blush); margin-bottom: 20px; }
+  .persona-name { font-family: var(--f-display); font-size: 32px; font-weight: 600; font-style: italic; color: var(--ink); line-height: 1; margin-bottom: 8px; }
+  .persona-sub { font-family: var(--f-body); font-size: 10px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 20px; }
+  .persona-desc { font-size: 13px; line-height: 1.8; color: var(--ink-mid); border-top: 1px solid var(--border); padding-top: 16px; }
+  .persona-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 20px; }
+  .persona-tag { font-family: var(--f-body); font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; color: var(--ink-light); border: 1px solid var(--border); padding: 4px 10px; background: var(--cream); }
+
+  /* PALETTE + TYPE */
+  .palette-row { display: flex; height: 120px; gap: 0; margin-bottom: 2px; overflow: hidden; }
+  .swatch { flex: 1; display: flex; align-items: flex-end; padding: 14px; cursor: default; transition: flex 0.4s ease; }
+  .swatch:hover { flex: 2.2; }
+  .swatch-label { font-family: var(--f-body); font-size: 8px; letter-spacing: 0.15em; text-transform: uppercase; line-height: 2; }
+  .swatch-label .hex { opacity: 0.6; }
+  .type-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 40px; }
+  .type-card { background: var(--white); padding: 40px 32px; border: 1px solid var(--border); }
+  .type-sample { margin-bottom: 20px; line-height: 1; }
+  .type-card:nth-child(1) .type-sample { font-family: var(--f-script); font-size: 52px; color: var(--ink); }
+  .type-card:nth-child(2) .type-sample { font-family: var(--f-display); font-style: italic; font-size: 44px; font-weight: 300; color: var(--ink); }
+  .type-card:nth-child(3) .type-sample { font-family: var(--f-body); font-size: 13px; font-weight: 500; letter-spacing: 0.3em; text-transform: uppercase; color: var(--blush); line-height: 2; }
+  .type-name { font-family: var(--f-body); font-size: 8px; letter-spacing: 0.3em; text-transform: uppercase; color: var(--ink-light); margin-bottom: 6px; }
+  .type-detail { font-size: 12px; line-height: 1.7; color: var(--ink-mid); }
+
+  /* VOICE */
+  .voice-section { background: var(--cream-mid); }
+  .voice-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 2px; margin-bottom: 2px; }
+  .voice-block { background: var(--white); padding: 48px 40px; }
+  .voice-block.dark { background: var(--ink); }
+  .voice-block-label { font-family: var(--f-body); font-size: 8px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--blush); margin-bottom: 20px; }
+  .voice-block h3 { font-family: var(--f-display); font-style: italic; font-size: 28px; font-weight: 600; color: var(--ink); margin-bottom: 16px; line-height: 1.2; }
+  .voice-block.dark h3 { color: var(--cream); }
+  .voice-block p { font-size: 14px; line-height: 1.85; color: var(--ink-mid); }
+  .voice-block.dark p { color: rgba(245,240,232,0.5); }
+  .voice-list { list-style: none; margin-top: 24px; display: flex; flex-direction: column; gap: 10px; }
+  .voice-list li { font-size: 13px; line-height: 1.7; color: var(--ink-mid); display: flex; gap: 12px; padding-bottom: 10px; border-bottom: 1px solid var(--border); }
+  .voice-list li:last-child { border-bottom: none; }
+  .voice-list li::before { content: '→'; color: var(--blush); flex-shrink: 0; margin-top: 1px; }
+  .voice-block.dark .voice-list li { color: rgba(245,240,232,0.45); border-bottom-color: rgba(245,240,232,0.06); }
+  .copy-samples { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; }
+  .copy-sample { background: var(--white); padding: 36px 32px; border-top: 1px solid var(--border); }
+  .cs-platform { font-family: var(--f-body); font-size: 8px; letter-spacing: 0.35em; text-transform: uppercase; color: var(--blush); margin-bottom: 20px; }
+  .cs-copy { font-family: var(--f-display); font-style: italic; font-size: 18px; line-height: 1.5; color: var(--ink); }
+  .cs-note { font-family: var(--f-body); font-size: 9px; letter-spacing: 0.15em; color: var(--ink-light); margin-top: 16px; }
+
+  /* SEASONS */
+  .seasons-intro { font-size: 15px; line-height: 1.9; color: var(--ink-mid); max-width: 640px; margin-bottom: 64px; }
+  .season-rules { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; margin-bottom: 64px; }
+  .rule-card { background: var(--white); padding: 36px 28px; border-top: 2px solid var(--border); transition: border-top-color 0.3s; cursor: default; }
+  .rule-card:hover { border-top-color: var(--blush); }
+  .rule-icon { font-size: 20px; margin-bottom: 20px; }
+  .rule-name { font-family: var(--f-body); font-weight: 600; font-size: 12px; letter-spacing: 0.08em; text-transform: uppercase; color: var(--ink); margin-bottom: 10px; }
+  .rule-desc { font-size: 12px; line-height: 1.75; color: var(--ink-mid); }
+  .seasons-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 2px; }
+  .season-card { padding: 48px 32px; position: relative; overflow: hidden; cursor: default; transition: transform 0.3s; min-height: 400px; display: flex; flex-direction: column; justify-content: flex-end; }
+  .season-card:hover { transform: translateY(-4px); z-index: 10; }
+  .season-card::before { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(28,24,18,0.88) 0%, transparent 60%); z-index: 1; }
+  .season-bg { position: absolute; inset: 0; z-index: 0; }
+  .season-content { position: relative; z-index: 2; }
+  .season-num { font-family: var(--f-body); font-size: 8px; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(245,240,232,0.4); margin-bottom: 12px; }
+  .season-name { font-family: var(--f-script); font-size: 36px; color: var(--cream); line-height: 1; margin-bottom: 8px; }
+  .season-theme { font-family: var(--f-body); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: rgba(245,240,232,0.5); margin-bottom: 16px; }
+  .season-desc { font-size: 12px; line-height: 1.7; color: rgba(245,240,232,0.65); margin-bottom: 20px; }
+  .season-palette { display: flex; gap: 6px; }
+  .season-dot { width: 12px; height: 12px; border-radius: 50%; border: 1px solid rgba(245,240,232,0.2); }
+
+  /* PRODUCTS */
+  .products-section { background: var(--cream-deep); }
+  .products-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 2px; margin-top: 48px; }
+  .product-card { background: var(--white); padding: 40px 32px; cursor: default; transition: background 0.2s; }
+  .product-card:hover { background: var(--cream); }
+  .product-icon { font-size: 28px; margin-bottom: 20px; }
+  .product-name { font-family: var(--f-display); font-style: italic; font-size: 26px; font-weight: 600; color: var(--ink); margin-bottom: 8px; }
+  .product-tag { font-family: var(--f-body); font-size: 8px; letter-spacing: 0.25em; text-transform: uppercase; color: var(--blush); margin-bottom: 16px; }
+  .product-desc { font-size: 13px; line-height: 1.8; color: var(--ink-mid); border-top: 1px solid var(--border); padding-top: 16px; }
+  .special-set { grid-column: span 3; background: var(--ink); padding: 48px; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
+  .special-set h3 { font-family: var(--f-display); font-style: italic; font-size: clamp(2rem, 3vw, 3rem); color: var(--cream); line-height: 1.1; margin-bottom: 16px; }
+  .special-set h3 em { color: var(--blush); font-style: normal; }
+  .special-set p { font-size: 14px; line-height: 1.85; color: rgba(245,240,232,0.5); }
+  .special-set-items { display: flex; flex-direction: column; gap: 2px; }
+  .set-item { background: rgba(245,240,232,0.04); padding: 16px 20px; display: flex; align-items: center; gap: 16px; font-size: 13px; color: rgba(245,240,232,0.6); border-left: 2px solid transparent; transition: border-color 0.3s, background 0.3s; }
+  .set-item:hover { border-left-color: var(--blush); background: rgba(245,240,232,0.07); }
+  .set-item-icon { font-size: 16px; flex-shrink: 0; }
+  .set-item-label { font-weight: 500; color: var(--cream); }
+
+  /* MANIFESTO */
+  .manifesto-section { background: var(--blush); padding: 100px 56px; position: relative; overflow: hidden; }
+  .manifesto-section::before { content: 'Ageless'; position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-family: var(--f-script); font-size: 28vw; color: rgba(28,24,18,0.06); white-space: nowrap; pointer-events: none; line-height: 1; }
+  .manifesto-inner { position: relative; z-index: 1; text-align: center; }
+  .manifesto-label { font-family: var(--f-body); font-size: 9px; letter-spacing: 0.4em; text-transform: uppercase; color: rgba(253,250,245,0.5); margin-bottom: 36px; }
+  .manifesto-text { font-family: var(--f-display); font-size: clamp(2rem, 4vw, 4rem); font-weight: 600; line-height: 1.15; color: var(--white); max-width: 860px; margin: 0 auto 32px; }
+  .manifesto-text em { font-style: italic; color: rgba(253,250,245,0.55); }
+  .manifesto-byline { font-family: var(--f-body); font-size: 9px; letter-spacing: 0.35em; text-transform: uppercase; color: rgba(253,250,245,0.4); }
+
+  /* FOOTER */
+  footer { padding: 48px 56px; display: flex; justify-content: space-between; align-items: flex-end; border-top: 1px solid var(--border); }
+  .footer-brand { font-family: var(--f-script); font-size: 36px; color: var(--cream-deep); }
+  .footer-credits { font-family: var(--f-body); font-size: 9px; letter-spacing: 0.2em; text-transform: uppercase; color: var(--ink-light); text-align: right; line-height: 2.2; }
+  .footer-credits a { color: var(--blush); text-decoration: none; }
+
+  /* ANIMATIONS */
+  @keyframes rise { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: translateY(0); } }
+  .sr { opacity: 0; transform: translateY(28px); transition: opacity 0.8s ease, transform 0.8s ease; }
+  .sr.visible { opacity: 1; transform: none; }
+  .sr-d1 { transition-delay: 0.1s; }
+  .sr-d2 { transition-delay: 0.2s; }
+  .sr-d3 { transition-delay: 0.3s; }
+
+
+/* ── Tablet (≤900px) ── */
+@media (max-width: 900px) {
+  nav {
+    padding: 0 32px;
+  }
+  .nav-links {
+    display: none;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 90px;
+  }
+  .hero-left {
+    padding: 60px 32px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-right {
+    padding: 60px 32px;
+    min-height: 360px;
+  }
+
+  .sec-inner {
+    padding: 72px 32px;
+  }
+
+  .origin-grid {
+    grid-template-columns: 1fr;
+    gap: 48px;
+  }
+
+  .against-inner {
+    grid-template-columns: 1fr;
+    gap: 48px;
+    padding: 72px 32px;
+  }
+
+  .audience-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .type-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .voice-grid {
+    grid-template-columns: 1fr;
+  }
+  .copy-samples {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .season-rules {
+    grid-template-columns: 1fr 1fr;
+  }
+  .seasons-grid {
+    grid-template-columns: 1fr 1fr;
+  }
+
+  .products-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+
+/* ── Mobile (≤600px) ── */
+@media (max-width: 600px) {
+  body { cursor: auto; }
+
+  #crust-bar {
+    padding: 0 16px;
+  }
+  #crust-bar-label {
+    display: none;
+  }
+
+  nav {
+    padding: 0 20px;
+    height: 52px;
+  }
+  .nav-logo {
+    font-size: 22px;
+  }
+  .nav-tag {
+    display: none;
+  }
+
+  .hero {
+    grid-template-columns: 1fr;
+    padding-top: 82px;
+  }
+  .hero-left {
+    padding: 48px 20px 40px;
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+  .hero-right {
+    padding: 48px 20px;
+    min-height: 280px;
+  }
+  .hero-meta {
+    gap: 28px;
+    flex-wrap: wrap;
+  }
+
+  .sec-inner {
+    padding: 56px 20px;
+  }
+  .sec-title {
+    font-size: clamp(2.2rem, 9vw, 3.5rem);
+    margin-bottom: 32px;
+  }
+
+  .origin-grid {
+    grid-template-columns: 1fr;
+    gap: 40px;
+  }
+
+  .against-inner {
+    grid-template-columns: 1fr;
+    gap: 40px;
+    padding: 56px 20px;
+  }
+  .against-right {
+    gap: 2px;
+  }
+
+  .audience-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .palette-row {
+    height: 80px;
+  }
+  .swatch {
+    padding: 10px;
+  }
+  .swatch-label {
+    font-size: 7px;
+  }
+
+  .type-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .voice-grid {
+    grid-template-columns: 1fr;
+  }
+  .voice-block {
+    padding: 36px 24px;
+  }
+  .copy-samples {
+    grid-template-columns: 1fr;
+  }
+
+  .season-rules {
+    grid-template-columns: 1fr 1fr;
+    gap: 2px;
+  }
+  .rule-card {
+    padding: 24px 18px;
+  }
+  .seasons-grid {
+    grid-template-columns: 1fr;
+  }
+  .season-card {
+    min-height: 320px;
+  }
+
+  .products-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .manifesto-section .manifesto-inner {
+    padding: 56px 20px;
+  }
+  .manifesto-text {
+    font-size: clamp(1.8rem, 7vw, 2.6rem);
+  }
+
+  footer {
+    padding: 40px 20px;
+    flex-direction: column;
+    gap: 12px;
+    text-align: left;
+  }
+}
+
+</style>
+</head>
+<body>
+
+<div id="crust-bar">
+  <a href="../index.html" id="crust-bar-back">← Crust Media</a>
+  <div id="crust-bar-label">Crust Media — Brand Portfolio 2025</div>
+  <div id="crust-bar-right">Brand 03 / 10</div>
+</div>
+
+<nav>
+  <div class="nav-logo">Ageless</div>
+  <div class="nav-links">
+    <a href="#origin">Origin</a>
+    <a href="#audience">Audience</a>
+    <a href="#identity">Identity</a>
+    <a href="#voice">Voice</a>
+    <a href="#seasons">Seasons</a>
+    <a href="#products">Products</a>
+  </div>
+  <div class="nav-tag">Brand 03 / 10</div>
+</nav>
+
+<!-- HERO -->
+<div class="hero">
+  <div class="hero-left">
+    <div class="hero-eyebrow">Wearable Art · Est. 2025 · Crust Media Portfolio</div>
+    <div class="hero-name">Ageless</div>
+    <div class="hero-tagline">Art you carry. Confidence you wear.</div>
+    <div class="hero-divider"></div>
+    <p class="hero-desc">
+      <strong>Ageless is a wearable art brand built on one conviction:</strong> fashion should feel like something. Every piece is a canvas. Every print tells a story. Every woman who wears it walks into a room and <em>owns it</em> — not because she's trying to, but because she can't help it.
+    </p>
+    <div class="hero-meta">
+      <div class="hero-meta-item">
+        <div class="hero-meta-val"><em>4</em></div>
+        <div class="hero-meta-label">Seasons / Year</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-val">6+</div>
+        <div class="hero-meta-label">Product Types</div>
+      </div>
+      <div class="hero-meta-item">
+        <div class="hero-meta-val"><em>∞</em></div>
+        <div class="hero-meta-label">Stories to Tell</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-right">
+    <div class="hero-product-stack">
+      <img src="images/Totebag_4.png" alt="Ageless Standard Edition" style="max-width: 300px; width: 78%; display: block; margin: 0 auto 28px; border-radius: 0;">
+      <div class="hero-product-badge">Standard Edition — Collection 001</div>
+      <div class="hero-manifesto">
+        She doesn't demand attention.<br>
+        <em>She makes it</em><br>
+        impossible to look away.
+      </div>
+      <div class="hero-manifesto-sub">Ageless · Art You Carry · Confidence You Wear</div>
+    </div>
+  </div>
+</div>
+
+<!-- ORIGIN -->
+<section id="origin">
+  <div class="sec-inner">
+    <div class="sec-label sr">01 — Origin</div>
+    <h2 class="sec-title sr sr-d1">The woman who<br><em>got bored first.</em></h2>
+    <div class="origin-grid sr sr-d2">
+      <div class="origin-copy">
+        <p><strong>Ageless started with a complaint.</strong> A young woman looked at the fashion world — the safe colours, the quiet logos, the brands that asked you to disappear into them — and decided she wanted the opposite. Not louder. Not more expensive. Just <em>more alive.</em></p>
+        <p>She wanted to get dressed and feel something. She wanted to carry a bag that started conversations she didn't have to start herself. She wanted to wear something comfortable enough to live in and striking enough that people remembered it — and her — long after she left the room.</p>
+        <div class="origin-pullquote">"Fashion had forgotten how to have a personality.<br>We gave it one back."</div>
+        <p>So Ageless was born: a brand where the garment is the gallery. Where every tote bag, every oversized tee, every hoodie is a piece of art you actually use. <strong>Not art you hang on a wall. Art you take everywhere.</strong></p>
+        <p>The name isn't an accident. The women in these prints — the angel, the woman at the window, the eye that sees everything — aren't from any particular era. They're timeless. <em>Ageless.</em> And so is the woman who wears them.</p>
+      </div>
+      <div class="origin-sidebar">
+        <div class="origin-card"><div class="origin-card-label">Category</div><div class="origin-card-value">Wearable Art / Fashion</div></div>
+        <div class="origin-card"><div class="origin-card-label">Product Philosophy</div><div class="origin-card-value">The garment is the canvas. The art is the brand.</div></div>
+        <div class="origin-card"><div class="origin-card-label">Brand Archetype</div><div class="origin-card-value accent">The Creator + The Lover</div></div>
+        <div class="origin-card"><div class="origin-card-label">Against</div><div class="origin-card-value accent">Shyness. Safe choices. Fashion that asks you to fade.</div></div>
+        <div class="origin-card"><div class="origin-card-label">For</div><div class="origin-card-value sage">Comfort AND confidence. Art AND utility. Story AND style.</div></div>
+        <div class="origin-card"><div class="origin-card-label">Tagline</div><div class="origin-card-value">Art you carry. Confidence you wear.</div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- AGAINST -->
+<section id="against" class="against-section">
+  <div class="against-inner sr">
+    <div class="against-left">
+      <div class="sec-label">02 — Philosophy</div>
+      <h2 class="against-title">Ageless is<br><em>against</em><br>being small.</h2>
+      <p class="against-body">The fashion industry has spent decades telling women to <strong>tone it down</strong>. Neutral palettes. Minimal logos. Understated everything. As if confidence was something to apologise for. Ageless is the direct answer. Not aggressive. Not in-your-face. Just <strong>unapologetically present.</strong></p>
+    </div>
+    <div class="against-right">
+      <div class="against-item"><h4>Against Blending In</h4><p>Every Ageless piece is designed to be noticed — not because it screams, but because it has something to say. The art does the talking.</p></div>
+      <div class="against-item"><h4>Against Safe Choices</h4><p>Boring palettes, quiet logos, forgettable prints. Ageless chooses art that makes you feel something every time you put it on.</p></div>
+      <div class="against-item"><h4>Against Comfort OR Confidence</h4><p>The false choice between feeling good and looking powerful. Ageless is an oversized tee you live in and a bag people stop to look at. Both. Always.</p></div>
+      <div class="against-item"><h4>Against Forgettable Fashion</h4><p>Trend cycles that exhaust and empty. Ageless pieces outlast the season they were born in — art doesn't expire.</p></div>
+    </div>
+  </div>
+</section>
+
+<!-- AUDIENCE -->
+<section id="audience">
+  <div class="sec-inner">
+    <div class="sec-label sr">03 — Audience</div>
+    <h2 class="sec-title sr sr-d1">Who wears<br><em>Ageless?</em></h2>
+    <div class="audience-grid sr sr-d2">
+      <div class="persona-card">
+        <div class="persona-num">P.01</div>
+        <div class="persona-name">The Curator</div>
+        <div class="persona-sub">Ages 22–32 · Creative · Urban</div>
+        <div class="persona-desc">Strong opinions about everything — her coffee order, her reading list, the angle of every photo she takes. Works in a creative field or wishes she did. Her home looks like a gallery. Her wardrobe is an extension of it. Buys Ageless because it matches how she already sees herself: considered, artistic, unhurried.</div>
+        <div class="persona-tags"><span class="persona-tag">Art Galleries</span><span class="persona-tag">Film Photography</span><span class="persona-tag">Specialty Coffee</span><span class="persona-tag">Literary Fiction</span><span class="persona-tag">Yoga</span></div>
+      </div>
+      <div class="persona-card">
+        <div class="persona-num">P.02</div>
+        <div class="persona-name">The Protagonist</div>
+        <div class="persona-sub">Ages 18–26 · Online-native · Self-building</div>
+        <div class="persona-desc">Building her identity in public and she knows it. TikTok, Instagram — present and intentional about what she shows. Discovered Ageless through the content and immediately understood it. Doesn't just wear the brand — she posts it, gifts it, evangelises it. The bag is a character in her feed.</div>
+        <div class="persona-tags"><span class="persona-tag">Content Creation</span><span class="persona-tag">Aesthetic Feeds</span><span class="persona-tag">Thrifting</span><span class="persona-tag">Manga / Anime</span><span class="persona-tag">Self-Portraits</span></div>
+      </div>
+      <div class="persona-card">
+        <div class="persona-num">P.03</div>
+        <div class="persona-name">The Unbothered</div>
+        <div class="persona-sub">Ages 28–40 · Established · Intentional</div>
+        <div class="persona-desc">Stopped caring what people think sometime in her late twenties and never looked back. Buys less, chooses harder. When she saw Ageless she thought: finally, something with a personality. Wears the martini-at-window bag to work meetings. Not ironically. Because she can.</div>
+        <div class="persona-tags"><span class="persona-tag">Slow Fashion</span><span class="persona-tag">Travel</span><span class="persona-tag">Jazz / Neo-Soul</span><span class="persona-tag">Long Dinners</span><span class="persona-tag">Museums</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- IDENTITY -->
+<section id="identity">
+  <div class="sec-inner">
+    <div class="sec-label sr">04 — Visual Identity</div>
+    <h2 class="sec-title sr sr-d1">Colour &amp;<br><em>Typography</em></h2>
+    <div class="palette-row sr sr-d2">
+      <div class="swatch" style="background:#1C1812;"><div class="swatch-label" style="color:#4A4030;">Ink<br><span class="hex">#1C1812</span></div></div>
+      <div class="swatch" style="background:#F5F0E8;"><div class="swatch-label" style="color:#9A8E7A;">Cream<br><span class="hex">#F5F0E8</span></div></div>
+      <div class="swatch" style="background:#EDE6D6;"><div class="swatch-label" style="color:#9A8E7A;">Cream Mid<br><span class="hex">#EDE6D6</span></div></div>
+      <div class="swatch" style="background:#D4826A;"><div class="swatch-label" style="color:#FDFAF5;">Blush<br><span class="hex">#D4826A</span></div></div>
+      <div class="swatch" style="background:#F0C4B0;"><div class="swatch-label" style="color:#C06850;">Blush Pale<br><span class="hex">#F0C4B0</span></div></div>
+      <div class="swatch" style="background:#7A9E7E;"><div class="swatch-label" style="color:#FDFAF5;">Sage<br><span class="hex">#7A9E7E</span></div></div>
+      <div class="swatch" style="background:#C8A050;"><div class="swatch-label" style="color:#FDFAF5;">Gold<br><span class="hex">#C8A050</span></div></div>
+    </div>
+    <div class="type-grid sr">
+      <div class="type-card"><div class="type-sample">Ageless</div><div class="type-name">Brand Mark / Signature</div><div class="type-detail">Dancing Script — SemiBold. The soul of the brand. Every piece is signed with it. Warm, confident, unmistakable. Never forced to be anything other than itself.</div></div>
+      <div class="type-card"><div class="type-sample">She doesn't ask<br>for the room.</div><div class="type-name">Headlines / Editorial</div><div class="type-detail">Cormorant Garamond — Italic, Light. Used for pull quotes, campaign headlines, and brand statements. Intelligent, feminine, unrushed.</div></div>
+      <div class="type-card"><div class="type-sample">STANDARD EDITION<br>COLLECTION 001<br>WEARABLE ART</div><div class="type-name">Labels / UI / Tags</div><div class="type-detail">DM Sans — Medium, tracked wide. Clean precision for product labels, collection names, metadata, and navigation.</div></div>
+    </div>
+  </div>
+</section>
+
+<!-- VOICE -->
+<section id="voice" class="voice-section">
+  <div class="sec-inner" style="padding-bottom:0;">
+    <div class="sec-label sr">05 — Brand Voice</div>
+    <h2 class="sec-title sr sr-d1">How Ageless<br><em>speaks</em></h2>
+  </div>
+  <div class="voice-grid sr">
+    <div class="voice-block">
+      <div class="voice-block-label">Ageless is —</div>
+      <h3>Sassy. Warm. Absolutely sure of itself.</h3>
+      <p>Ageless speaks the way its customer thinks — with wit, warmth, and the quiet confidence of someone who stopped seeking permission. It doesn't announce itself. It arrives.</p>
+      <ul class="voice-list">
+        <li>Playful with a point — every line lands somewhere</li>
+        <li>Warm but never desperate for approval</li>
+        <li>Direct. Says the thing. Doesn't hedge it.</li>
+        <li>Celebrates femininity without defining it narrowly</li>
+        <li>Uses humour as confidence, not deflection</li>
+        <li>Writes to the woman, not at her</li>
+      </ul>
+    </div>
+    <div class="voice-block dark">
+      <div class="voice-block-label">Ageless is never —</div>
+      <h3>Loud for loudness sake. Or apologetic.</h3>
+      <p>There's a difference between confidence and noise. Ageless has no interest in begging for attention or pretending it doesn't want it. The brand exudes. It doesn't perform.</p>
+      <ul class="voice-list">
+        <li>"Empowering women since…" — tired, borrowed, empty</li>
+        <li>Aggressive or combative — power isn't anger</li>
+        <li>Overly precious about being "art" — wear it, live in it</li>
+        <li>Discount-coded and urgency-driven — not that brand</li>
+        <li>Girlboss energy — that era is over</li>
+        <li>Explaining the joke</li>
+      </ul>
+    </div>
+  </div>
+  <div class="copy-samples sr">
+    <div class="copy-sample"><img src="images/16.png" alt="Instagram post" style="width:100%;display:block;margin-bottom:20px;"><div class="cs-platform">Instagram — Product Post</div><div class="cs-copy">"She smells like roses. She cuts like a warning."</div><div class="cs-note">→ Best performing formula: contrast + surprise</div></div>
+    <div class="copy-sample"><img src="images/17.png" alt="TikTok post" style="width:100%;display:block;margin-bottom:20px;"><div class="cs-platform">TikTok — Hook</div><div class="cs-copy">"If you're going to stare — at least buy the bag."</div><div class="cs-note">→ Direct address. Turns attention into conversion.</div></div>
+    <div class="copy-sample"><img src="images/123.png" alt="Season launch post" style="width:100%;display:block;margin-bottom:20px;"><div class="cs-platform">Season Launch</div><div class="cs-copy">"Unbothered. Unrushed. Unforgettable. New season. Same you — just louder."</div><div class="cs-note">→ Season drop tone: familiar + exciting</div></div>
+  </div>
+</section>
+
+<!-- SEASONS -->
+<section id="seasons">
+  <div class="sec-inner">
+    <div class="sec-label sr">06 — Season Framework</div>
+    <h2 class="sec-title sr sr-d1">Every month,<br><em>a new story.</em></h2>
+    <p class="seasons-intro sr sr-d2">Ageless runs on a season model — each collection built around a mood, a woman archetype, a colour world, and a set of illustrations that belong together. The brand stays constant. The story changes. Every season is designed to feel complete on its own and connected to every other one.</p>
+    <div class="season-rules sr">
+      <div class="rule-card"><div class="rule-icon">🎨</div><div class="rule-name">One Dominant Colour</div><div class="rule-desc">Every season has a lead colour running through the product palette, the content, and the marketing. The brand neutral holds. The season colour shifts.</div></div>
+      <div class="rule-card"><div class="rule-icon">👤</div><div class="rule-name">One Woman Archetype</div><div class="rule-desc">Each season centres a type of woman — not a demographic, a feeling. The Dreamer. The Rebel. The Romantic. The illustrations embody her.</div></div>
+      <div class="rule-card"><div class="rule-icon">🖊</div><div class="rule-name">Consistent Signature</div><div class="rule-desc">The Ageless script stays bottom-right on every product, every season. The only constant. Everything else can change.</div></div>
+      <div class="rule-card"><div class="rule-icon">📦</div><div class="rule-name">Full Product Suite</div><div class="rule-desc">Each season covers all active product types. Every category gets the season's art. No SKU left behind.</div></div>
+    </div>
+    <div class="seasons-grid sr">
+      <div class="season-card">
+        <div class="season-bg" style="background: linear-gradient(135deg, #2A1A1A 0%, #8B4513 40%, #C8A050 100%);"><img src="images/20.png" alt="Origins Season" style="width:100%;height:100%;object-fit:cover;opacity:0.7;display:block;"></div>
+        <div class="season-content">
+          <div class="season-num">Standard Edition</div>
+          <div class="season-name">Origins</div>
+          <div class="season-theme">The Woman Who Started It All</div>
+          <div class="season-desc">Angels, gold chains, crystal apples, smoke faces. The founding collection — maximum range, introducing every mood Ageless will ever inhabit.</div>
+          <div class="season-palette"><div class="season-dot" style="background:#C8A050;"></div><div class="season-dot" style="background:#6B3A2A;"></div><div class="season-dot" style="background:#7BA7BC;"></div><div class="season-dot" style="background:#D4826A;"></div></div>
+        </div>
+      </div>
+      <div class="season-card">
+        <div class="season-bg" style="background: linear-gradient(135deg, #0D1B12 0%, #1A4020 40%, #4A7A3A 80%, #8AB870 100%);"><img src="images/21.png" alt="Bloom Season" style="width:100%;height:100%;object-fit:cover;opacity:0.7;display:block;"></div>
+        <div class="season-content">
+          <div class="season-num">Season 01</div>
+          <div class="season-name">Bloom</div>
+          <div class="season-theme">The Woman in Her Element</div>
+          <div class="season-desc">Botanical illustration. Overgrown gardens. Women half-hidden in flowers, entirely at peace. Deep forest greens and unexpected pops of petal.</div>
+          <div class="season-palette"><div class="season-dot" style="background:#2D6A40;"></div><div class="season-dot" style="background:#8AB870;"></div><div class="season-dot" style="background:#E8C85A;"></div><div class="season-dot" style="background:#C87850;"></div></div>
+        </div>
+      </div>
+      <div class="season-card">
+        <div class="season-bg" style="background: linear-gradient(135deg, #0A0A1A 0%, #1A1040 40%, #3A2060 80%, #6A40A0 100%);"><img src="images/23.png" alt="After Dark Season" style="width:100%;height:100%;object-fit:cover;opacity:0.7;display:block;"></div>
+        <div class="season-content">
+          <div class="season-num">Season 02</div>
+          <div class="season-name">After Dark</div>
+          <div class="season-theme">The Woman Who Owns the Night</div>
+          <div class="season-desc">Deep indigo, violet and near-black. Moonlit silhouettes, neon details, women at windows and women at bars. The most editorial Ageless will ever feel.</div>
+          <div class="season-palette"><div class="season-dot" style="background:#3A2060;"></div><div class="season-dot" style="background:#6A40A0;"></div><div class="season-dot" style="background:#C060D0;"></div><div class="season-dot" style="background:#F0D080;"></div></div>
+        </div>
+      </div>
+      <div class="season-card">
+        <div class="season-bg" style="background: linear-gradient(135deg, #2A1015 0%, #8B2030 40%, #C83050 80%, #F0607A 100%);"><img src="images/24.png" alt="Crimson Season" style="width:100%;height:100%;object-fit:cover;opacity:0.7;display:block;"></div>
+        <div class="season-content">
+          <div class="season-num">Season 03</div>
+          <div class="season-name">Crimson</div>
+          <div class="season-theme">The Woman Who Knows Her Power</div>
+          <div class="season-desc">Bold reds, deep crimsons, warm rose. Women in motion — dancing, reaching, claiming. The most emotionally charged season. Power as colour.</div>
+          <div class="season-palette"><div class="season-dot" style="background:#8B2030;"></div><div class="season-dot" style="background:#C83050;"></div><div class="season-dot" style="background:#F0607A;"></div><div class="season-dot" style="background:#1C1812;"></div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- PRODUCTS -->
+<section id="products" class="products-section">
+  <div class="sec-inner">
+    <div class="sec-label sr">07 — Product Range</div>
+    <h2 class="sec-title sr sr-d1">The full<br><em>collection.</em></h2>
+    <div class="products-grid sr sr-d2">
+      <div class="product-card"><div class="product-icon"><img src="images/tote_bag_icon.png" alt="Tote Bag" style="width:56px;height:56px;object-fit:contain;"></div><div class="product-name">Tote Bag</div><div class="product-tag">Core Product · All Seasons</div><div class="product-desc">The original Ageless canvas. Full all-over print, structured base, signature script bottom-right. The piece that started everything and anchors every collection.</div></div>
+      <div class="product-card"><div class="product-icon"><img src="images/tshirt_icon.png" alt="Oversized Tee" style="width:56px;height:56px;object-fit:contain;"></div><div class="product-name">Oversized Tee</div><div class="product-tag">Core Product · All Seasons</div><div class="product-desc">Relaxed fit, full all-over print. Comfortable enough to live in, striking enough to be remembered. Comfort and confidence are the same decision.</div></div>
+      <div class="product-card"><div class="product-icon">🧥</div><div class="product-name">Hoodie</div><div class="product-tag">Expanded Range · Season 01+</div><div class="product-desc">Heavyweight, relaxed, full all-over print. The season's art at its most wearable. The piece you reach for on a grey morning when you still want to feel like yourself.</div></div>
+      <div class="product-card"><div class="product-icon">🧢</div><div class="product-name">Cap</div><div class="product-tag">Expanded Range · Season 01+</div><div class="product-desc">Embroidered Ageless script. Season accent colour on the brim. The finishing piece — the thing that turns an outfit into a statement without trying to.</div></div>
+      <div class="product-card"><div class="product-icon">🧦</div><div class="product-name">Socks</div><div class="product-tag">Expanded Range · Season 01+</div><div class="product-desc">Season-colour patterned with the Ageless script and a small illustration element. The detail piece — the thing someone notices last and remembers longest.</div></div>
+      <div class="product-card"><div class="product-icon">✨</div><div class="product-name">Limited Prints</div><div class="product-tag">Special Release · Select Seasons</div><div class="product-desc">The illustration as a standalone art print — separate from any garment. For the Curator who wants the art on her wall and on her back. Numbered, signed, limited.</div></div>
+      <div class="special-set">
+        <div>
+          <h3>The <em>Complete</em> Set</h3>
+          <p>For the woman who wants the full world. Buy one of every piece in a season and Ageless sends you something extra — because that kind of commitment deserves to be acknowledged. Every complete set ships with a handwritten card.</p>
+        </div>
+        <div class="special-set-items">
+          <div class="set-item"><div class="set-item-icon">📓</div><div><span class="set-item-label">Ageless Notebook</span> — season cover art, cream pages</div></div>
+          <div class="set-item"><div class="set-item-icon">🖊</div><div><span class="set-item-label">Branded Pen</span> — script logo, season accent colour</div></div>
+          <div class="set-item"><div class="set-item-icon">💌</div><div><span class="set-item-label">Greeting Card</span> — season illustration, handwritten note</div></div>
+          <div class="set-item"><div class="set-item-icon">🛍</div><div><span class="set-item-label">Ageless Product Bag</span> — reusable, branded, season colour</div></div>
+        </div>
+      </div>
+    </div>
+    <div style="display:grid; grid-template-columns:repeat(5,1fr); gap:4px; margin-top:4px;">
+      <img src="images/2.png" alt="Ageless Product" style="width:100%;aspect-ratio:1;object-fit:cover;display:block;">
+      <img src="images/3.png" alt="Ageless Product" style="width:100%;aspect-ratio:1;object-fit:cover;display:block;">
+      <img src="images/mockup.png" alt="Ageless Product" style="width:100%;aspect-ratio:1;object-fit:cover;display:block;">
+      <img src="images/8883367.png" alt="Ageless Lifestyle" style="width:100%;aspect-ratio:1;object-fit:cover;display:block;">
+      <img src="images/11557249.png" alt="Ageless Lifestyle" style="width:100%;aspect-ratio:1;object-fit:cover;display:block;">
+    </div>
+  </div>
+</section>
+<section class="manifesto-section">
+  <div class="manifesto-inner sr">
+    <div class="manifesto-label">Ageless — Brand Manifesto — 2025</div>
+    <div class="manifesto-text">
+      Fashion forgot how to have a personality.<br>
+      <em>We gave it one back.</em><br>
+      Wear the story. Own the room.
+    </div>
+    <div class="manifesto-byline">Ageless · Art you carry · Confidence you wear · crustmedia.co</div>
+  </div>
+</section>
+
+<footer>
+  <div class="footer-brand">Ageless</div>
+  <div class="footer-credits">
+    A Crust Media Brand World — <a href="../index.html">crustmedia.co</a><br>
+    Brand No. 03 of 10 · Wearable Art<br>
+    Concept, Identity &amp; Strategy ©2025<br>
+    → Next: NOCTURNE (04/10)
+  </div>
+</footer>
+
+<script>
+  const srEls = document.querySelectorAll('.sr');
+  const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) e.target.classList.add('visible'); });
+  }, { threshold: 0.08, rootMargin: '0px 0px -40px 0px' });
+  srEls.forEach(el => obs.observe(el));
+</script>
+</body>
+</html>
